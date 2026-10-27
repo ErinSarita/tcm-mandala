@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Body Clock Mandala</title>
-<meta name="description" content="Two wheels for the rhythms of Traditional Chinese Medicine: the body clock of the twelve organ hours, and the Five Phases in their five seasons of the year.">
+<meta name="description" content="Three wheels for the rhythms of Traditional Chinese Medicine: Taoist cosmology from Wuji to the Five Phases and their cycles, the body clock of the twelve organ hours, and the Five Phases in the seasons of the year.">
 <link rel="icon" href="favicon.svg?v=1" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -244,6 +244,34 @@ section.about p{margin:0;max-width:68ch}
 .viewtoggle button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .nowmark line{stroke:var(--gold);stroke-width:2.5;stroke-linecap:round}
 .nowmark circle{fill:var(--gold);stroke:var(--bg);stroke-width:2.5}
+@media (max-width:560px){.viewtoggle button{padding:7px 14px}.viewtoggle button span{display:none}}
+/* The Phases wheel */
+.relline{fill:none;stroke-linecap:round}
+.rel-gen .relline{stroke:var(--ink);stroke-width:3.4;opacity:.82}
+.rel-ctl .relline{stroke:var(--muted);stroke-width:2.6;stroke-dasharray:8 6}
+.relhit{fill:none;stroke:transparent;stroke-width:24;pointer-events:stroke}
+.cell.rel{stroke:none}
+.cell.rel:focus-visible .relline{stroke:var(--gold);opacity:1}
+svg.cycle .rel:not(.lit){opacity:.22}
+.rel.lit .relline{stroke-width:4.6;opacity:1}
+.genlbl{font-family:var(--body);font-weight:700;fill:var(--muted);letter-spacing:.1em;pointer-events:none}
+.seed{pointer-events:none}
+.wujiring{fill:none;stroke:var(--lotline);stroke-width:1.2;opacity:.7;pointer-events:none}
+#selOutline circle{fill:none;stroke:var(--gold);stroke-width:2.6;pointer-events:none}
+#selOutline .selrel{stroke:var(--gold);stroke-width:9;opacity:.45;stroke-linecap:round}
+.pchip{font:inherit;font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--c);color:var(--on-light);border-radius:999px;padding:2px 11px;cursor:pointer}
+.pchip:hover,.pchip:focus-visible{border-color:var(--ink);outline:none}
+.rels{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.rels li{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.rels li>span{min-width:72px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.arr{font-size:18px;color:var(--muted)}
+.yytable{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px;margin:0}
+.yytable dt,.yytable dd{margin:0;padding:3px 0;border-bottom:1px solid var(--line)}
+.yytable dt:first-of-type,.yytable dd:first-of-type{font-family:var(--display);font-size:18px}
+.unfold{margin:0;padding-left:22px;display:grid;gap:6px}
+.zhtag{display:inline-block;font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.06em;border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--muted);margin-left:6px;vertical-align:middle}
+.orgchips{align-items:center}
+
 </style>
 <script>
 try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") document.documentElement.setAttribute("data-theme",t); }catch(e){}
@@ -258,12 +286,12 @@ try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") docume
     </button>
     <div class="eyebrow">Traditional Chinese Medicine, in one circle</div>
     <h1>The Body Clock Mandala</h1>
-    <p class="lede">Two wheels for the rhythms of Traditional Chinese Medicine (TCM). The Day wheel is the body clock: 24 hours with noon at the top, and qi, the body's moving energy, passing through twelve organ systems about two hours each. The Year wheel is the Five Phases (Wood, Fire, Earth, Metal, Water) in their five seasons, from spring to winter. Both put noon and midsummer at the top. Read them as a way to notice your own rhythms, not as a diagnosis. Take what is useful now.</p>
+    <p class="lede">Three wheels for the rhythms of Traditional Chinese Medicine (TCM). The Phases wheel goes to the roots: from Wuji, the boundless mystery, through Taiji, the first movement, and yin and yang, to the Five Phases (Fire, Earth, Metal, Water, Wood) and the two cycles that join them, one feeding and one taming. The Day wheel is the body clock: qi passing through twelve organ systems around the 24 hours. The Year wheel is the Five Phases in their five seasons, from spring to winter. Read them as a way to notice your own rhythms, not as a diagnosis. Take what is useful now.</p>
   </header>
 
   <div class="main">
     <div class="stage">
-      <div class="viewtoggle" id="viewtoggle" role="group" aria-label="Choose a wheel"><button type="button" data-mode="day" aria-pressed="true"><b>Day</b><span>24 hours</span></button><button type="button" data-mode="year" aria-pressed="false"><b>Year</b><span>five seasons</span></button></div>
+      <div class="viewtoggle" id="viewtoggle" role="group" aria-label="Choose a wheel"><button type="button" data-mode="phases" aria-pressed="true"><b>Phases</b><span>origins and cycles</span></button><button type="button" data-mode="day" aria-pressed="false"><b>Day</b><span>24 hours</span></button><button type="button" data-mode="year" aria-pressed="false"><b>Year</b><span>five seasons</span></button></div>
       <div class="svgbox"><div class="moontip" id="moontip" role="status"></div><svg id="m" viewBox="-574 -574 1148 1148" role="group" aria-label="The Body Clock Mandala"></svg></div>
       <div class="ringkey" id="ringkey" aria-label="Rings"></div>
       <p class="hintline">Choose any ring or petal to open it.</p>
@@ -278,26 +306,32 @@ try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") docume
 
   <section class="about" id="about">
     <h2>About this mandala</h2>
-    <p>A mandala is a circle organized around a center. This one gathers the TCM body clock and the Five Phase year into two matching wheels, with qi, the flowing center of the system, in the middle. It draws on classical Chinese medicine as it is taught today, and on the Five Phase (Wu Xing) theory that sits underneath it. Other schools and practitioners describe these ideas in their own ways, and this map does not replace them.</p>
+    <p>A mandala is a circle organized around a center. This one gathers the roots of Five Phase theory, the TCM body clock, and the Five Phase year into three wheels, with the source, the flowing center of the system, in the middle. It draws on classical Chinese medicine as it is taught today, and on the Five Phase (Wu Xing) theory that sits underneath it. Other schools and practitioners describe these ideas in their own ways, and this map does not replace them.</p>
     <h3>How it is built</h3>
     <p>The wheel is a 24-hour clock with noon at the top and midnight at the bottom, so the day reads clockwise like a clock face. The twelve organ systems each take a two-hour window in a fixed order (the horary cycle, zǐwǔ liúzhù): Lung at 3 am, then Large Intestine, Stomach, Spleen, Heart, Small Intestine, Bladder, Kidney, Pericardium, Triple Burner, Gallbladder, and Liver at 1 am. Each organ sits across the wheel from its partner twelve hours away, for example Heart at noon and Gallbladder at midnight.</p>
     <p>The ring just inside the organs is the Five Phases. Metal, Earth, Fire, Water, Fire again, and Wood cover the clock in six arcs, because Fire has two sets of organs: the Heart and Small Intestine at midday, and the Pericardium and Triple Burner in the evening. Outside the organs are daily-life petals and a band for the feeling or quality each organ is linked with.</p>
-    <h3>Two wheels</h3>
+    <h3>Three wheels</h3>
+    <p>The Phases wheel follows the Taoist account of how the many come from the one, in the order of the 11th-century scholar Zhou Dunyi's Explanation of the Diagram of the Supreme Ultimate: Wuji, the boundless; Taiji, the first movement; yin and yang; the Five Phases; and the ten thousand things. The phases are spaced evenly, Fire at the top and then Earth, Metal, Water, and Wood clockwise, so the generating cycle runs around the circle and the controlling cycle forms a five-pointed star, drawn behind yin and yang where all the phases meet. The texts give more than one route from one to many: the Tao Te Ching counts one, two, three, and the ten thousand things, and the Book of Changes moves from Taiji to two modes, four images, and eight trigrams. The panels note where readings differ.</p>
     <p>The Day wheel follows the Chinese Medicine Atlas body clock: the twelve organ windows, the phase of each organ, a line for daily life, and the feeling each is linked with. The Year wheel follows Five Phase theory in its first home, the year: Wood in spring, Fire in summer, Earth in late summer, Metal in autumn, and Water in winter, with the organs each phase holds, the 24 solar terms of the Chinese calendar, and the calendar months. Seasons begin at the four starts (lì), around February 4, May 5, August 7, and November 7, so each solstice and equinox falls mid-season. Both wheels put noon and midsummer at the top.</p>
     <h3>What is tradition, and what is science</h3>
     <p>The organ clock and the Five Phases are classical Chinese medical ideas. They are a way of organizing experience, and they have been used for centuries. They have not been shown by modern research to work as stated, and in particular there is no good evidence that each organ peaks in its own two-hour window. What science does support is that the body keeps time. Genes in nearly every cell run a circadian clock. Cortisol rises in the early morning, core body temperature falls overnight, and melatonin begins to rise in the evening. The TCM clock and the circadian clock overlap in spirit, not in detail. Use the first as a lens for noticing, and lean on the second, and on your clinicians, for health decisions.</p>
     <h3>Going gently</h3>
     <p>Paying attention to your body can stir strong feelings, and for some people old pain. Go one ring at a time, and stop when you need to. Several windows touch on emotions such as grief, fear, and anger. These are described as parts of being human, not as faults to fix or as the cause of illness. If what comes up is heavy, look for support from a trauma-informed therapist. This mandala is for reflection and education. It is not therapy or medical advice, and it is not a substitute for a licensed practitioner. Waking at the same hour every night, pain, bleeding, breathlessness, chest pain, and changes that last all deserve a conversation with a doctor.</p>
     <h3>A note on language</h3>
-    <p>Organ names in capital letters, such as the Lung or the Liver, name TCM systems of function. They overlap with the organs of anatomy but are not the same thing. Chinese terms are given in pinyin with tone marks: qi (qì), shén, jīng, wei qi (wèi qì). Translations vary from author to author; the wording here is our own.</p>
+    <p>Organ names in capital letters, such as the Lung or the Liver, name TCM systems of function. They overlap with the organs of anatomy but are not the same thing. Chinese terms are given in pinyin with tone marks: qi (qì), shén, jīng, wei qi (wèi qì). The Phases wheel uses traditional characters, as in the classical texts. The Tao Te Ching is also spelled Daodejing, and Tao is also spelled Dao. Translations vary from author to author; the wording here is our own.</p>
     <h3>References</h3>
     <ol class="refs">
       <li>Chinese Medicine Atlas. (n.d.). <i>TCM Body Clock</i>. <a href="https://chinesemedicineatlas.com/tcm-body-clock/" target="_blank" rel="noopener">chinesemedicineatlas.com/tcm-body-clock</a>. The clock's windows and the idea for this map.</li>
+      <li>Chan, W. (Trans. and Ed.). (1963). <i>A Source Book in Chinese Philosophy</i>. Princeton University Press. (Includes Zhou Dunyi's Explanation of the Diagram of the Supreme Ultimate.)</li>
       <li>Kaptchuk, T. J. (2000). <i>The Web That Has No Weaver: Understanding Chinese Medicine</i> (2nd ed.). McGraw-Hill.</li>
+      <li>Kohn, L. (2001). <i>Daoism and Chinese Culture</i>. Three Pines Press.</li>
       <li>Maciocia, G. (2015). <i>The Foundations of Chinese Medicine</i> (3rd ed.). Elsevier.</li>
       <li>Panda, S. (2018). <i>The Circadian Code</i>. Rodale.</li>
       <li>Takahashi, J. S. (2017). Transcriptional architecture of the mammalian circadian clock. <i>Nature Reviews Genetics, 18</i>(3), 164 to 179.</li>
+      <li>Unschuld, P. U. (Trans.). (1986). <i>Nan-ching: The Classic of Difficult Issues</i>. University of California Press.</li>
       <li>Veith, I. (Trans.). (1949). <i>The Yellow Emperor's Classic of Internal Medicine</i>. University of California Press. Translates the first 34 chapters of the Su Wen, including chapter 2 on the seasons. The Ling Shu is the companion classic.</li>
+      <li>Wang, R. R. (2012). <i>Yinyang: The Way of Heaven and Earth in Chinese Thought and Culture</i>. Cambridge University Press.</li>
+      <li>The Tao Te Ching, the Book of Changes, and the medical classics, in Chinese with many translations, at the <a href="https://ctext.org" target="_blank" rel="noopener">Chinese Text Project</a>.</li>
     </ol>
     <p class="foot">Created by Erin Singleton. An educational map for reflection, not therapy, medical advice, or a substitute for a licensed practitioner.</p>
   </section>
@@ -776,13 +810,401 @@ function drawNow(){
   const t=el("title",{},g); const d=new Date();
   t.textContent= mode==="day" ? "Now: "+d.toLocaleTimeString([], {hour:"numeric",minute:"2-digit"}) : "Today: "+d.toLocaleDateString([], {month:"long",day:"numeric"});
 }
-let mode="day";
-function draw(){ if(mode==="year") drawYear(); else drawDay(); drawNow(); }
+let mode="phases";
+function draw(){ if(mode==="phases") return drawCosmos(); if(mode==="year") drawYear(); else drawDay(); drawNow(); }
 setInterval(()=>{ if(document.getElementById("nowmark")) drawNow(); }, 60000);
 function hover(cell){
   if(!cell){ svg.classList.remove("dimming"); cells.forEach(c=>c.classList.remove("off")); return; }
   svg.classList.add("dimming");
   cells.forEach(c=>c.classList.toggle("off", !(c.dataset.sets||"").split(" ").includes(cell.dataset.slice)));
+}
+
+
+/* ---------- The Phases wheel ----------
+   Taoist cosmology from the center out, after Zhou Dunyi: Wuji, the boundless mystery; Taiji, the first movement;
+   yin and yang; the Five Phases, evenly spaced, joined by the generating (shēng) and controlling (kè) cycles;
+   and the ten thousand things. Read from the outside in, it is the return. */
+const RINGS_C = {
+  wuji:  {name:"Wuji, the mystery", sw:"radial-gradient(circle,#fff,var(--yang))", color:"--yang", about:"At the center, the boundless source before anything divides. It is drawn as an empty circle."},
+  taiji: {name:"Taiji, the first movement", sw:"linear-gradient(90deg,var(--yang2),var(--gold))", color:"--yang2", about:"The first stirring, the pivot between stillness and movement, from which yin and yang arise."},
+  yy:    {name:"Yin and yang", sw:"linear-gradient(90deg,var(--yang),var(--yin))", color:"--yin", about:"The two modes, stillness and movement, each holding the seed of the other."},
+  phase: {name:"The Five Phases", sw:"linear-gradient(90deg,var(--fire),var(--earth),var(--metal),var(--water),var(--wood))", color:"--earth", about:"Fire, Earth, Metal, Water, and Wood, spaced evenly around the wheel, joined by their two cycles."},
+  gen:   {name:"Generating, shēng", sw:"linear-gradient(90deg,var(--ink),var(--ink))", color:"--earth2", about:"Arrows around the circle, clockwise: each phase feeds the next, like a mother feeding her child."},
+  ctl:   {name:"Controlling, kè", sw:"repeating-linear-gradient(90deg,var(--muted) 0 4px,transparent 4px 7px)", color:"--metal2", about:"The star through the middle: each phase tames the one two steps ahead, like a grandmother setting limits."},
+  corr:  {name:"Correspondences", sw:"linear-gradient(90deg,var(--fire2),var(--earth2),var(--metal2),var(--water2),var(--wood2))", color:"--earth2", about:"For each phase: its season and direction, its organs, and its feeling and virtue."},
+  motion:{name:"The motion of each phase", sw:"linear-gradient(90deg,var(--band),var(--band2))", color:"--band", about:"How qi moves in each phase: rising, centering, gathering, sinking, growing."},
+  ww:    {name:"The ten thousand things", sw:"linear-gradient(90deg,var(--fire3),var(--earth3),var(--metal3),var(--water3),var(--wood3))", color:"--earth3", about:"Everything that is, each a blend of yin, yang, and the Five Phases. Read inward, the way of return."}
+};
+const WUJI = {
+  intro:"Before anything, the Taoist texts point toward something that cannot quite be pointed to. The Tao Te Ching opens by saying that the Tao that can be spoken is not the lasting Tao, and the name that can be named is not the lasting name (chapter 1). What has no name is the beginning of heaven and earth. Later thinkers called this boundless source Wújí, without limit, and drew it as an empty circle. It is not nothing. It is everything before it divides: whole, still, and full of possibility.",
+  what:["Wújí (無極) means without a ridgepole, without limit: no edges, no top, and no opposites yet.","The Tao Te Ching calls it the mystery (xuán 玄), and the mystery within the mystery, the gateway of all wonders (chapter 1).","It speaks of something formless and complete, there before heaven and earth, silent and empty, standing alone and unchanging, moving everywhere without tiring. Not knowing its name, the text calls it Tao (chapter 25).","To return to the boundless is named as the ripening of a simple, whole life (chapter 28)."],
+  practice:["Sit for a few minutes without trying to do anything, not even to relax.","Notice the space that sounds arise in, and the quiet between thoughts.","Let not knowing be enough for now."],
+  gently:"Emptiness can feel like peace. For some people, especially after trauma, it can also feel like loss, numbness, or unreality. If stillness feels unsafe or far away, open your eyes, feel your feet, and come back to something solid. Rest in the boundless only as much as feels good.",
+  deep:["Tao Te Ching, chapters 1, 25, 28, and 40.","Zhou Dunyi, Explanation of the Diagram of the Supreme Ultimate (Taijitu Shuo), which opens with Wuji."]
+};
+const TAIJI = {
+  intro:"Out of the boundless comes the first stirring. Tàijí (太極) is the supreme ultimate; literally, the great ridgepole, the top beam of a roof from which both slopes fall away. It is the pivot where the one becomes able to divide, the hinge between stillness and movement. Zhou Dunyi, an 11th-century scholar, wrote the account most often quoted. In our own words: the boundless, and yet the supreme ultimate. Taiji moves and gives rise to yang. When movement reaches its limit it becomes still, and stillness gives rise to yin. When stillness reaches its limit, movement returns. Movement and stillness take turns, each the root of the other.",
+  what:["Taiji is not a thing apart from Wuji. Zhou Dunyi's first line, wújí ér tàijí, is often read as the boundless, and yet the supreme ultimate: one reality, seen as still and as about to move.","Others read the same line as from the boundless comes the supreme ultimate, a first step in time. Scholars have argued over the two readings since the 12th century, and both are still taught.","The Book of Changes has a parallel line: change holds the Taiji, which gives birth to the two modes (Xici, the Great Commentary).","The familiar black and white symbol is the Taiji diagram (tàijí tú). It shows Taiji already turning into yin and yang."],
+  practice:["Watch the breath at its turn: the moment the in-breath becomes the out-breath.","Notice the first movement of a choice, just before you decide.","Stand still for a minute, then move very slowly, and feel the change between them."],
+  gently:"The turn from stillness to movement happens by itself. You do not need to force it, in meditation or in life. If you feel stuck, the smallest movement is enough to begin.",
+  deep:["Zhou Dunyi, Taijitu Shuo; translated in Chan (1963).","Book of Changes, Xici (Great Commentary), part 1, chapter 11."]
+};
+const YINYANG = {
+  intro:"Taiji divides into two: yin and yang, the two modes (liǎng yí 兩儀). Yang is movement, warmth, brightness, rising, and reaching out. Yin is stillness, coolness, darkness, settling, and drawing in. The old characters show the sunny and the shady sides of a hill. They are not good and bad, or two forces at war. They are two sides of one turning, each giving rise to the other.",
+  pairs:[["Movement","Stillness"],["Light","Darkness"],["Warmth","Coolness"],["Rising","Settling"],["Outward","Inward"],["Day","Night"],["Activity","Rest"],["Expanding","Gathering"]],
+  principles:["<b>Opposed and joined.</b> Each is defined by the other, like the two sides of one hill.","<b>Rooted in each other.</b> Each holds the seed of the other, shown by the small dots in the symbol.","<b>Waxing and waning.</b> As one grows, the other recedes, the way day gives way to night.","<b>Transforming.</b> At its extreme each turns into the other, as midnight turns toward morning."],
+  four:"The Book of Changes describes a next step: the two modes give rise to the four images (sì xiàng 四象), greater yang, lesser yin, lesser yang, and greater yin (Xici). Four of the Five Phases match them. Wood is lesser yang, yang still growing. Fire is greater yang, yang at its fullest. Metal is lesser yin, yin beginning to gather. Water is greater yin, yin at its deepest. Earth is the balance in the middle, where one turns into the other.",
+  ddj:"The Tao Te Ching gives its own sequence: the Tao gives birth to one, one to two, two to three, and three to the ten thousand things. The ten thousand things carry yin on their backs and hold yang in their arms, and the blending of their breath makes harmony (chapter 42). Two is usually read as yin and yang. Three is read either as yin, yang, and the harmonizing breath between them, or as heaven, earth, and humankind.",
+  practice:["Notice yin and yang in your day: where you are moving, and where you are resting.","When you are worn out from doing, look for the yin that would balance it. When you feel flat, look for a little yang.","In a hard moment, look for the seed of the other: a little rest inside effort, a little light inside grief."],
+  gently:"Yin and yang have often been mapped onto gender, with yin as feminine and yang as masculine. The mapping is old, but it describes qualities every person has, not what anyone should be. Every body and every life holds both."
+};
+const PHASES = [
+  {key:"fire", name:"Fire", zh:"火", py:"Huǒ", c:"--fire", tx:"tx-white", img:"Greater yang", imgZh:"太陽 tài yáng", motion:"Rises and spreads", season:"Summer", dir:"South", color:"Red", organs:"Heart, Small Intestine", organsLong:"Heart and Small Intestine, with the Pericardium and Triple Burner", emo:"Joy", virtue:"Propriety", virtueZh:"禮 lǐ", spirit:"Shén 神, the spirit and awareness",
+   blurb:"Fire is yang at its fullest: warmth, light, and the upward reach of summer. It is the phase of the Heart, which houses the spirit (shén), and of connection, warmth, and joy. Its motion is rising and spreading.",
+   tip:"Yang at its fullest: warmth, light, connection."},
+  {key:"earth", name:"Earth", zh:"土", py:"Tǔ", c:"--earth", tx:"tx-ink", img:"The balance", imgZh:"中 zhōng, the center", motion:"Centers and turns", season:"Late summer", dir:"Center", color:"Yellow", organs:"Spleen, Stomach", organsLong:"Spleen and Stomach", emo:"Worry", virtue:"Trustworthiness", virtueZh:"信 xìn", spirit:"Yì 意, thought and intention",
+   blurb:"Earth is the center, the balance point where yang turns toward yin. It receives, transforms, and gives out again, like soil and like digestion. It is the phase of the Spleen, of thought and intention (yì), and of steadiness. Its motion is centering: the ground everything else turns around.",
+   tip:"The center: nourishing, steadying, turning."},
+  {key:"metal", name:"Metal", zh:"金", py:"Jīn", c:"--metal", tx:"tx-ink", img:"Lesser yin", imgZh:"少陰 shào yīn", motion:"Gathers and descends", season:"Autumn", dir:"West", color:"White", organs:"Lung, Large Intestine", organsLong:"Lung and Large Intestine", emo:"Grief", virtue:"Righteousness", virtueZh:"義 yì", spirit:"Pò 魄, the bodily soul",
+   blurb:"Metal is yin beginning to gather: autumn, when the harvest comes in and the leaves let go. It refines, defines, and releases what is finished. It is the phase of the Lung and the breath, and of the bodily soul (pò). Its motion is gathering inward and descending.",
+   tip:"Yin gathering: refining, letting go."},
+  {key:"water", name:"Water", zh:"水", py:"Shuǐ", c:"--water", tx:"tx-white", img:"Greater yin", imgZh:"太陰 tài yīn", motion:"Sinks and stores", season:"Winter", dir:"North", color:"Black", organs:"Kidney, Bladder", organsLong:"Kidney and Bladder", emo:"Fear", virtue:"Wisdom", virtueZh:"智 zhì", spirit:"Zhì 志, the will",
+   blurb:"Water is yin at its deepest: winter, stillness, and the seed held underground. It keeps the reserves that life draws on. It is the phase of the Kidney, of essence (jīng), and of the will (zhì). Its motion is sinking and storing, and in its depth the next yang is born.",
+   tip:"Yin at its deepest: rest, reserve, the seed."},
+  {key:"wood", name:"Wood", zh:"木", py:"Mù", c:"--wood", tx:"tx-white", img:"Lesser yang", imgZh:"少陽 shào yáng", motion:"Grows up and out", season:"Spring", dir:"East", color:"Green", organs:"Liver, Gallbladder", organsLong:"Liver and Gallbladder", emo:"Anger", virtue:"Kindness", virtueZh:"仁 rén", spirit:"Hún 魂, the ethereal soul",
+   blurb:"Wood is yang being born and growing: spring, the shoot pushing up through the soil. It plans, grows, and reaches toward the light. It is the phase of the Liver and of the ethereal soul (hún), which carries vision and dreams. Its motion is growing up and out.",
+   tip:"Yang growing: vision, plans, new life."}
+];
+const GEN = [
+  {title:"Fire makes Earth", image:"Fire burns down to ash, and ash becomes soil.", body:"The Heart's warmth supports the Spleen's work of digestion. Warmth and ease can help appetite and steadiness.", life:"Enthusiasm and connection settle into something steady: a home, a routine, a shared table."},
+  {title:"Earth bears Metal", image:"Metals and minerals form inside the earth.", body:"The Spleen sends refined essence up to the Lung. Strengthening Earth to support Metal (péi tǔ shēng jīn) is a classic approach to a Lung that has been weak for a long time.", life:"Being nourished and steady makes it possible to see clearly, refine, and let go."},
+  {title:"Metal gathers Water", image:"Water beads on cold metal, and springs run out of rock.", body:"The Lung sends breath and fluids downward, and the Kidney receives and holds them.", life:"Letting go of what is finished makes room for rest and renewal."},
+  {title:"Water nourishes Wood", image:"Rain and groundwater feed the tree.", body:"The Kidney's stored essence nourishes the Liver's blood and its smooth flow.", life:"Deep rest and full reserves make new growth possible: plans that come from a full well."},
+  {title:"Wood feeds Fire", image:"Wood is the fuel of the flame.", body:"The Liver stores blood that nourishes the Heart, and its smooth flow keeps the spirit at ease.", life:"Vision and plans give warmth and connection something to burn."}
+];
+const CTL = [
+  {title:"Fire softens Metal", image:"Heat melts metal so it can be shaped.", body:"The Heart's warmth keeps the Lung from cold and stiffness. Too much heat can dry and scorch it.", life:"Warmth softens rigidity, and connection can ease a grief that has hardened."},
+  {title:"Earth contains Water", image:"A riverbank keeps the river in its course.", body:"The Spleen governs the movement of fluids so that water does not pool or overflow.", life:"Grounding and routine hold fear and overwhelm within their banks."},
+  {title:"Metal prunes Wood", image:"The blade cuts and shapes the tree.", body:"The Lung's downward movement restrains the Liver's upward rush.", life:"Discernment and boundaries prune plans that would overgrow."},
+  {title:"Water calms Fire", image:"Water cools and contains a flame.", body:"The Kidney's water cools and anchors the Heart's fire, so the mind can rest. Their meeting is called the communication of Heart and Kidney (xīn shèn xiāng jiāo).", life:"Stillness and rest keep excitement from burning out."},
+  {title:"Wood parts Earth", image:"Roots break up and hold the soil.", body:"The Liver's smooth flow keeps the Spleen and Stomach moving.", life:"Growth and change keep a routine from becoming a rut."}
+];
+const BALANCE = {
+  intro:"In health the two cycles keep each other in check: every phase is fed by one, feeds another, is tamed by a third, and tames a fourth. Nothing grows without limit, and nothing is left unsupported. The tradition also names the ways the balance slips, and uses them to reason about what is happening and what might help.",
+  kinds:[
+    {name:"Overacting", zh:"乘 chéng", what:"The tamer presses too hard, or the tamed is too weak to hold its ground, so restraint turns into oppression.", eg:"Wood overacting on Earth. Stress and frustration (the Liver) press on digestion (the Spleen and Stomach), and the stomach knots or the bowels change with tension.", from:4, to:1, kind:"ctl"},
+    {name:"Insulting", zh:"侮 wǔ", what:"The cycle runs backwards: the phase that should be tamed pushes back against its tamer.", eg:"Wood insulting Metal, called Wood fire tormenting Metal (mù huǒ xíng jīn). Heat from frustration rises against the Lung, with a dry, irritated cough that comes with anger.", from:4, to:2, kind:"rev"},
+    {name:"The mother affects the child", zh:"母病及子 mǔ bìng jí zǐ", what:"Along the generating cycle, a weak mother cannot feed her child.", eg:"When Kidney Water is depleted, the Liver it feeds can become dry and restless.", from:3, to:4, kind:"gen"},
+    {name:"The child drains the mother", zh:"子盜母氣 zǐ dào mǔ qì", what:"A child in need keeps drawing on its mother until she is depleted too.", eg:"A Heart worn out by long strain can draw on the Liver's blood that feeds it.", from:0, to:4, kind:"genrev"}
+  ],
+  rule:"The Classic of Difficulties (Nan Jing, chapter 69) gives a rule built on the generating cycle: when a phase is deficient, strengthen its mother; when it is in excess, drain its child.",
+  gently:"These patterns are how practitioners reason. They are not something to diagnose yourself with, and stress is not a failing of your Wood. If symptoms go on, or worry you, see a doctor or a licensed practitioner."
+};
+const WANWU = {
+  intro:"From the Five Phases come the ten thousand things (wànwù 萬物), the Chinese way of saying everything. Zhou Dunyi writes that as yin and yang meet and mingle, the ten thousand things are born, and they go on being born and changing without end. Every thing is a particular blend of yin, yang, and the Five Phases: a mountain, a meal, a mood, a person.",
+  what:["The ten thousand things carry yin on their backs and hold yang in their arms, and the blending of their breath makes harmony (Tao Te Ching 42).","Zhou Dunyi's account ends by folding back on itself: the Five Phases are one yin and yang, yin and yang are one Taiji, and Taiji is rooted in Wuji.","The path also runs the other way. All things flourish, and each returns to its root. Returning to the root is called stillness (Tao Te Ching 16). Returning is the movement of the Tao (chapter 40)."],
+  practice:["Look around and choose one thing. Ask which phases you see in it: its warmth, its weight, its edges, its stillness, its growth.","Notice that you are one of the ten thousand things too, made of the same turning.","When the world feels like too much, follow one thing inward, back toward the center."],
+  gently:"The idea that everything is connected can be a comfort, and it can also feel overwhelming. Take in only as much as you can hold. You are allowed to focus on one small thing."
+};
+const PRACTICE_C = {
+  intro:"You do not need to believe any of this to use it. These are ways to notice, offered as possibilities. Take what helps.",
+  journey:[
+    ["The ten thousand things","Open your eyes and let them rest on a few things around you. Name three."],
+    ["The Five Phases","Ask which phase feels loudest in you today, and which feels quiet."],
+    ["Yin and yang","Feel where you are active and where you are resting, in body and mind."],
+    ["Taiji","Watch the breath turn: in becoming out, out becoming in."],
+    ["Wuji","Rest for a few breaths in the quiet underneath, without doing anything."],
+    ["And back out","Return the same way, center to edge, and open your eyes to the room."]
+  ],
+  questions:["Which phase is strongest in my life right now? Which is thin?","What feeds the thin one? That is its mother on the generating cycle.","What would gently tame the strong one? That is its grandmother on the controlling cycle.","Where am I all yang, or all yin, and what would let the other in?"],
+  gently:"Contemplative practice can bring up strong feelings. You can stop at any time, change what you are doing, or come back later. If something feels like more than you can hold, reach out to a person you trust or a therapist. If you are in crisis, call or text 988 in the U.S., or your local emergency number.",
+  more:[`<b>Read the texts.</b> The <a href="https://ctext.org" target="_blank" rel="noopener">Chinese Text Project</a> has the Tao Te Ching, the Book of Changes, and the medical classics in Chinese, with many English translations.`,`<b>On yin and yang.</b> Robin RC. Wang, <i>Yinyang: The Way of Heaven and Earth in Chinese Thought and Culture</i> (2012), traces the idea from the earliest texts.`,`<b>On Taoism.</b> Livia Kohn, <i>Daoism and Chinese Culture</i> (2001), is a clear introduction to its cosmology and practice.`,`<b>On the phases in medicine.</b> Kaptchuk's <i>The Web That Has No Weaver</i> is a readable introduction, and Maciocia's <i>The Foundations of Chinese Medicine</i> goes into detail.`]
+};
+const RC = {wuji:[0,54], taiji:[60,82], yy:[88,156], node:292, nodeR:62, corr:[372,454], motion:[460,482], ww:[490,512], orn:[524,538]};
+const ring = (r0,r1) => `M${f(-r1)} 0 a${r1} ${r1} 0 1 0 ${2*r1} 0 a${r1} ${r1} 0 1 0 ${-2*r1} 0Z M${f(-r0)} 0 a${r0} ${r0} 0 1 1 ${2*r0} 0 a${r0} ${r0} 0 1 1 ${-2*r0} 0Z`;
+const disc = (cx,cy,r) => `M${f(cx-r)} ${f(cy)} a${r} ${r} 0 1 0 ${2*r} 0 a${r} ${r} 0 1 0 ${-2*r} 0Z`;
+function hText(x,y,text,cls,size,parent){ const t=el("text",{class:cls,"font-size":size,x:f(x),y:f(y),"text-anchor":"middle","dominant-baseline":"central"},parent); t.textContent=text; return t; }
+const pA = k => k*72;                         // phase k sits at k*72 degrees, Fire at the top
+const nxt = (k,n) => (k+n)%5;
+function wireCell(c,o){
+  c.dataset.slice=o.slice; c.dataset.sets=o.sets;
+  c.setAttribute("tabindex","0"); c.setAttribute("role","button"); c.setAttribute("aria-label",o.label);
+  const go=()=>{ moonTip(null); o.go(); };
+  c.addEventListener("click",go);
+  c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
+  const info=()=>{ const [x,y]=o.xy||P(o.at.r,o.at.a); return {x,y,html:`<span class="ringtag"><i></i>${o.tag}</span><b>${o.name}</b><span class="line">${o.line}</span><span>Tap to read more.</span>`,color:o.tipc||o.fill}; };
+  c.addEventListener("mouseenter",()=>{ hover(c); if(!openMoon) moonTip(c,info(),true); });
+  c.addEventListener("mouseleave",()=>{ hover(null); if(!openMoon) moonTip(null); });
+  c.addEventListener("focus",()=>{ hover(c); if(!openMoon && c.matches(":focus-visible")) moonTip(c,info(),true); });
+  c.addEventListener("blur",()=>{ hover(null); if(!openMoon) moonTip(null); });
+  cells.push(c); return c;
+}
+function cAddCell(d,o,parent){
+  const c=el("path",{d, class:"cell c-"+o.kind, fill:`var(${o.fill})`},parent);
+  return wireCell(c,o);
+}
+// a relation: a visible line with an arrowhead and a wide invisible stroke to hover
+function addRel(d,o,parent){
+  const g=el("g",{class:"cell rel rel-"+o.kind},parent);
+  el("path",{d,class:"relline","marker-end":`url(#ah-${o.kind})`},g);
+  el("path",{d,class:"relhit"},g);
+  return wireCell(g,o);
+}
+function drawCosmos(){
+  svg.innerHTML=""; cells.length=0; tpId=0;
+  const defs=el("defs",{});
+  const gr=el("radialGradient",{id:"wujig",cx:"50%",cy:"50%",r:"50%"},defs);
+  el("stop",{offset:"0%",style:"stop-color:#fff"},gr); el("stop",{offset:"100%",style:"stop-color:var(--yang)"},gr);
+  [["gen","var(--ink)",8],["ctl","var(--muted)",7]].forEach(([k,c,s])=>{ const m=el("marker",{id:"ah-"+k,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:s,markerHeight:s,orient:"auto",markerUnits:"userSpaceOnUse"},defs); el("path",{d:"M0 0L10 5L0 10z",style:`fill:${c}`},m); });
+  // marker size is in user units here, so make it readable
+  defs.querySelectorAll("marker").forEach(m=>{ m.setAttribute("markerWidth",m.id==="ah-gen"?18:15); m.setAttribute("markerHeight",m.id==="ah-gen"?18:15); });
+
+  // outer ornament: sixty small petals in the colors of the five phases, the ten thousand things
+  const og=el("g",{"aria-hidden":"true"});
+  for(let k=0;k<60;k++){ const a=k*6; el("path",{d:petal(RC.orn[0],RC.orn[1],a-2.2,a+2.2),style:`fill:var(${PHASES[Math.floor(((a+36)%360)/72)].c}2)`,class:"orn"},og); }
+
+  const labels=el("g",{"pointer-events":"none"});
+
+  // the ten thousand things
+  cAddCell(ring(RC.ww[0],RC.ww[1]),{kind:"ww",slice:"ww",sets:"ww",fill:"--band2",label:"The ten thousand things",tag:"The ten thousand things",name:"Wànwù 萬物",line:"Everything that is, each a blend of yin, yang, and the Five Phases.",at:{a:0,r:RC.ww[1]},go:()=>showWanwu(true)});
+  arcText((RC.ww[0]+RC.ww[1])/2,-40,40,"THE TEN THOUSAND THINGS","bandlbl",13,2,labels);
+  arcText((RC.ww[0]+RC.ww[1])/2,140,220,"WÀNWÙ · 萬物","bandlbl",13,2,labels);
+  arcText((RC.ww[0]+RC.ww[1])/2,50,130,"THE UNFOLDING · INWARD, THE RETURN","bandlbl",11,1.5,labels);
+  arcText((RC.ww[0]+RC.ww[1])/2,230,310,"FROM THE MYSTERY, OUTWARD","bandlbl",11,1.5,labels);
+
+  // each phase: motion band, correspondences, and the node itself
+  PHASES.forEach((p,k)=>{
+    const a=pA(k), a0=a-36, a1=a+36, sets=`p${k} s${k} s${nxt(k,4)} k${k} k${nxt(k,3)}`;
+    cAddCell(rsector(RC.motion[0],RC.motion[1],a0+0.6,a1-0.6,{rIn:3,rOut:3}),{kind:"motion",slice:"p"+k,sets:"p"+k,fill:k%2?"--band2":"--band",label:`${p.name}: ${p.motion.toLowerCase()}`,tag:"The motion of "+p.name,name:p.motion,line:`How qi moves in ${p.name}.`,at:{a,r:RC.motion[1]},go:()=>showPhases(k,true)});
+    arcText((RC.motion[0]+RC.motion[1])/2,a0+2,a1-2,p.motion,"bandlbl",13,0.6,labels);
+    cAddCell(rsector(RC.corr[0],RC.corr[1],a0+GAP,a1-GAP,{rIn:9,rOut:9}),{kind:"corr",slice:"p"+k,sets:"p"+k,fill:`${p.c}2`,label:`${p.name}: ${p.season}, ${p.dir}; ${p.organs}; ${p.emo}, ${p.virtue}`,tag:"Correspondences · "+p.name,name:`${p.season} · ${p.dir}`,line:`${p.organs}. ${p.emo}; ${p.virtue.toLowerCase()}.`,at:{a,r:(RC.corr[0]+RC.corr[1])/2},go:()=>showPhases(k,true)});
+    const m=(RC.corr[0]+RC.corr[1])/2, flip=a>95&&a<265, sg=flip?-1:1;
+    arcText(m+sg*24,a0+3,a1-3,`${p.season} · ${p.dir}`,"lbl tx-ink tx-disp",19,0.3,labels);
+    arcText(m,a0+3,a1-3,p.organs,"lbl tx-ink tx-disp",16,0.2,labels);
+    arcText(m-sg*22,a0+3,a1-3,`${p.emo.toLowerCase()} · ${p.virtue.toLowerCase()}`,"tx-ink tx-small",13,0.3,labels);
+  });
+
+  // the controlling cycle: a star behind the center, each phase taming the one two steps ahead
+  const relg=el("g",{});
+  PHASES.forEach((p,k)=>{
+    const [x0,y0]=P(RC.node,pA(k)), [x1,y1]=P(RC.node,pA(nxt(k,2))), L=Math.hypot(x1-x0,y1-y0), u=[(x1-x0)/L,(y1-y0)/L], s=RC.nodeR+4, e=RC.nodeR+10;
+    const d=`M${f(x0+u[0]*s)} ${f(y0+u[1]*s)} L${f(x1-u[0]*e)} ${f(y1-u[1]*e)}`;
+    const t=PHASES[nxt(k,2)];
+    addRel(d,{kind:"ctl",slice:"k"+k,sets:`k${k} p${k} p${nxt(k,2)}`,fill:"--metal2",label:`${CTL[k].title}: controlling cycle`,tag:"Controlling · kè",name:CTL[k].title,line:CTL[k].image,xy:[x0+u[0]*(s+70),y0+u[1]*(s+70)],go:()=>showCtl(k,true)},relg);
+  });
+  // the generating cycle: arrows around the circle, clockwise
+  PHASES.forEach((p,k)=>{
+    const a0=pA(k)+14.5, a1=pA(k)+72-15.5, [sx,sy]=P(RC.node,a0);
+    const d=`M${f(sx)} ${f(sy)} `+arc(RC.node,a0,a1,1);
+    addRel(d,{kind:"gen",slice:"s"+k,sets:`s${k} p${k} p${nxt(k,1)}`,fill:"--earth2",label:`${GEN[k].title}: generating cycle`,tag:"Generating · shēng",name:GEN[k].title,line:GEN[k].image,at:{a:pA(k)+36,r:RC.node+8},go:()=>showGen(k,true)},relg);
+    arcText(RC.node+17,pA(k)+22,pA(k)+50,"feeds","genlbl",12,1,labels);
+  });
+
+  // yin and yang, Taiji, and Wuji sit over the middle of the star
+  const [r0,r1]=RC.yy, rm=(r0+r1)/2, sp=(a,b)=>`Q${f(P(rm,(a+b)/2+8)[0])} ${f(P(rm,(a+b)/2+8)[1])}`;
+  const yangD=`M${f(P(r0,180)[0])} ${f(P(r0,180)[1])} `+arc(r0,180,360,1)+` ${sp(360,400)} ${f(P(r1,400)[0])} ${f(P(r1,400)[1])} `+arc(r1,400,220,0)+` ${sp(220,180)} ${f(P(r0,180)[0])} ${f(P(r0,180)[1])}Z`;
+  const yinD=`M${f(P(r0,0)[0])} ${f(P(r0,0)[1])} `+arc(r0,0,180,1)+` ${sp(180,220)} ${f(P(r1,220)[0])} ${f(P(r1,220)[1])} `+arc(r1,220,40,0)+` ${sp(40,0)} ${f(P(r0,0)[0])} ${f(P(r0,0)[1])}Z`;
+  cAddCell(yangD,{kind:"yang",slice:"yy",sets:"yy",fill:"--yang",label:"Yang: movement, light, rising",tag:"Yin and yang",name:"Yáng 陽",line:"Movement, warmth, light, rising, reaching out.",at:{a:300,r:rm},go:()=>showYinYang(true)});
+  cAddCell(yinD,{kind:"yin",slice:"yy",sets:"yy",fill:"--yin",label:"Yin: stillness, dark, settling",tag:"Yin and yang",name:"Yīn 陰",line:"Stillness, coolness, darkness, settling, drawing in.",at:{a:120,r:rm},go:()=>showYinYang(true)});
+  el("circle",{cx:f(P(rm,163)[0]),cy:f(P(rm,163)[1]),r:7,class:"seed",style:"fill:var(--yang)"},labels);
+  el("circle",{cx:f(P(rm,343)[0]),cy:f(P(rm,343)[1]),r:7,class:"seed",style:"fill:var(--yin)"},labels);
+  twoLines(rm,232,318,"YANG 陽","movement · rising","lbl tx-ink tx-disp",19,"tx-ink tx-small",11,22,labels);
+  twoLines(rm,52,138,"YIN 陰","stillness · settling","lbl tx-white tx-disp",19,"tx-white tx-small",11,22,labels);
+
+  cAddCell(ring(RC.taiji[0],RC.taiji[1]),{kind:"taiji",slice:"tj",sets:"tj",fill:"--yang2",label:"Taiji, the first movement",tag:"Taiji",name:"Tàijí 太極",line:"The first stirring: the turn between stillness and movement.",at:{a:0,r:RC.taiji[1]},go:()=>showTaiji(true)});
+  arcText((RC.taiji[0]+RC.taiji[1])/2,-88,88,"TAIJI 太極 · THE FIRST MOVEMENT","bandlbl",10,1,labels);
+  arcText((RC.taiji[0]+RC.taiji[1])/2,92,268,"MOVEMENT · STILLNESS","bandlbl",10,1.6,labels);
+
+  cAddCell(disc(0,0,RC.wuji[1]),{kind:"wuji",slice:"wj",sets:"wj",fill:"--yang",label:"Wuji, the boundless mystery, at the center",tag:"The center",name:"Wújí 無極",line:"The boundless mystery, before anything divides.",at:{a:0,r:20},go:()=>showWuji(true)});
+  svg.lastChild.setAttribute("fill","url(#wujig)");
+  el("circle",{cx:0,cy:0,r:RC.wuji[1]-7,class:"wujiring"},labels);
+  hText(0,-8,"無極","lbl tx-ink",22,labels);
+  hText(0,16,"Wújí","tx-ink tx-small",11.5,labels);
+
+  // the phase nodes, last so they sit on top of their arrows
+  PHASES.forEach((p,k)=>{
+    const [x,y]=P(RC.node,pA(k)), sets=`p${k} s${k} s${nxt(k,4)} k${k} k${nxt(k,3)}`;
+    cAddCell(disc(x,y,RC.nodeR),{kind:"node",slice:"p"+k,sets,fill:p.c,label:`${p.name}, ${p.py}: ${p.img.toLowerCase()}`,tag:"The Five Phases",name:`${p.name} · ${p.zh} ${p.py}`,line:p.tip,xy:[x,y-RC.nodeR+6],go:()=>showPhases(k,true)});
+    hText(x,y-22,p.zh,`lbl ${p.tx}`,20,labels);
+    hText(x,y+2,p.name.toUpperCase(),`lbl ${p.tx} tx-disp`,20,labels);
+    hText(x,y+24,p.img.toLowerCase(),`${p.tx} tx-small`,11,labels);
+  });
+
+  svg.appendChild(labels);
+  svg.insertBefore(og, svg.firstChild.nextSibling);
+  el("g",{id:"selOutline"});
+  applySel();
+}
+function showCycle(kind){
+  cells.forEach(c=>c.classList.toggle("lit", kind && c.classList.contains("rel-"+kind)));
+  svg.classList.toggle("cycle", !!kind);
+}
+const GO_C = {intro:()=>showCosmosIntro(), wuji:()=>showWuji(true), taiji:()=>showTaiji(true), yy:()=>showYinYang(true), phases:()=>showPhases(null,true), gen:()=>showGen(null,true), ctl:()=>showCtl(null,true), bal:()=>showBalance(true), ww:()=>showWanwu(true), practice:()=>showCosmosPractice(true)};
+const pchip = k => `<button type="button" class="pchip" data-phase="${k}" style="--c:var(${PHASES[k].c}2)">${PHASES[k].name}</button>`;
+const nextBtns = (a,b) => `<div class="rnext"><button type="button" class="btn" data-go="${a[0]}">← ${a[1]}</button><button type="button" class="btn" data-go="${b[0]}">${b[1]} →</button></div>`;
+
+// a small pentagon of the phases, with one or both cycles
+function cCycleSVG(mode, hi){
+  const pos=PHASES.map((p,i)=>P(104,i*72)), r=30;
+  const line=(i,j,attrs,mk)=>{ const [x1,y1]=pos[i],[x2,y2]=pos[j]; const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),u=[dx/L,dy/L]; return `<line x1="${f(x1+u[0]*(r+2))}" y1="${f(y1+u[1]*(r+2))}" x2="${f(x2-u[0]*(r+8))}" y2="${f(y2-u[1]*(r+8))}" ${attrs} marker-end="url(#${mk})"/>`; };
+  const op=i=>hi==null||hi===i?1:.25;
+  const gen=mode!=="ctl"?PHASES.map((_,i)=>line(i,nxt(i,1),`stroke="var(--ink)" stroke-width="2.6" opacity="${op(i)}"`,"pah1")).join(""):"";
+  const ctl=mode!=="gen"?PHASES.map((_,i)=>line(i,nxt(i,2),`stroke="var(--muted)" stroke-width="1.8" stroke-dasharray="5 4" opacity="${op(i)}"`,"pah2")).join(""):"";
+  const nodes=PHASES.map((p,i)=>`<circle cx="${f(pos[i][0])}" cy="${f(pos[i][1])}" r="${r}" fill="var(${p.c})" stroke="var(--bg)" stroke-width="2"/><text x="${f(pos[i][0])}" y="${f(pos[i][1])}" text-anchor="middle" dominant-baseline="central" style="${p.tx==='tx-white'?'fill:#fff':''}">${p.name}</text>`).join("");
+  return `<div class="cyc"><svg viewBox="-150 -150 300 300" role="img" aria-label="The Five Phases in an even ring, Fire at the top, then Earth, Metal, Water, and Wood clockwise.${mode!=="ctl"?" Solid arrows run clockwise for the generating cycle.":""}${mode!=="gen"?" Dashed arrows cross the ring for the controlling cycle.":""}"><defs><marker id="pah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker><marker id="pah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>${ctl}${gen}${nodes}</svg>
+    <div class="legendkey">${mode!=="ctl"?`<span><i></i>generates (shēng)</span>`:""}${mode!=="gen"?`<span><i class="dash"></i>controls (kè)</span>`:""}</div></div>`;
+}
+function showCosmosIntro(){
+  setView("intro"); setSubnav([]);
+  panel.innerHTML=`<div class="center-msg">
+    <div class="eyebrow">Begin here</div>
+    <h2>From the mystery to the ten thousand things</h2>
+    <p>This mandala follows the Taoist story of how things come to be, from the center outward. At the center is Wuji, the boundless mystery, before anything divides. Around it is Taiji, the first movement. Taiji turns into yin and yang. Yin and yang, moving and changing, become the Five Phases. And the Five Phases, mixing in endless ways, become the ten thousand things: everything there is.</p>
+    <p>The Five Phases sit evenly around the wheel, joined by two relationships. Around the circle, clockwise, each phase feeds the next: the generating cycle, like a mother feeding her child. Across the circle, as a star, each phase tames the one two steps ahead: the controlling cycle, like a grandmother who sets limits with love. Together they keep everything in balance.</p>
+    <p>Read from the center out, the wheel is an unfolding. Read from the outside in, it is the return the Taoist texts describe: from the many things, back through the phases and yin and yang, to stillness at the root.</p>
+    <p class="sym">The star is drawn behind yin and yang on purpose. The taming of the phases passes through the center, where all of them meet.</p>
+  </div>
+  <div class="intro">
+    <h2>Reading the wheel</h2>
+    <ul class="legend">${Object.keys(RINGS_C).map(k=>`<li>${sw(RINGS_C[k].sw)}<div><b>${RINGS_C[k].name}</b>${RINGS_C[k].about}</div></li>`).join("")}</ul>
+    <p>Hover over a phase to light up its four relationships: the phase that feeds it, the one it feeds, the one that tames it, and the one it tames. Hover over an arrow to see that one relationship.</p>
+    <p class="hint">Choose any ring, phase, or arrow to open it. Go slowly, and take what is useful now. <button type="button" class="pauselink" data-go="practice">Begin gently</button></p>
+  </div>`;
+  wirePanelLinks();
+}
+function simplePage(v,selKind,eyebrow,title,meta,X,extra,nav){
+  setView(v,{kind:selKind,i:0}); setSubnav([]);
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">${eyebrow}</div><h2>${title}</h2><div class="meta">${meta}</div><p>${X.intro}</p></div>
+    ${X.what?`<div class="ring"><h3>${sw(RINGS_C[selKind==="yy"?"yy":selKind].sw)}What the texts say</h3>${ul(X.what)}</div>`:""}
+    ${extra||""}
+    <div class="ring"><h3>Ways to practice</h3>${ul(X.practice)}</div>
+    <p class="gentle"><b>Go gently.</b> ${X.gently}</p>
+    ${X.deep?`<div class="deeper"><b>Going deeper</b>${ul(X.deep)}</div>`:""}
+    ${nav}`;
+  wirePanelLinks();
+}
+function showWuji(user){
+  simplePage("wuji","wuji","The center","Wuji, the mystery","Wújí · 無極 · without limit · the boundless",WUJI,
+    `<div class="ring"><h3>Before yin and yang</h3><p>Wuji is what was there before yin and yang: not a time long ago, but the ground underneath everything now. The Tao Te Ching says that being comes from non-being (chapter 40). Taoist practice treats this as something you can rest in, not only think about.</p></div>`,
+    nextBtns(["intro","How to read"],["taiji","Taiji"]));
+  if(user) bringPanel();
+}
+function showTaiji(user){
+  simplePage("taiji","taiji","The first ring","Taiji, the first movement","Tàijí · 太極 · the supreme ultimate · the great ridgepole",TAIJI,
+    `<div class="ring"><h3>The unfolding, in one passage</h3><ol class="unfold">
+      <li><b>Wuji</b>, and yet <b>Taiji</b>.</li><li>Taiji moves, and gives rise to <b>yang</b>.</li><li>At the limit of movement comes stillness, and stillness gives rise to <b>yin</b>.</li><li>Yang changes and yin joins, and <b>Water, Fire, Wood, Metal, and Earth</b> arise.</li><li>The five breaths spread in order, and the <b>four seasons</b> turn.</li><li>Yin and yang meet, and the <b>ten thousand things</b> are born and change without end.</li></ol>
+      <p class="about">After Zhou Dunyi's Explanation of the Diagram of the Supreme Ultimate, in our own words. It ends by folding back on itself: the Five Phases are one yin and yang, yin and yang are one Taiji, and Taiji is rooted in Wuji.</p></div>`,
+    nextBtns(["wuji","Wuji"],["yy","Yin and yang"]));
+  if(user) bringPanel();
+}
+function showYinYang(user){
+  const Y=YINYANG;
+  simplePage("yy","yy","The second ring","Yin and yang","Yīn 陰 and yáng 陽 · the two modes · liǎng yí 兩儀",Y,
+    `<div class="ring"><h3>${sw(RINGS_C.yy.sw)}Two sides of one turning</h3>
+      <dl class="yytable"><dt>Yang 陽</dt><dd>Yin 陰</dd>${Y.pairs.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>
+      <h4>How they move together</h4>${ul(Y.principles)}</div>
+    <div class="ring"><h3>From two to five</h3><p>${Y.four}</p>
+      <ul class="phtable">${[4,0,1,2,3].map(k=>{ const p=PHASES[k]; return `<li>${sw(`var(${p.c})`)}<div><b>${p.name}</b><span>${p.img} · ${p.imgZh}</span></div></li>`; }).join("")}</ul></div>
+    <div class="ring"><h3>Another telling</h3><p>${Y.ddj}</p></div>`,
+    nextBtns(["taiji","Taiji"],["phases","The Five Phases"]));
+  if(user) bringPanel();
+}
+function showPhases(k,user){
+  setView("phases", k!=null?{kind:"node",i:k}:{kind:"phases",i:0});
+  setSubnav(PHASES.map((p,i)=>({label:p.name,go:()=>showPhases(i,true)})), k==null?-1:k);
+  const card=i=>{ const p=PHASES[i], fb=nxt(i,4), fd=nxt(i,1), tb=nxt(i,3), td=nxt(i,2);
+    return `<details class="qcard" id="p-${i}"${k===i?" open":""}><summary><span class="cardbar" style="background:var(${p.c})"></span><span style="display:grid;gap:1px;padding:10px 16px 12px"><span class="qn">${p.name} · ${p.zh} ${p.py}</span><span class="qq">${p.img} · ${p.motion.toLowerCase()}</span><span class="qw">${p.tip}</span></span></summary>
+      <div class="qbody">
+        <p>${p.blurb}</p>
+        <h4>Its four relationships</h4>
+        <ul class="rels">
+          <li><span>Fed by</span>${pchip(fb)}<button type="button" class="pauselink" data-gen="${fb}">${GEN[fb].title}</button></li>
+          <li><span>Feeds</span>${pchip(fd)}<button type="button" class="pauselink" data-gen="${i}">${GEN[i].title}</button></li>
+          <li><span>Tamed by</span>${pchip(tb)}<button type="button" class="pauselink" data-ctl="${tb}">${CTL[tb].title}</button></li>
+          <li><span>Tames</span>${pchip(td)}<button type="button" class="pauselink" data-ctl="${i}">${CTL[i].title}</button></li>
+        </ul>
+        <h4>Correspondences</h4>
+        <dl class="day"><dt>Yin and yang</dt><dd>${p.img} (${p.imgZh})</dd><dt>Motion</dt><dd>${p.motion}</dd><dt>Season</dt><dd>${p.season}</dd><dt>Direction</dt><dd>${p.dir}</dd><dt>Color</dt><dd>${p.color}</dd><dt>Organs</dt><dd>${p.organsLong}</dd><dt>Feeling</dt><dd>${p.emo}</dd><dt>Virtue</dt><dd>${p.virtue}, ${p.virtueZh}</dd><dt>Spirit</dt><dd>${p.spirit}</dd></dl>
+        <p class="gentle"><b>Go gently.</b> A phase that feels strong or thin in you is not a verdict on who you are. The phases shift with seasons, years, and circumstances.</p>
+      </div></details>`; };
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">The middle ring</div><h2>The Five Phases</h2>
+      <div class="meta">Wǔ Xíng · 五行 · yin and yang in motion</div>
+      <p>In Zhou Dunyi's telling, yang changes and yin joins, and Water, Fire, Wood, Metal, and Earth arise. The word xíng means to walk or to move, so the Five Phases are not five materials. They are five ways that yin and yang move and change: growing, rising, centering, gathering, and sinking. The tradition uses them to describe seasons, directions, organs, feelings, and how each part of a body or a life affects the others.</p></div>
+    ${cCycleSVG("both")}
+    ${[0,1,2,3,4].map(card).join("")}
+    <p class="src">After Zhou Dunyi; the Huangdi Neijing; Kaptchuk (2000); Maciocia (2015); Wang (2012).</p>
+    ${nextBtns(["yy","Yin and yang"],["gen","Generating"])}`;
+  wirePanelLinks();
+  panel.querySelectorAll(".qcard").forEach(d=>d.addEventListener("toggle",()=>{ if(d.open){ sel={kind:"node",i:+d.id.slice(2)}; applySel(); } }));
+  if(user) bringPanel(k!=null?document.getElementById("p-"+k):null);
+}
+function relPage(kind,k,user){
+  const L=kind==="gen"?GEN:CTL, step=kind==="gen"?1:2;
+  setView(kind, k!=null?{kind,i:k}:{kind:null,i:null}, kind);
+  setSubnav(L.map((x,i)=>({label:x.title,go:()=>relPage(kind,i,true)})), k==null?-1:k);
+  const card=i=>{ const x=L[i], a=PHASES[i], b=PHASES[nxt(i,step)];
+    return `<details class="qcard" id="r-${i}"${k===i?" open":""}><summary><span class="cardbar" style="background:linear-gradient(90deg,var(${a.c}),var(${b.c}))"></span><span style="display:grid;gap:1px;padding:10px 16px 12px"><span class="qn">${x.title}</span><span class="qq">${a.name} ${a.zh} ${kind==="gen"?"生":"克"} ${b.name} ${b.zh}</span><span class="qw">${x.image}</span></span></summary>
+      <div class="qbody">
+        <h4>In the body</h4><p>${x.body}</p>
+        <h4>In a life</h4><p>${x.life}</p>
+        <div class="orgchips">${pchip(i)}${pchip(nxt(i,step))}</div>
+      </div></details>`; };
+  const G = kind==="gen";
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">${G?"Around the circle":"Across the circle"}</div><h2>${G?"The generating cycle":"The controlling cycle"}</h2>
+      <div class="meta">${G?"Shēng 生 · to give birth · the mother and child":"Kè 克 · to restrain · the grandmother"}</div>
+      <p>${G?"Going clockwise, each phase gives birth to and feeds the next: Fire, Earth, Metal, Water, Wood, and back to Fire. The tradition calls the feeding phase the mother and the fed phase the child. It is the building, supportive direction: what one phase gathers, it passes on.":"Going across the circle, each phase restrains the one two steps ahead: Fire tames Metal, Metal tames Wood, Wood tames Earth, Earth tames Water, and Water tames Fire. The tradition sometimes calls the taming phase the grandmother. This is not punishment. It is the restraint that keeps any one phase from growing without limit, the way a riverbank lets a river flow by holding its shape."}</p></div>
+    ${cCycleSVG(kind, k)}
+    ${[0,1,2,3,4].map(card).join("")}
+    <div class="ring"><h3>${G?"Feeding and taming together":"Taming as care"}</h3><p>${G?"Each phase is both a mother and a child: it is fed by the phase behind it and feeds the phase ahead. The controlling cycle runs alongside, so that what is fed does not overgrow. When one is strong, the generating cycle passes the strength on, and the controlling cycle keeps it in proportion.":"Every phase is tamed by one and tames another, so no phase is only in charge. The grandmother is herself fed by the generating cycle, and the phase she tames grows the very phase that will tame her in turn, closing the loop. Restraint, held this way, is part of how each thing is cared for."} <button type="button" class="pauselink" data-go="bal">When the balance slips</button></p></div>
+    <p class="gentle"><b>Go gently.</b> These relationships are images for thinking about balance, not rules about your body or your character. Use them to ask questions, and take health concerns to a doctor or a licensed practitioner.</p>
+    <p class="src">After the Huangdi Neijing; the Nan Jing; Kaptchuk (2000); Maciocia (2015).</p>
+    ${G?nextBtns(["phases","The Five Phases"],["ctl","Controlling"]):nextBtns(["gen","Generating"],["bal","Out of balance"])}`;
+  wirePanelLinks();
+  panel.querySelectorAll(".qcard").forEach(d=>d.addEventListener("toggle",()=>{ if(d.open){ sel={kind,i:+d.id.slice(2)}; applySel(); } }));
+  if(user) bringPanel(k!=null?document.getElementById("r-"+k):null);
+}
+function showGen(k,user){ relPage("gen",k,user); }
+function showCtl(k,user){ relPage("ctl",k,user); }
+function showBalance(user){
+  setView("bal"); setSubnav([]);
+  const B=BALANCE, arrow={ctl:"→", rev:"⇠", gen:"→", genrev:"⇠"};
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">When the cycles slip</div><h2>Out of balance</h2>
+      <div class="meta">Overacting, insulting, and the mother and child</div><p>${B.intro}</p></div>
+    ${B.kinds.map(x=>`<div class="ring"><h3>${x.name} <span class="zhtag">${x.zh}</span></h3><p>${x.what}</p>
+      <p class="about"><b>For example.</b> ${x.eg}</p><div class="orgchips">${pchip(x.from)}<span class="arr">${arrow[x.kind]}</span>${pchip(x.to)}</div></div>`).join("")}
+    <div class="ring"><h3>A rule from the classics</h3><p>${B.rule}</p></div>
+    <p class="gentle"><b>Go gently.</b> ${B.gently}</p>
+    <p class="src">After the Nan Jing (Unschuld, 1986); Maciocia (2015).</p>
+    ${nextBtns(["ctl","Controlling"],["ww","The ten thousand things"])}`;
+  wirePanelLinks();
+  if(user) bringPanel();
+}
+function showWanwu(user){
+  simplePage("ww","ww","The outer ring","The ten thousand things","Wànwù · 萬物 · everything that is",WANWU,
+    `<div class="ring"><h3>The way back</h3><p>Read from the outside in, the wheel is a path of return: from the many things, to the phases they are made of, to yin and yang, to the first movement, and to the stillness underneath. Taoist practice walks this path in meditation, and it can be walked in a single breath.</p></div>`,
+    nextBtns(["bal","Out of balance"],["practice","Begin gently"]));
+  if(user) bringPanel();
+}
+function showCosmosPractice(user){
+  setView("practice"); setSubnav([]);
+  const X=PRACTICE_C;
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">Starting out</div><h2>Begin gently</h2>
+      <div class="meta">A short sitting through the wheel, and questions for your own phases</div><p>${X.intro}</p></div>
+    <div class="ring"><h3>A sitting through the wheel, inward and back</h3>
+      <ol class="weeks">${X.journey.map(([a,b],i)=>`<li style="--c:var(${["--earth2","--fire2","--metal2","--yang2","--yang","--wood2"][i]})"><span class="n">${i+1}</span><div><b>${a}.</b> ${b}</div></li>`).join("")}</ol>
+      <p class="about">About ten minutes. You can stop at any step.</p></div>
+    <div class="ring"><h3>Reading your own phases</h3>${ul(X.questions)}</div>
+    <p class="gentle"><b>Go gently.</b> ${X.gently}</p>
+    <div class="ring"><h3>Going further</h3>${ul(X.more)}</div>
+    <p class="src">After common contemplative practice; see the references below the wheel.</p>
+    <div class="rnext"><button type="button" class="btn" data-go="ww">← The ten thousand things</button><button type="button" class="btn" data-go="intro">Back to How to read</button></div>`;
+  wirePanelLinks();
+  if(user) bringPanel();
 }
 
 /* ---------- Hover cards ---------- */
@@ -817,6 +1239,10 @@ function addTab(label,key,go){
 // the day wheel's tabs open the organ clock; the year wheel's open the five seasons
 function buildTabs(){
   tabs.innerHTML="";
+  if(mode==="phases"){
+    [["How to read","intro"],["Wuji","wuji"],["Taiji","taiji"],["Yin and yang","yy"],["Five Phases","phases"],["Generating","gen"],["Controlling","ctl"],["Out of balance","bal"],["Ten thousand things","ww"],["Practice","practice"]].forEach(([l,k])=>addTab(l,k,()=>GO_C[k]()));
+    return markTabs();
+  }
   addTab("How to read","intro",()=>showIntro());
   addTab("Qi","qi",()=>showQi(true));
   addTab("Five Phases","five",()=>showFive(true));
@@ -840,6 +1266,10 @@ function wirePanelLinks(){
   panel.querySelectorAll("[data-organ]").forEach(b=>b.addEventListener("click",()=>{ const k=+b.dataset.organ; setMode("day",true); showElement(ORGANS[k].el,k,true); }));
   panel.querySelectorAll("[data-el]").forEach(b=>b.addEventListener("click",()=>{ setMode("day",true); showElement(b.dataset.el,null,true); }));
   panel.querySelectorAll("[data-yseason]").forEach(b=>b.addEventListener("click",()=>{ setMode("year",true); showYear(+b.dataset.yseason,true); }));
+  panel.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>{ setMode("phases",true); GO_C[b.dataset.go](); }));
+  panel.querySelectorAll("[data-phase]").forEach(b=>b.addEventListener("click",()=>{ setMode("phases",true); showPhases(+b.dataset.phase,true); }));
+  panel.querySelectorAll("[data-gen]").forEach(b=>b.addEventListener("click",()=>{ setMode("phases",true); showGen(+b.dataset.gen,true); }));
+  panel.querySelectorAll("[data-ctl]").forEach(b=>b.addEventListener("click",()=>{ setMode("phases",true); showCtl(+b.dataset.ctl,true); }));
   panel.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{ setMode(b.dataset.mode); bringPanel(document.querySelector(".stage")); }));
   panel.querySelectorAll("[data-qi]").forEach(b=>b.addEventListener("click",()=>showQi(true)));
   panel.querySelectorAll("[data-five]").forEach(b=>b.addEventListener("click",()=>showFive(true)));
@@ -850,7 +1280,7 @@ function bringPanel(target){
   const t=target||panel, r=t.getBoundingClientRect();
   if(isNarrow() || r.top<0 || r.top>window.innerHeight*0.7) t.scrollIntoView({behavior:"smooth",block:"start"});
 }
-function setView(v,s){ view=v; sel=s||{kind:null,i:null}; applySel(); markTabs(); }
+function setView(v,s,cycle){ view=v; sel=s||{kind:null,i:null}; showCycle(cycle||null); applySel(); markTabs(); }
 const organChips = ks => `<div class="orgchips">${ks.map(k=>`<button type="button" data-organ="${k}">${ORGANS[k].name} · ${ORGANS[k].short}</button>`).join("")}</div>`;
 
 /* How to read */
@@ -866,11 +1296,12 @@ const YEAR_HTML=`<div class="center-msg">
     <div class="eyebrow">The year wheel</div>
     <h2>The year, in five seasons</h2>
     <p>This wheel is the year as Five Phase theory describes it, which is where the phases are most at home. Each phase has a season: Wood is spring, Fire is summer, Earth is late summer, Metal is autumn, and Water is winter. Around them are the organs each phase holds, the months of the Chinese solar calendar, the calendar months, and the five seasons with their dates.</p>
-    <p>The seasons sit in the same places as on the day wheel, so you can switch between the two and see one inside the other: summer at the top, winter at the bottom, spring on the left, and autumn on the right. Midsummer at the top is noon on the day wheel, and midwinter at the bottom is midnight.</p>
+    <p>The seasons sit in the same places as on the day wheel, so you can switch between them and see one inside the other: summer at the top, winter at the bottom, spring on the left, and autumn on the right. Midsummer at the top is noon on the day wheel, and midwinter at the bottom is midnight.</p>
     <p>The Chinese calendar starts each season at one of the four starts (lì): the Start of Spring around February 4, of Summer around May 5, of Autumn around August 7, and of Winter around November 7. That puts each solstice and equinox in the middle of its season rather than at its beginning, so midsummer really is the middle of summer.</p>
     <p class="sym">The yin-yang at the center turns the same way for the year as for the day. Yang peaks at the summer solstice, at the top, and yin at the winter solstice, at the bottom. A small gold mark on the edge shows today.</p>
   </div>`;
 function showIntro(){
+  if(mode==="phases") return showCosmosIntro();
   if(mode==="year") return showYearIntro();
   setView("intro"); setSubnav([]);
   panel.innerHTML=CENTER_HTML+`<div class="intro">
@@ -967,6 +1398,7 @@ function showFive(user){
     <div class="ring"><h3>The phases on the wheel</h3>
       ${mode==="day" ? `<p>Metal runs from 3 to 7 am, Earth from 7 to 11 am, Fire from 11 am to 3 pm, Water from 3 to 7 pm, Fire again from 7 to 11 pm, and Wood from 11 pm to 3 am. Fire is the only phase with two arcs, because it holds four organ systems: the Heart and Small Intestine, and the Pericardium and Triple Burner.</p>`
       : `<p>On the Year wheel each phase has its season: Wood is spring, Fire is summer, Earth is late summer, Metal is autumn, and Water is winter. This is where Five Phase theory is most at home. <button type="button" class="pauselink" data-yseason="0">Open spring</button></p>`}</div>
+    <div class="ring"><h3>Where the phases come from</h3><p>The Phases wheel goes deeper: from Wuji and Taiji through yin and yang to the Five Phases, with the generating and controlling cycles in full and what happens when they slip. <button type="button" class="pauselink" data-mode="phases">Open the Phases wheel</button></p></div>
     <p class="gentle"><b>Go gently.</b> ${FIVE.gently}</p>
     <p class="src">After Kaptchuk (2000); Maciocia (2015); and the Yellow Emperor's Classic (Veith, 1949).</p>
     <div class="rnext"><button type="button" class="btn" data-qi>← Qi</button><button type="button" class="btn" data-el="metal">On to Metal →</button></div>`;
@@ -1028,14 +1460,20 @@ function showPractice(user){
   if(user) bringPanel();
 }
 
+const KIND_MODES={core:["day","year"],organ:["day"],elem:["day"],yseason:["year"],node:["phases"],gen:["phases"],ctl:["phases"],wuji:["phases"],taiji:["phases"],yy:["phases"],ww:["phases"],phases:["phases"]};
+const kindOk = k => !!k && (KIND_MODES[k]||["day"]).includes(mode);
 function applySel(){
   const so=document.getElementById("selOutline");
   if(!so) return; so.innerHTML="";
-  if((mode==="year") !== (sel.kind==="yseason") && sel.kind!=="core") return;
+  if(!kindOk(sel.kind)) return;
   if(sel.kind==="organ"){ const [a0,a1]=oA(sel.i);
     el("path",{d:rsector(R.organ[0]-3,R.emo[1]+3,a0+GAP/2,a1-GAP/2,{rIn:9,rOut:6})},so); }
   else if(sel.kind==="elem"){ ELARCS.forEach((x,i)=>{ if(x.el===sel.key) el("path",{d:shapeOf("elem",i,3)},so); }); }
   else if(sel.kind==="core") el("circle",{cx:0,cy:0,r:R.core[1]+4},so);
+  else if(sel.kind==="node"){ const [x,y]=P(RC.node,pA(sel.i)); el("circle",{cx:f(x),cy:f(y),r:RC.nodeR+4},so); }
+  else if(sel.kind==="gen"||sel.kind==="ctl"){ const c=cells.find(c=>c.dataset.slice===(sel.kind==="gen"?"s":"k")+sel.i); if(c) el("path",{d:c.querySelector(".relline").getAttribute("d"),class:"selrel"},so); }
+  else if(sel.kind==="wuji") el("circle",{cx:0,cy:0,r:RC.wuji[1]+3},so);
+  else if(["taiji","yy","ww"].includes(sel.kind)){ const [r0,r1]=RC[sel.kind]; el("circle",{cx:0,cy:0,r:r1+3},so); el("circle",{cx:0,cy:0,r:r0-3},so); }
   else if(sel.kind==="yseason"){ const [a0,a1]=YEAR[sel.i].a; el("path",{d:rsector(RY.phase[0]-3,RY.yseason[1]+3,a0+GAP/2,a1-GAP/2,{rIn:9,rOut:6})},so); }
 }
 
@@ -1051,10 +1489,11 @@ syncTheme();
 /* ring key */
 const rk=document.getElementById("ringkey");
 const KEYGO={core:()=>showQi(true), elem:()=>showFive(true), organ:()=>showElement("metal",null,true), daily:()=>showElement("metal",null,true), emo:()=>showElement("metal",null,true)};
+const KEYGO_C={wuji:()=>showWuji(true), taiji:()=>showTaiji(true), yy:()=>showYinYang(true), phase:()=>showPhases(null,true), gen:()=>showGen(null,true), ctl:()=>showCtl(null,true), corr:()=>showPhases(null,true), motion:()=>showPhases(null,true), ww:()=>showWanwu(true)};
 const KEYGO_Y={core:()=>showQi(true), phase:()=>showFive(true), yorg:()=>showYear(0,true), term:()=>showYear(0,true), month:()=>showYear(0,true), yseason:()=>showYear(0,true)};
 function buildKey(){
   rk.innerHTML="";
-  const [rings,go]= mode==="year" ? [RINGS_Y,KEYGO_Y] : [RINGS,KEYGO];
+  const [rings,go]= mode==="phases" ? [RINGS_C,KEYGO_C] : mode==="year" ? [RINGS_Y,KEYGO_Y] : [RINGS,KEYGO];
   Object.keys(go).forEach(k=>{
     const b=document.createElement("button"); b.type="button"; b.innerHTML=sw(rings[k].sw)+rings[k].name;
     b.addEventListener("click",go[k]); rk.appendChild(b);
@@ -1066,20 +1505,22 @@ const vt=document.getElementById("viewtoggle");
 function setMode(m,keepPanel){
   if(m===mode && svg.childNodes.length) return;
   mode=m; moonTip(null);
-  if(m!=="year" && sel.kind==="yseason") sel={kind:null,i:null};
+  if(!kindOk(sel.kind)) sel={kind:null,i:null};
   draw(); buildTabs(); buildKey();
   vt.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.mode===m?"true":"false"));
-  svg.setAttribute("aria-label", m==="year" ? "The Body Clock Mandala, the year in five seasons" : "The Body Clock Mandala, the day in 24 hours");
+  svg.setAttribute("aria-label", {phases:"The Body Clock Mandala, from Wuji to the Five Phases", year:"The Body Clock Mandala, the year in five seasons", day:"The Body Clock Mandala, the day in 24 hours"}[m]);
   try{ localStorage.setItem("tcm-view",m); }catch(e){}
   if(location.hash!=="#"+m) history.replaceState(null,"","#"+m);
   if(!keepPanel) showIntro();
 }
 vt.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
-window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(h==="day"||h==="year") setMode(h); });
+const MODES=["phases","day","year"];
+window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(MODES.includes(h)) setMode(h); });
 
 let start=location.hash.slice(1);
-if(start!=="day" && start!=="year"){ try{ start=localStorage.getItem("tcm-view"); }catch(e){} }
-setMode(start==="year" ? "year" : "day");
+if(!MODES.includes(start)){ try{ start=localStorage.getItem("tcm-view"); }catch(e){} }
+mode="";
+setMode(MODES.includes(start) ? start : "phases");
 
 })();
 </script>
