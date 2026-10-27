@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Body Clock Mandala</title>
+<meta name="description" content="The Traditional Chinese Medicine body clock in one circle: qi and yin-yang at the center, the Five Phases, the twelve organ hours of the day, and the four seasons the day passes through.">
+<link rel="icon" href="favicon.svg?v=1" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Mulish:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: the mandala holds the left (sticky on wide screens); the reading panel sits to the right. */
+:root{
+  --bg:#FBF6EE; --surface:#FFFFFF; --ink:#33291F; --muted:#76685D; --line:#E8DCCB;
+  --on-dark:#FFFFFF; --on-light:#2B2118; --gold:#B8861A;
+  --yang:#FFF6D6; --yang2:#F2D27A; --yin:#2F3560; --lot:#FFFFFF; --lotline:#C79A2E;
+  --wood:#4F8F6B;  --wood2:#A8D0B6;  --wood3:#D6EADC;
+  --fire:#C9553F;  --fire2:#EDA595;  --fire3:#F8D9D1;
+  --earth:#D09A22; --earth2:#F0CF82; --earth3:#F8E8BC;
+  --metal:#8E96AE; --metal2:#C4C9D8; --metal3:#E4E7EF;
+  --water:#4C79B0; --water2:#A4C1E0; --water3:#D3E1F2;
+  --band:#E6DBCB; --band2:#F1E9DC; --orn:#D9B48A;
+  --display:"Marcellus", "Cormorant Garamond", Georgia, serif;
+  --body:"Mulish", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1C1A24; --surface:#27242F; --ink:#F2EADD; --muted:#B7ABA0; --line:#3D3846;
+  --on-light:#2B2118; --gold:#E3B94F;
+  --yang:#FFF6D6; --yang2:#E7C265; --yin:#2A2F5E; --lotline:#D6A93E;
+  --wood:#3F7C5A;  --wood2:#8FBFA0;  --wood3:#BFDCCA;
+  --fire:#B4473A;  --fire2:#E39787;  --fire3:#EFC0B5;
+  --earth:#C28F22; --earth2:#E4C06E; --earth3:#EFDAA2;
+  --metal:#7B839E; --metal2:#AEB4C6; --metal3:#CDD1DE;
+  --water:#3F69A0; --water2:#8DADD2; --water3:#BCD0E8;
+  --band:#CDBFAC; --band2:#DDD2C1; --orn:#B58E66; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#1C1A24; --surface:#27242F; --ink:#F2EADD; --muted:#B7ABA0; --line:#3D3846;
+  --on-light:#2B2118; --gold:#E3B94F;
+  --yang:#FFF6D6; --yang2:#E7C265; --yin:#2A2F5E; --lotline:#D6A93E;
+  --wood:#3F7C5A;  --wood2:#8FBFA0;  --wood3:#BFDCCA;
+  --fire:#B4473A;  --fire2:#E39787;  --fire3:#EFC0B5;
+  --earth:#C28F22; --earth2:#E4C06E; --earth3:#EFDAA2;
+  --metal:#7B839E; --metal2:#AEB4C6; --metal3:#CDD1DE;
+  --water:#3F69A0; --water2:#8DADD2; --water3:#BCD0E8;
+  --band:#CDBFAC; --band2:#DDD2C1; --orn:#B58E66; color-scheme:dark }
+
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+[hidden]{display:none!important}
+img{max-width:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:28px 64px}
+header.top{display:grid;gap:6px;margin-bottom:22px;position:relative;padding-right:52px}
+:root[data-theme="light"]{color-scheme:light}
+.themebtn{position:absolute;top:-4px;right:0;width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer;padding:0}
+.themebtn:hover{background:var(--bg)}
+.themebtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.themebtn svg{width:20px;height:20px;overflow:visible}
+.themebtn .sun{display:none}
+.is-dark .themebtn .moon{display:none}
+.is-dark .themebtn .sun{display:block}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,54px);line-height:1.05;margin:0;text-wrap:balance}
+.lede{max-width:66ch;color:var(--muted);margin:4px 0 0}
+.lede a{color:var(--ink)}
+
+.main{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:900px){.main{grid-template-columns:1fr}}
+.stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:grid;gap:14px;max-height:calc(100vh - 24px - env(safe-area-inset-top,0px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:4px 6px 12px 2px}
+@media (max-width:900px){.stage{position:static;max-height:none;overflow:visible;padding:0}}
+.svgbox{width:100%;max-width:760px;margin:0 auto;aspect-ratio:1/1;position:relative}
+.coretip,.moontip{position:absolute;z-index:2;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:13.5px;line-height:1.4;text-align:center;box-shadow:0 6px 20px color-mix(in srgb, var(--ink) 16%, transparent);pointer-events:none;opacity:0;transition:opacity .15s ease}
+.moontip{left:0;top:0;width:max-content;max-width:min(260px,72%)}
+.moontip.on{opacity:1}
+.moontip.ringed{border-top:5px solid var(--tipc);background:color-mix(in srgb, var(--tipc) 14%, var(--surface))}
+.moontip .ringtag{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.moontip .ringtag i{width:10px;height:10px;border-radius:50%;background:var(--tipc);box-shadow:0 0 0 1px color-mix(in srgb, var(--ink) 25%, transparent)}
+.moontip b{font-family:var(--display);font-weight:400;font-size:16px;display:block}
+.moontip span{color:var(--muted);font-size:12.5px;display:block}
+.moontip .line{display:block;color:var(--ink);font-size:13.5px}
+.center-msg{display:grid;gap:12px}
+.center-msg h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;line-height:1.15}
+.center-msg p{margin:0;max-width:62ch}
+.center-msg .sym{font-size:14.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+svg{width:100%;height:100%;display:block;overflow:visible}
+.cell{cursor:pointer;transition:opacity .25s ease;stroke:var(--bg);stroke-width:2.5}
+.cell:focus{outline:none}
+.cell:focus-visible{stroke:var(--ink);stroke-width:3}
+svg.dimming .cell.off{opacity:.28}
+#selOutline path{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linejoin:round;pointer-events:none}
+.lbl{pointer-events:none;font-family:var(--display)}
+.tx-ink{fill:var(--on-light)}
+.tx-white{fill:var(--on-dark)}
+.tx-disp{font-family:var(--display);font-weight:400}
+.tx-body{font-family:var(--body);font-weight:700}
+.tx-small{font-family:var(--body);font-weight:600}
+.band{pointer-events:none}
+.bandlbl{fill:var(--on-light);font-family:var(--body);font-weight:700;pointer-events:none}
+.orn{fill:var(--orn);opacity:.55;pointer-events:none}
+.ringkey{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:640px;margin:0 auto}
+.ringkey button{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 8px;cursor:pointer}
+.ringkey button:hover{border-color:var(--ink)}
+.btn:focus-visible,.tab:focus-visible,.ringkey button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sw{width:14px;height:14px;border-radius:50%;flex:none;box-shadow:0 0 0 1px color-mix(in srgb, var(--ink) 18%, transparent)}
+.hintline{text-align:center;font-size:13.5px;color:var(--muted);margin:0}
+.btn{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.btn:hover{background:var(--bg);border-color:var(--ink)}
+
+/* Panel */
+.panel{display:grid;gap:18px;min-width:0}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font:inherit;font-size:14px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.subnav{display:flex;flex-wrap:wrap;gap:6px;margin-top:-8px}
+.subnav button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:999px;padding:3px 11px;cursor:pointer}
+.subnav button[aria-current="true"]{color:var(--ink);border-color:var(--ink)}
+.subnav button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.phasehead h2{font-family:var(--display);font-weight:400;font-size:32px;line-height:1.1;margin:0}
+.phasehead .meta{color:var(--muted);font-size:14px;margin-top:4px}
+.phasehead p{margin:10px 0 0;max-width:62ch}
+.phasehead .eyebrow{margin-bottom:4px}
+.ring{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:grid;gap:10px;scroll-margin-top:16px}
+.ring h3{margin:0;font-family:var(--display);font-weight:400;font-size:22px;display:flex;align-items:center;gap:10px}
+.ring h3 .sw{width:16px;height:16px}
+.ring .about{margin:0;color:var(--muted);font-size:14px}
+.ring h4{margin:4px 0 0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ring p{margin:0}
+.ring ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.gentle{background:color-mix(in srgb, var(--samadhi) 11%, transparent);border-radius:10px;padding:10px 12px;font-size:14.5px;margin:0}
+.gentle b{font-family:var(--display);font-weight:400;font-size:16px}
+.deeper{font-size:14px;color:var(--muted)}
+.deeper b{color:var(--ink)}
+.deeper ul{margin:4px 0 0;padding-left:18px;display:grid;gap:3px}
+.src{font-size:12.5px;color:var(--muted);margin:0}
+.intro{display:grid;gap:14px}
+.center-msg + .intro{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+.intro h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;line-height:1.15}
+.intro p{margin:0;max-width:62ch}
+.legend{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.legend li{display:grid;grid-template-columns:18px 1fr;gap:12px;align-items:start}
+.legend .sw{margin-top:5px;width:18px;height:18px}
+.legend b{font-family:var(--display);font-weight:400;font-size:19px;display:block}
+.hint{font-size:14px;color:var(--muted)}
+.pauselink{font:inherit;font-size:14px;color:var(--muted);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+.pauselink:hover{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:3px 11px;cursor:pointer}
+.chips button:hover,.chips button:focus-visible{border-color:var(--ink);outline:none}
+.rnext{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;scroll-margin-top:16px}
+.qcard[open]{border-color:var(--ink)}
+.qcard summary{cursor:pointer;padding:12px 16px;display:grid;gap:1px;list-style:none}
+.qcard summary::-webkit-details-marker{display:none}
+.qcard summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:14px}
+.qn{font-family:var(--display);font-size:21px}
+.qq{font-family:var(--display);font-size:16px;color:var(--muted)}
+.qw{font-size:13px;color:var(--muted)}
+.qbody{display:grid;gap:14px;padding:0 16px 16px}
+.qbody p{margin:0}
+.qbody ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.qbody h4{margin:4px 0 0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.qcard .cardbar{display:block;height:5px;border-radius:14px 14px 0 0}
+.herq{font-family:var(--display);font-size:20px;line-height:1.3;color:var(--ink);margin:4px 0 8px;padding:12px 14px;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.herq small{display:block;font-family:var(--body);font-size:13.5px;line-height:1.45;color:var(--muted);margin-top:3px}
+.herq span{display:block;font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.refuge{display:grid;gap:4px;font-family:var(--display);font-size:18px;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 8px}
+.refuge small{display:block;font-family:var(--body);font-size:13.5px;color:var(--muted)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0;padding:0;list-style:none}
+.chain li{font-size:13.5px;font-weight:600;border-radius:999px;padding:3px 11px;color:var(--on-light)}
+.chain li:not(:last-child)::after{content:" \2192";color:var(--muted);font-weight:400}
+.chain li{background:var(--c)}
+.dive{border:1px solid var(--line);border-left:5px solid var(--dc);border-radius:12px;background:color-mix(in srgb, var(--dc) 7%, var(--surface))}
+.dive summary{cursor:pointer;padding:10px 14px;display:grid;gap:1px;list-style:none}
+.dive summary::-webkit-details-marker{display:none}
+.dive summary b{font-family:var(--display);font-weight:400;font-size:18px}
+.dive summary span{font-size:13px;color:var(--muted)}
+.dive summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:12px}
+.dive[open] summary{border-bottom:1px solid var(--line)}
+.divebody{display:grid;gap:12px;padding:12px 14px 16px}
+.divebody p{margin:0}
+.divebody ul,.divebody ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.divebody h4{margin:6px 0 0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.prac{display:grid;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.prac b{font-family:var(--display);font-weight:400;font-size:17px}
+.prac .why{font-size:13.5px;color:var(--muted)}
+.day{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0}
+.day dt{font-weight:700;font-size:14px}
+.day dd{margin:0}
+.weeks{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
+.weeks li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.weeks .n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--on-light);background:var(--c)}
+.tasks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:0;padding:0;list-style:none}
+.tasks li{border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:13.5px;color:var(--muted);background:color-mix(in srgb, var(--c) 28%, var(--surface))}
+.tasks li b{display:block;font-family:var(--display);font-weight:400;font-size:17px;color:var(--ink)}
+@media (max-width:520px){.tasks{grid-template-columns:1fr}}
+
+section.about{margin-top:56px;display:grid;gap:18px;max-width:880px}
+section.about h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0}
+section.about h3{font-family:var(--display);font-weight:400;font-size:21px;margin:8px 0 0}
+section.about p{margin:0;max-width:68ch}
+.refs{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14.5px}
+.foot{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:10px}
+@media (prefers-reduced-motion: reduce){.cell{transition:none}}
+
+/* Body clock additions */
+.tx-small2{font-family:var(--body);font-weight:700}
+.yy{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted);margin-left:6px;vertical-align:middle}
+.orgchips{display:flex;flex-wrap:wrap;gap:6px}
+.orgchips button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:3px 11px;cursor:pointer}
+.orgchips button:hover,.orgchips button:focus-visible{border-color:var(--ink);outline:none}
+.scard{border:1px solid var(--line);border-left:6px solid var(--sc);border-radius:12px;background:color-mix(in srgb, var(--sc) 9%, var(--surface));padding:12px 14px;display:grid;gap:8px}
+.scard h3{margin:0;font-family:var(--display);font-weight:400;font-size:22px}
+.scard .when{font-size:13px;color:var(--muted)}
+.scard p{margin:0}
+.scard ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.scard h4{margin:4px 0 0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ptn{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.ptn li{display:grid;grid-template-columns:minmax(110px,150px) 1fr;gap:4px 14px;align-items:baseline;border-top:1px solid var(--line);padding-top:8px}
+.ptn li:first-child{border-top:0;padding-top:0}
+.ptn b{font-family:var(--display);font-weight:400;font-size:16px}
+@media (max-width:520px){.ptn li{grid-template-columns:1fr}}
+.cyc{display:grid;gap:10px;justify-items:center}
+.cyc svg{width:min(340px,100%);height:auto;overflow:visible}
+.cyc text{font-family:var(--display);font-size:15px;fill:var(--on-light);pointer-events:none}
+.legendkey{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);justify-content:center}
+.legendkey i{display:inline-block;width:26px;height:0;border-top:2.5px solid var(--ink);vertical-align:middle;margin-right:6px}
+.legendkey i.dash{border-top:2px dashed var(--muted)}
+.phtable{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.phtable li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.phtable .sw{margin-top:5px}
+.phtable b{font-family:var(--display);font-weight:400;font-size:18px}
+.phtable span{display:block;font-size:14px;color:var(--muted)}
+.hours{font-variant-numeric:tabular-nums}
+.ornnoon{fill:var(--yang2);opacity:.95}
+.ornmid{fill:var(--yin);opacity:.85}
+.hourlbl{font-family:var(--body);font-weight:700;font-size:11px;letter-spacing:.14em;fill:var(--muted);pointer-events:none}
+.hingelbl{font-family:var(--body);font-weight:700;pointer-events:none;fill:var(--on-light)}
+.cell.hinge{stroke-width:2}
+</style>
+<script>
+try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") document.documentElement.setAttribute("data-theme",t); }catch(e){}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <button class="themebtn" type="button" id="themebtn" aria-label="Switch to dark mode">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+    </button>
+    <div class="eyebrow">Traditional Chinese Medicine, in one circle</div>
+    <h1>The Body Clock Mandala</h1>
+    <p class="lede">A map of the day as Traditional Chinese Medicine (TCM) describes it. Around the wheel run the 24 hours, with noon at the top and midnight at the bottom. Qi, the body's moving energy, is said to pass through twelve organ systems in turn, about two hours each. Each belongs to one of the Five Phases (Wood, Fire, Earth, Metal, Water), and the day itself turns through the four seasons: dawn as spring, midday as summer, evening as autumn, night as winter. Read it as a way to notice your own rhythms, not as a diagnosis. Take what is useful now.</p>
+  </header>
+
+  <div class="main">
+    <div class="stage">
+      <div class="svgbox"><div class="moontip" id="moontip" role="status"></div><svg id="m" viewBox="-574 -574 1148 1148" role="group" aria-label="The Body Clock Mandala"></svg></div>
+      <div class="ringkey" id="ringkey" aria-label="Rings"></div>
+      <p class="hintline">Choose any ring or petal to open it.</p>
+    </div>
+
+    <div class="panel">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="subnav" id="subnav" hidden></div>
+      <div id="panel" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <section class="about" id="about">
+    <h2>About this mandala</h2>
+    <p>A mandala is a circle organized around a center. This one gathers the TCM body clock into a single wheel, with qi, the flowing center of the system, in the middle. It draws on classical Chinese medicine as it is taught today, and on the Five Phase (Wu Xing) theory that sits underneath it. Other schools and practitioners describe these ideas in their own ways, and this map does not replace them.</p>
+    <h3>How it is built</h3>
+    <p>The wheel is a 24-hour clock with noon at the top and midnight at the bottom, so the day reads clockwise like a clock face. The twelve organ systems each take a two-hour window in a fixed order (the horary cycle, zǐwǔ liúzhù): Lung at 3 am, then Large Intestine, Stomach, Spleen, Heart, Small Intestine, Bladder, Kidney, Pericardium, Triple Burner, Gallbladder, and Liver at 1 am. Each organ sits across the wheel from its partner twelve hours away, for example Heart at noon and Gallbladder at midnight.</p>
+    <p>The ring just inside the organs is the Five Phases. Metal, Earth, Fire, Water, Fire again, and Wood cover the clock in six arcs, because Fire has two sets of organs: the Heart and Small Intestine at midday, and the Pericardium and Triple Burner in the evening. Outside the organs are daily-life petals, a narrow band for the feeling or quality each organ is linked with, and an outer ring of the four seasons.</p>
+    <h3>The day as a small year</h3>
+    <p>The classical texts pair the day with the year: morning is spring, noon is summer, evening is autumn, and midnight is winter (Ling Shu 44). With noon at the top this falls neatly into place: spring on the left where the sun rises, summer at the top, autumn on the right, winter at the bottom. Yang, the warm and active side of things, grows from midnight to noon and yields to yin from noon to midnight, the same turning as the yin-yang symbol at the center. Earth, the fifth phase, sits at the hinges between seasons, shown as four small markers.</p>
+    <p>The organ clock and the seasons of the day are two different layers, and they do not line up one for one. The Wood organs, for instance, keep their hours late in the night, just before the day's spring begins. The tradition holds both at once: the organ clock follows qi through the channels, while the four seasons follow the sun.</p>
+    <h3>What is tradition, and what is science</h3>
+    <p>The organ clock, the Five Phases, and the pairing of day and year are classical Chinese medical ideas. They are a way of organizing experience, and they have been used for centuries. They have not been shown by modern research to work as stated, and in particular there is no good evidence that each organ peaks in its own two-hour window. What science does support is that the body keeps time. Genes in nearly every cell run a circadian clock. Cortisol rises in the early morning, core body temperature falls overnight, and melatonin begins to rise in the evening. The TCM clock and the circadian clock overlap in spirit, not in detail. Use the first as a lens for noticing, and lean on the second, and on your clinicians, for health decisions.</p>
+    <h3>Going gently</h3>
+    <p>Paying attention to your body can stir strong feelings, and for some people old pain. Go one ring at a time, and stop when you need to. Several windows touch on emotions such as grief, fear, and anger. These are described as parts of being human, not as faults to fix or as the cause of illness. If what comes up is heavy, look for support from a trauma-informed therapist. This mandala is for reflection and education. It is not therapy or medical advice, and it is not a substitute for a licensed practitioner. Waking at the same hour every night, pain, bleeding, breathlessness, chest pain, and changes that last all deserve a conversation with a doctor.</p>
+    <h3>A note on language</h3>
+    <p>Organ names in capital letters, such as the Lung or the Liver, name TCM systems of function. They overlap with the organs of anatomy but are not the same thing. Chinese terms are given in pinyin with tone marks: qi (qì), shén, jīng, wei qi (wèi qì). Translations vary from author to author; the wording here is our own.</p>
+    <h3>References</h3>
+    <ol class="refs">
+      <li>Chinese Medicine Atlas. (n.d.). <i>TCM Body Clock</i>. <a href="https://chinesemedicineatlas.com/tcm-body-clock/" target="_blank" rel="noopener">chinesemedicineatlas.com/tcm-body-clock</a>. The clock's windows and the idea for this map.</li>
+      <li>Kaptchuk, T. J. (2000). <i>The Web That Has No Weaver: Understanding Chinese Medicine</i> (2nd ed.). McGraw-Hill.</li>
+      <li>Maciocia, G. (2015). <i>The Foundations of Chinese Medicine</i> (3rd ed.). Elsevier.</li>
+      <li>Panda, S. (2018). <i>The Circadian Code</i>. Rodale.</li>
+      <li>Takahashi, J. S. (2017). Transcriptional architecture of the mammalian circadian clock. <i>Nature Reviews Genetics, 18</i>(3), 164 to 179.</li>
+      <li>Veith, I. (Trans.). (1949). <i>The Yellow Emperor's Classic of Internal Medicine</i>. University of California Press. Translates the first 34 chapters of the Su Wen, including chapter 2 on the seasons. The Ling Shu is the companion classic.</li>
+    </ol>
+    <p class="foot">Created by Erin Singleton. An educational map for reflection, not therapy, medical advice, or a substitute for a licensed practitioner.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Content ----------
+   In our own words, after classical Chinese medicine as it is taught today. The wheel: qi and yin-yang at the center;
+   the Five Phases; the twelve organ hours (noon at the top, midnight at the bottom); a petal of daily life for each;
+   a band for the feeling or quality each is linked with; and, outermost, the four seasons of the day, with Earth at the turns. */
+const RINGS = {
+  core:   {name:"Qi, yin and yang", sw:"radial-gradient(circle,var(--yang),var(--yin))", color:"--yang2", about:"At the center, the moving force of the body and the turning of yang and yin. Yang grows from midnight to noon, and yin from noon to midnight."},
+  elem:   {name:"The Five Phases", sw:"linear-gradient(90deg,var(--metal),var(--earth),var(--fire),var(--water),var(--wood))", color:"--earth", about:"Wood, Fire, Earth, Metal, and Water: five ways qi moves and changes. Each organ belongs to one, and the clock passes through them in six arcs."},
+  organ:  {name:"The twelve organ hours", sw:"linear-gradient(90deg,var(--metal2),var(--earth2),var(--fire2),var(--water2),var(--wood2))", color:"--earth2", about:"Twelve organ systems, two hours each, in a fixed order. Noon is at the top, midnight at the bottom, and the day reads clockwise."},
+  daily:  {name:"In daily life", sw:"linear-gradient(90deg,var(--metal3),var(--earth3),var(--fire3),var(--water3),var(--wood3))", color:"--earth3", about:"Petals for how each window can look in an ordinary day."},
+  emo:    {name:"Feeling and quality", sw:"linear-gradient(90deg,var(--band),var(--band2))", color:"--band", about:"A narrow band naming the feeling or quality each organ is linked with, such as grief for the Lung or courage for the Gallbladder."},
+  season: {name:"The four seasons of the day", sw:"linear-gradient(90deg,var(--wood2),var(--fire2),var(--metal2),var(--water2))", color:"--wood2", about:"Morning is spring, noon is summer, evening is autumn, midnight is winter. Small Earth markers sit at the hinges between them."}
+};
+
+const ELEMENTS = {
+  metal:{name:"Metal", py:"Jīn", zh:"金", c:"--metal", season:"Autumn", dir:"West", climate:"Dryness", emo:"Grief", organs:"Lung and Large Intestine", time:"3 to 7 am",
+    blurb:"Metal is refining and boundary: taking in what is clean, letting go of what is done. It is the phase of breath and of the skin, the body's edge. In the year it is autumn, when leaves are released and the harvest is gathered in.",
+    holds:["Taking in and letting go, the in-breath and the out-breath.","Boundaries: the skin, the edge between you and the world.","Grief, and the clearing that can come after it."],
+    gently:"Grief is not a problem to be fixed on a schedule. It comes in its own time, and it can be held by other people. If it feels like too much, a therapist or a grief group can help more than any clock."},
+  earth:{name:"Earth", py:"Tǔ", zh:"土", c:"--earth", season:"Late summer, and the turns between seasons", dir:"Center", climate:"Dampness", emo:"Worry", organs:"Stomach and Spleen", time:"7 to 11 am",
+    blurb:"Earth is the center and the great nourisher: it receives, transforms, and gives out again. In the year it is late summer, the fullness before the harvest, and in some schools it holds the hinge at the end of each season. In the body it is digestion, and the steady ground of thought.",
+    holds:["Nourishment: taking in food and turning it into energy.","Steadiness, the ground under other things.","Worry and overthinking, when the mind keeps chewing."],
+    gently:"Worry is often a sensible reaction to a worrying life. Try not to blame the Spleen or yourself. If thoughts loop and will not rest, or eating has become hard, support from a clinician is a kindness."},
+  fire:{name:"Fire", py:"Huǒ", zh:"火", c:"--fire", season:"Summer", dir:"South", climate:"Heat", emo:"Joy", organs:"Heart and Small Intestine at midday; Pericardium and Triple Burner in the evening", time:"11 am to 3 pm, and 7 to 11 pm",
+    blurb:"Fire is warmth, connection, and the bright upward motion of summer. It has two sets of organs on the wheel. The Heart and Small Intestine hold the midday fire, and the Pericardium and Triple Burner hold the evening fire. Many teachers call the first sovereign fire and the second ministerial fire, the one that carries the sovereign's warmth out into the body and into relationship.",
+    holds:["Warmth, circulation, and the spark of awareness (shén).","Connection: with other people, and with joy.","Discernment, sorting what is clear from what is not."],
+    gently:"Joy cannot be summoned on demand, and a flat or anxious heart is not a failure. If your heart races, aches, or skips, or you have low mood that lasts, speak to a doctor."},
+  water:{name:"Water", py:"Shuǐ", zh:"水", c:"--water", season:"Winter", dir:"North", climate:"Cold", emo:"Fear", organs:"Bladder and Kidney", time:"3 to 7 pm",
+    blurb:"Water is depth, reserve, and rest. It stores what the rest of the system draws on, and its season is winter, when life goes down to the root. In the body it is the fluids, the bones, the low back, and the will to keep going.",
+    holds:["Reserves: the essence (jīng) you are given and slowly spend.","Rest and the quiet that renews.","Fear, and the will that meets it."],
+    gently:"Fear is often a fair response to something that is frightening, or to something that was. If it is tied to hard memories, a trauma-informed therapist is the right companion, not an organ clock."},
+  wood:{name:"Wood", py:"Mù", zh:"木", c:"--wood", season:"Spring", dir:"East", climate:"Wind", emo:"Anger", organs:"Gallbladder and Liver", time:"11 pm to 3 am",
+    blurb:"Wood is growth that wants to move: the shoot that pushes up, the plan that wants to unfold. It is the phase of spring, and of qi moving smoothly. When Wood is blocked, the tradition describes frustration, irritability, and anger. The Wood organs keep their hours late in the night, just before the day's spring begins.",
+    holds:["Smooth movement of qi through the body and the emotions.","Planning, deciding, and starting.","Anger and frustration, when growth is held back."],
+    gently:"Anger is not wrong. It often stands guard over something that matters. It deserves a place to go in the daytime, through talk, movement, or writing. If it frightens you, or is turned against yourself, please reach out to a professional."}
+};
+const ELORDER = ["metal","earth","fire","water","wood"];
+
+/* the twelve organs, in clock order from 3 am. start = first hour of the window. */
+const ORGANS = [
+  {key:"lung", name:"Lung", zh:"肺", py:"Fèi", start:3, time:"3 to 5 am", short:"3–5 am", el:"metal", yin:true, emo:"Grief", daily:["Rest deeply,","breathe slowly"],
+   tip:"Governs breath and the body's outer defense. Pre-dawn is for deep rest.",
+   intro:"In TCM the Lung governs breath and moves qi through the body, and it spreads the protective qi (wèi qì) that guards the surface. Its window comes in the last of the night, before dawn. The tradition links the Lung with grief: the feeling of something let go that is still being felt.",
+   role:["Takes in clear qi from the air and sends it down and out.","Spreads wèi qì, the outer defense, and keeps the skin in order.","Opens to the nose, and is linked with the voice."],
+   inwin:["Deep sleep is the best use of this window, if you can have it.","If you are up, a few slow breaths or a quiet dawn sit suit it."],
+   notice:["Waking at this hour, cough, wheeze, frequent colds, skin that flares.","Grief that comes up at first light."],
+   gently:"Waking at 3 or 4 in the morning is common and has many causes, from stress and light to pain, alcohol, and perimenopause. This map does not diagnose. If it keeps happening, or you are struggling to breathe, talk with a clinician."},
+  {key:"li", name:"Large Intestine", zh:"大肠", py:"Dàcháng", start:5, time:"5 to 7 am", short:"5–7 am", el:"metal", yin:false, emo:"Letting go", daily:["Warm water,","let go"],
+   tip:"Letting go, in the body and the heart. A warm drink and a calm start.",
+   intro:"The Large Intestine receives what the Stomach and Spleen have worked through, takes back the fluid, and releases the rest. Paired with the Lung, it carries the Metal theme of letting go: what is finished can move on.",
+   role:["Absorbs fluid and moves waste out.","Partners the Lung: one is the yin side of Metal, the other the yang side.","Is linked with the large intestine channel running down the arm."],
+   inwin:["Warm water on waking, then time for the bowels.","A slow, unhurried start before the rush of the day."],
+   notice:["Constipation or loose stools, especially in the early morning.","Shoulder or arm pain along the outer arm."],
+   gently:"Bowel habits are private and tangled up with stress, shame, and food. These are patterns to be curious about, not faults. Blood in the stool or a lasting change in habit is a reason to see a doctor."},
+  {key:"st", name:"Stomach", zh:"胃", py:"Wèi", start:7, time:"7 to 9 am", short:"7–9 am", el:"earth", yin:false, emo:"Anxiety", daily:["A warm,","real breakfast"],
+   tip:"Receives and ripens food. A warm, real breakfast suits it.",
+   intro:"The Stomach receives what you eat and begins to ripen it. In the clock this is the hour for the largest meal, if that suits your life. The Stomach is also linked to how you take in more than food: news, worry, and a mind that keeps chewing.",
+   role:["Receives food and drink and begins to break it down.","Passes the useful part to the Spleen and sends the rest down.","Is said to like moisture and to be harmed by too much cold."],
+   inwin:["A warm, cooked breakfast, even a simple one.","Fewer cold drinks and icy foods at this hour."],
+   notice:["Bloating, nausea, mouth ulcers, a sore stomach.","Anxious or looping thoughts that arrive with the first meal or before it."],
+   gently:"Not everyone can eat a big breakfast. Medical needs, schedules, and a history with food can make meals hard. The clock offers a pattern, not a rule. If eating is tangled with fear or shame, a clinician who knows eating difficulties will help more than a timetable."},
+  {key:"sp", name:"Spleen", zh:"脾", py:"Pí", start:9, time:"9 to 11 am", short:"9–11 am", el:"earth", yin:true, emo:"Worry", daily:["Focused work,","less worry"],
+   tip:"Turns food into energy and holds blood in place. A good hour for focused work.",
+   intro:"In TCM the Spleen is less an organ of anatomy than a function: transforming food and drink into qi and blood, and lifting them upward. Its phase is Earth, the center. When it is strong there is clear thought and steady energy. When it is taxed, the tradition describes worry and a heavy, tired body.",
+   role:["Transforms food essence into qi and blood.","Holds the blood in its vessels and lifts what belongs up.","Is linked with the muscles and the limbs."],
+   inwin:["Focused, thoughtful work and planning.","Notice when you start to over-think, and set it down."],
+   notice:["Fatigue, heavy limbs, loose stools.","Worry or rumination that settles in mid-morning."],
+   gently:"Tiredness and worry have many roots. A mind that worries is not a weak Spleen or a flaw of character. If the heaviness is deep or lasting, it is worth checking with a clinician, including for thyroid, iron, and low mood."},
+  {key:"ht", name:"Heart", zh:"心", py:"Xīn", start:11, time:"11 am to 1 pm", short:"11 am–1 pm", el:"fire", yin:true, emo:"Joy", daily:["A short rest,","no overwork"],
+   tip:"Houses the shén, the spirit and mind. Midday is for warmth, with a short rest.",
+   intro:"In TCM the Heart is the sovereign of the organs. It moves blood and houses the shén, the spirit: the clear awareness behind thought, feeling, and sleep. Midday, when the sun is highest, is its time. Joy belongs to the Heart, and so does the ease that lets joy in.",
+   role:["Governs the blood and its circulation.","Houses the shén: mind, awareness, and sleep.","Opens to the tongue, and shows in the complexion."],
+   inwin:["A short rest, around twenty minutes, if you can take one.","Go easy on overwork and overstimulation at the high point of the day."],
+   notice:["Palpitations, poor sleep, a mind that will not settle, poor memory.","Joy that feels missing, or too frantic."],
+   gently:"Palpitations, chest pain, or fainting call for a medical check, not a body-clock reading. And joy cannot be demanded. If it feels far away, that is a human state to be met with support, not a Heart to fix."},
+  {key:"si", name:"Small Intestine", zh:"小肠", py:"Xiǎocháng", start:13, time:"1 to 3 pm", short:"1–3 pm", el:"fire", yin:false, emo:"Discernment", daily:["Sort, decide,","eat lightly"],
+   tip:"Sorts the clear from the cloudy, in food and in thought.",
+   intro:"The Small Intestine separates what is pure from what is not, sending nourishment on and waste down. TCM reads this as discernment too: sorting what to keep from what to leave, in thought as well as in food. It is Fire, and it partners the Heart.",
+   role:["Receives from the Stomach and separates the clear from the turbid.","Sends fluid to the Bladder and waste to the Large Intestine.","Is linked with clarity of judgment."],
+   inwin:["Sorting, organizing, and decisions.","A lighter lunch, if the afternoon tends to drag."],
+   notice:["Mental fog or indecision after lunch.","Ringing in the ears, neck and shoulder tension."],
+   gently:"The post-lunch slump is partly circadian and partly about what you ate and how you slept. It is not a character flaw. Persistent tinnitus or neck pain is worth a clinician's look."},
+  {key:"bl", name:"Bladder", zh:"膀胱", py:"Pángguāng", start:15, time:"3 to 5 pm", short:"3–5 pm", el:"water", yin:false, emo:"Fear", daily:["Steady focus,","drink water"],
+   tip:"Stores and releases fluid. Its channel runs the whole back.",
+   intro:"The Bladder stores and releases fluid. Its channel is the longest, running from the eye over the head and down the back to the foot, and the back-shu points along it reach every other organ. Water, the phase of depth, brings fear, and with it the capacity to settle into stillness.",
+   role:["Stores urine and releases it.","Its channel runs down the back; the back-shu points connect to each organ.","Water in its yang form: it moves."],
+   inwin:["Steady, patient focus on one thing.","Drink enough water, and stretch the back and neck."],
+   notice:["Back pain, a stiff neck, urinary trouble.","Fear or deep unease that comes in the late afternoon."],
+   gently:"Urinary symptoms, especially pain, blood, or fever, need medical care. Fear is a message worth hearing, not a defect in your Water."},
+  {key:"ki", name:"Kidney", zh:"肾", py:"Shèn", start:17, time:"5 to 7 pm", short:"5–7 pm", el:"water", yin:true, emo:"Willpower", daily:["Slow down,","light supper"],
+   tip:"The root of yin and yang. Evening is for conserving, not spending.",
+   intro:"The Kidney stores jīng, the essence you are born with and slowly spend across a life, and is called the root of yin and yang. It governs the bones, the water in the body, and the will. As the day turns toward night, the tradition suggests spending less and gathering more.",
+   role:["Stores jīng (essence), the root of growth and reproduction.","Governs bones, marrow, and water in the body.","Opens to the ears, and its seat is the low back."],
+   inwin:["Ease off, with light movement such as a walk.","A moderate supper rather than a heavy one, and a start to winding down."],
+   notice:["Low back or knee ache, a drop in hearing.","Fear, or a will that feels spent."],
+   gently:"Fear and a spent will are very often the body's answer to too much for too long, or to hard experiences, and not a sign of a depleted organ. Be kind to the part that is tired. Persistent back pain, swelling, or changes in urine are worth a medical check."},
+  {key:"pc", name:"Pericardium", zh:"心包", py:"Xīnbāo", start:19, time:"7 to 9 pm", short:"7–9 pm", el:"fire", yin:true, emo:"Bonds", daily:["Time with","loved ones"],
+   tip:"The heart's protector, and the hour for closeness.",
+   intro:"The Pericardium is the sheath around the Heart. In TCM it guards the Heart and carries its feeling into relationship, so this window is about bonds: the people you love and the ease of being with them.",
+   role:["Protects the Heart from harm and from excess.","Governs how feeling moves between people, warmth and boundaries both.","Partners the Triple Burner."],
+   inwin:["Reading, quiet talk, time with people you love.","Less stimulation: fewer screens, less news, no heavy arguments."],
+   notice:["Over-sensitivity, anxiety, palpitations, trouble falling asleep.","Hurt that comes up when evening arrives and the day's guard comes down."],
+   gently:"Evening can bring up loneliness or old hurt, especially for people carrying grief, a hard home, or a history of harm. Bonds include your bond with yourself, with a pet, with a place. If evenings are heavy, a trusted person or a therapist can sit with you."},
+  {key:"tb", name:"Triple Burner", zh:"三焦", py:"Sānjiāo", start:21, time:"9 to 11 pm", short:"9–11 pm", el:"fire", yin:false, emo:"Coordination", daily:["Dim the lights,","screens off"],
+   tip:"The three zones of the torso, moving fluid and warmth through the body.",
+   intro:"The Triple Burner (sānjiāo) is not a single organ. It is the three zones of the torso: upper (heart and lungs), middle (stomach and spleen), and lower (liver, kidneys, bowels, and bladder). Together they carry fluid and qi through the body like irrigation channels. Its window is for preparing to sleep.",
+   role:["Coordinates the movement of fluid and qi through the three zones.","Links the organs so the whole works together.","Partners the Pericardium."],
+   inwin:["Prepare for sleep: dim the lights, put screens away.","A warm bath, a gentle stretch, a quiet room."],
+   notice:["Poor sleep, a feeling of heat or chill, swelling.","A sense that the parts of you are not working as one."],
+   gently:"Sleep trouble is common and treatable. Bright light and screens at night do affect melatonin, which is well studied. If sleep stays hard, a clinician can look at sleep apnea, anxiety, and other causes."},
+  {key:"gb", name:"Gallbladder", zh:"胆", py:"Dǎn", start:23, time:"11 pm to 1 am", short:"11 pm–1 am", el:"wood", yin:false, emo:"Courage", daily:["Be asleep,","if you can"],
+   tip:"Decisions and courage. This is the hour to be asleep.",
+   intro:"The Gallbladder stores and releases bile, and the tradition gives it the quality of decisiveness: the courage to choose and act. It is Wood, the phase of growth, and it partners the Liver. Its window falls on midnight, the turning of the day, directly across the wheel from the Heart.",
+   role:["Stores bile and sends it to help digest fat.","Governs decisiveness, and the courage to start.","Runs along the sides of the body, head to toe."],
+   inwin:["Be asleep, if you can. Many people find the early part of the night the most restful.","Late nights are said to tax the Gallbladder."],
+   notice:["Indecision, timidity, a bitter taste, migraines, sciatica.","Feeling stuck between options."],
+   gently:"Many people cannot be asleep at midnight: shift workers, new parents, caregivers, people with insomnia or pain. The clock is not an accusation. If you are awake at this hour, rest as you can and be gentle about it."},
+  {key:"lv", name:"Liver", zh:"肝", py:"Gān", start:25, time:"1 to 3 am", short:"1–3 am", el:"wood", yin:true, emo:"Anger", daily:["Rest, and let","dreams work"],
+   tip:"Keeps qi flowing smoothly and stores blood. Anger and frustration live here.",
+   intro:"In TCM the Liver keeps qi moving smoothly, like a river kept clear, and stores the blood that rests while you lie down. It is the Wood organ: growth that wants to move. When qi is blocked, the tradition describes frustration, irritability, and anger. Waking in the small hours is a classic sign in this system that something wants to move.",
+   role:["Spreads qi smoothly through the body and the emotions.","Stores blood, and releases it to the body when it moves.","Is linked with the tendons and the eyes."],
+   inwin:["Rest. Dreams are said to help process feeling.","Keep late food and alcohol light."],
+   notice:["Waking between 1 and 3, irritability, headache, eye strain.","Menstrual changes, or a feeling of pressure and held-in frustration."],
+   gently:"Anger is not wrong. It often protects something that matters. Waking at night has many ordinary causes. If your mood is low, or frustration feels like despair, please speak with a professional."}
+];
+const OPPOSITE = k => (k+6)%12;
+
+/* the clock in six Wu Xing arcs: angles in degrees from the top (noon), clockwise */
+const ELARCS = [
+  {el:"metal", a:[-135,-75], orgs:[0,1],   sub:"Jīn"},
+  {el:"earth", a:[-75,-15],  orgs:[2,3],   sub:"Tǔ"},
+  {el:"fire",  a:[-15,45],   orgs:[4,5],   sub:"Huǒ", kind:"Sovereign fire"},
+  {el:"water", a:[45,105],   orgs:[6,7],   sub:"Shuǐ"},
+  {el:"fire",  a:[105,165],  orgs:[8,9],   sub:"Huǒ", kind:"Ministerial fire"},
+  {el:"wood",  a:[165,225],  orgs:[10,11], sub:"Mù"}
+];
+
+const SEASONS = [
+  {key:"spring", name:"Spring", sub:"3–9 am · dawn", el:"wood", c:"--wood2", a:[-135,-45], orgs:[0,1,2], yy:"Yang rising",
+   tip:"Dawn is the day's spring: yang is born and begins to climb.",
+   day:"Dawn is the spring of the day. Yang, the warm and active side of things, has been gathering since midnight and now begins to climb. Waking, stretching, and beginning belong here.",
+   year:["Phase: Wood, growth that wants to move up and out.","Climate: wind. Direction: east. Organs: Liver and Gallbladder.","Feeling: the push to begin, and anger when it is blocked."],
+   rest:"For spring the old text suggests staying up a little late, rising early, and walking about easily in the open, letting the body loosen (Su Wen 2).",
+   tryit:["Open a window or step outside soon after waking.","Stretch the sides of the body, where the Wood channels run.","Begin one thing, and keep it small."],
+   hinge:"The Wood organs keep their hours at the end of winter, just before this ring begins: the Liver at 1 to 3 am, and then dawn."},
+  {key:"summer", name:"Summer", sub:"9 am–3 pm · midday", el:"fire", c:"--fire2", a:[-45,45], orgs:[3,4,5], yy:"Yang at its height",
+   tip:"Midday is the day's summer: yang is at its fullest.",
+   day:"Midday is the summer of the day. The sun is at its height, and yang is fullest. This is the time for the work that needs the most of you, and for a pause when the heat peaks.",
+   year:["Phase: Fire, warmth and the bright upward motion of growth.","Climate: heat. Direction: south. Organs: Heart, Small Intestine (with the Pericardium and Triple Burner).","Feeling: joy."],
+   rest:"For summer the text suggests staying up a little late, rising early, and not growing weary of the long days (Su Wen 2).",
+   tryit:["Put your best work in this window.","A short rest at noon, if you can.","Water, shade, and light food in the heat."],
+   hinge:"The Earth hinge at 9 am sits between the Stomach and the Spleen, the nourishing hours, at the turn from spring into summer."},
+  {key:"autumn", name:"Autumn", sub:"3–9 pm · evening", el:"metal", c:"--metal2", a:[45,135], orgs:[6,7,8], yy:"Yang yields, yin gathers",
+   tip:"Evening is the day's autumn: yang yields and yin begins to gather.",
+   day:"Evening is the autumn of the day. The light lowers, yang eases, and yin begins to gather. The tradition asks for less spending and more gathering in: finishing, letting go, and drawing close.",
+   year:["Phase: Metal, refining and letting go.","Climate: dryness. Direction: west. Organs: Lung and Large Intestine.","Feeling: grief, and the clearing after it."],
+   rest:"For autumn the text suggests going to bed early and rising with the first light (Su Wen 2).",
+   tryit:["Slow down as the light falls.","Let go of what the day did not need.","A lighter supper, and time with people you love."],
+   hinge:"The Metal organs keep their hours at dawn, not in the day's autumn. The year and the clock are two different layers."},
+  {key:"winter", name:"Winter", sub:"9 pm–3 am · night", el:"water", c:"--water2", a:[135,225], orgs:[9,10,11], yy:"Yin at its deepest",
+   tip:"Midnight is the day's winter: yin is deepest, with the seed of yang inside it.",
+   day:"Night is the winter of the day. Yin is deepest, and the body goes down to the root to rest and be restored. The first small seed of the next day's yang is already in it.",
+   year:["Phase: Water, depth, reserve, and rest.","Climate: cold. Direction: north. Organs: Kidney and Bladder.","Feeling: fear, and the will that meets it."],
+   rest:"For winter the text suggests going to bed early, rising late, and waiting for the sun (Su Wen 2).",
+   tryit:["Keep it dark, cool, and quiet.","Warm feet, a warm drink, no screens.","Rest counts, even when sleep does not come."],
+   hinge:"The Liver hour is the last of winter. At 3 am the wheel turns to spring again."}
+];
+
+const HINGES = [
+  {a:-135, when:"3 am", between:"winter and spring"},
+  {a:-45,  when:"9 am", between:"spring and summer"},
+  {a:45,   when:"3 pm", between:"summer and autumn"},
+  {a:135,  when:"9 pm", between:"autumn and winter"}
+];
+
+const QI = {
+  intro:"Qi (qì) is the word TCM uses for the moving force that animates the body: what warms, protects, transforms, and holds things in place. It is not a thing you can weigh. It is closer to a way of describing life as flow. At the center of the wheel it is shown with the yin-yang symbol, which is how the tradition describes its two faces.",
+  what:["Qi moves along twelve main channels, the meridians, each linked to an organ system. The horary cycle (zǐwǔ liúzhù) says it passes through them in a fixed order, about two hours each, in a full circuit every day.","An organ is said to be most responsive to care in its own window. Twelve hours later, at the other side of the wheel, it is described as at its low point.","Eight extraordinary vessels act as reservoirs, filling when the main channels are in excess and releasing when they are in need."],
+  yy:["Yang is warm, active, bright, and outward. Yin is cool, still, dark, and inward. Neither is better, and each holds the seed of the other, which is why the symbol has a dot of each inside the other.","Over a day, yang grows from midnight to noon and yin grows from noon to midnight. Noon is the peak of yang, and midnight the peak of yin. That is why the symbol is drawn with its bright head at the top and its dark head at the bottom.","Six organs are yin (they store: Lung, Spleen, Heart, Kidney, Pericardium, Liver), and six are yang (they transform and move: Large Intestine, Stomach, Small Intestine, Bladder, Triple Burner, Gallbladder). Yin channels run on the inner limbs and front of the body, and yang channels on the outer limbs and back."],
+  solar:"The clock follows the sun where you are, not the number on your watch. Daylight saving time, or living far from the middle of your time zone, can move the windows by an hour or more. Treat the times as a rhythm, not a stopwatch.",
+  science:["The body does keep time. Genes in nearly every cell run a circadian clock, cortisol rises in the early morning, core body temperature falls overnight, and melatonin starts to rise in the evening (Takahashi, 2017).","The TCM clock and the circadian clock share an idea, that the body has a daily shape. They do not agree in detail, and modern research has not shown that each organ peaks in its own two-hour window.","So use the TCM clock the way you might use a poem about the day: as a lens for noticing. Lean on your clinicians for decisions about your health."],
+  gently:"Reading your body can slide into watching it for danger. If the clock starts to feel like a test you are failing, set it down. Nothing here says your hours are wrong or your organs are weak. Go at the pace that feels kind."
+};
+
+const PRACTICE = {
+  intro:"You do not need to follow the whole clock. Pick one window that speaks to you and try it for a week. These are common ways practitioners and teachers use the clock. Use what helps and change what does not.",
+  anchors:[
+    ["On waking","Warm water, a slow breath, a few minutes before screens. The Lung and Large Intestine hours, 3 to 7 am, are for rest, breath, and letting go."],
+    ["Morning meal","A warm, real breakfast if that suits you. The Stomach and Spleen hours, 7 to 11 am, are for nourishment and clear work."],
+    ["Midday","Your best work, then a short pause. The Heart and Small Intestine hours, 11 am to 3 pm, are for warmth, focus, and sorting."],
+    ["Late afternoon","Steady focus, a drink of water, a stretch of the back. The Bladder and Kidney hours, 3 to 7 pm, turn toward conserving."],
+    ["Evening","A lighter supper, people you love, less stimulation. The Pericardium and Triple Burner hours, 7 to 11 pm, are for closeness and preparing to sleep."],
+    ["Night","Dark, cool, quiet, and rest as it comes. The Gallbladder and Liver hours, 11 pm to 3 am, are for sleep and for dreams to sort what the day held."]
+  ],
+  patterns:[
+    ["Waking 1 to 3 am",11,"the Liver is the window; look at frustration, late food or drink, and stress"],
+    ["Waking 3 to 5 am",0, "the Lung is the window; look at grief, breath, and what you are holding"],
+    ["Worry mid-morning",3,"the Spleen is the window; look at meals, over-thinking, and heaviness"],
+    ["Slump after lunch",5, "the Small Intestine is the window; look at lunch, sleep, and decisions waiting for you"],
+    ["Fear or unease late in the day",7,"the Kidney is the window; look at how much you have spent, and at rest"],
+    ["Racing or sensitive in the evening",8,"the Pericardium is the window; look at stimulation and closeness"],
+    ["Wired at night",9,"the Triple Burner is the window; look at light and winding down"]
+  ],
+  life:"If your life does not follow the clock, the clock is not wrong and neither are you. Shift workers, new parents, caregivers, and people in pain often live outside it. You can borrow its shape: a warm start, a pause at the height of your day, a slower evening, whenever those fall for you.",
+  gently:"Tracking your body can help, and it can also feed worry. Keep a light touch. This is not a diagnosis, and it does not replace care from a doctor or a licensed practitioner. If a symptom is severe, sudden, or lasting, please see someone. If you are in crisis, call or text 988 in the U.S., or your local emergency number.",
+  more:[`<b>Read.</b> The <a href="https://chinesemedicineatlas.com/tcm-body-clock/" target="_blank" rel="noopener">Chinese Medicine Atlas body clock</a> lays out the twelve windows and a table for reading patterns. Kaptchuk's <i>The Web That Has No Weaver</i> is a classic and readable introduction to the ideas behind the clock.`,`<b>Read, for the science.</b> Panda's <i>The Circadian Code</i> is an accessible account of the body's clocks, light, meals, and sleep.`,`<b>Find a person.</b> A licensed acupuncturist or TCM practitioner can talk with you about your own patterns. Tell your regular doctor too, so the care fits together.`]
+};
+
+const FIVE = {
+  intro:"The Five Phases (Wǔ Xíng) are five ways qi moves and changes: Wood, Fire, Earth, Metal, and Water. They are not five substances. The word xíng means moving or walking, so a phase is a kind of motion. The tradition uses them to describe the seasons, the organs, the feelings, and how things in a body or a life affect one another.",
+  gen:[["Wood feeds Fire","as fuel feeds a flame."],["Fire makes Earth","as ash settles to soil."],["Earth bears Metal","as ore comes from the ground."],["Metal gathers Water","as dew gathers on cold metal."],["Water nourishes Wood","as rain feeds the tree."]],
+  ctl:[["Wood parts Earth","roots break up soil."],["Earth holds back Water","as a bank holds a river."],["Water quenches Fire","as rain puts out a flame."],["Fire melts Metal","as heat softens it."],["Metal cuts Wood","as an axe fells a tree."]],
+  gently:"The cycles are metaphors that help the mind hold relationships. They are not laws, and they do not tell you what is wrong with you. If a pattern here seems to describe a problem, treat it as a question to take to a practitioner."
+};
+
+/* ---------- Geometry ---------- */
+const R = {core:[0,62], elem:[68,146], organ:[152,280], daily:[286,396], emo:[402,424], season:[432,504], orn:[524,538]};
+const VB = 574;
+const GAP = 1.2;
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("m");
+const rad = d => (d-90)*Math.PI/180;
+const P = (r,a) => [r*Math.cos(rad(a)), r*Math.sin(rad(a))];
+const f = n => n.toFixed(2);
+function el(tag, attrs, parent){ const e=document.createElementNS(NS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); (parent||svg).appendChild(e); return e; }
+function arc(r,a0,a1,sweep){ const [x,y]=P(r,a1); const large=Math.abs(a1-a0)>180?1:0; return `A${f(r)} ${f(r)} 0 ${large} ${sweep} ${f(x)} ${f(y)}`; }
+function sector(r0,r1,a0,a1,n,bulge){
+  const s0=P(r0,a0); let d=`M${f(s0[0])} ${f(s0[1])}`;
+  const e0=P(r1,a0); d+=` L${f(e0[0])} ${f(e0[1])}`;
+  const step=(a1-a0)/n;
+  for(let i=0;i<n;i++){ const b0=a0+i*step, b1=b0+step, m=(b0+b1)/2;
+    if(bulge){ const c=P(r1+bulge,m), e=P(r1,b1); d+=` Q${f(c[0])} ${f(c[1])} ${f(e[0])} ${f(e[1])}`; }
+    else d+=" "+arc(r1,b0,b1,1);
+  }
+  d+=` L${f(P(r0,a1)[0])} ${f(P(r0,a1)[1])} `+arc(r0,a1,a0,0)+"Z";
+  return d;
+}
+function rsector(r0,r1,a0,a1,o){
+  o=o||{};
+  const p=(r,a)=>`${f(P(r,a)[0])} ${f(P(r,a)[1])}`, dA=(rc,r)=>rc/r*180/Math.PI;
+  const ro=o.rOut||0, ri=o.rIn||0;
+  let d=`M${p(r0+ri,a0)} L${p(r1-ro,a0)}`;
+  if(ro) d+=` Q${p(r1,a0)} ${p(r1,a0+dA(ro,r1))} `+arc(r1,a0+dA(ro,r1),a1-dA(ro,r1),1)+` Q${p(r1,a1)} ${p(r1-ro,a1)}`;
+  else d+=` L${p(r1,a0)} `+arc(r1,a0,a1,1);
+  d+=` L${p(r0+ri,a1)}`;
+  if(ri) d+=` Q${p(r0,a1)} ${p(r0,a1-dA(ri,r0))} `+arc(r0,a1-dA(ri,r0),a0+dA(ri,r0),0)+` Q${p(r0,a0)} ${p(r0+ri,a0)}Z`;
+  else d+=` L${p(r0,a1)} `+arc(r0,a1,a0,0)+"Z";
+  return d;
+}
+function bloom(r0,r1,a0,a1){
+  const h=r1-r0, w=a1-a0, m=(a0+a1)/2, p=(r,a)=>`${f(P(r,a)[0])} ${f(P(r,a)[1])}`;
+  return `M${p(r0,a0)} C${p(r0+h*0.62,a0-w*0.03)} ${p(r1+2,m-w*0.2)} ${p(r1,m)} C${p(r1+2,m+w*0.2)} ${p(r0+h*0.62,a1+w*0.03)} ${p(r0,a1)} `+arc(r0,a1,a0,0)+"Z";
+}
+function petal(r0,r1,a0,a1){
+  const m=(a0+a1)/2, w=(a1-a0);
+  const b0=P(r0,a0), b1=P(r0,a1), tip=P(r1,m);
+  const c0=P(r0+(r1-r0)*.62,a0-w*.08), c1=P(r0+(r1-r0)*.62,a1+w*.08);
+  return `M${f(b0[0])} ${f(b0[1])} Q${f(c0[0])} ${f(c0[1])} ${f(tip[0])} ${f(tip[1])} Q${f(c1[0])} ${f(c1[1])} ${f(b1[0])} ${f(b1[1])} `+arc(r0,a1,a0,0)+"Z";
+}
+function discPath(cx,cy,r){ return `M${f(cx-r)} ${f(cy)} a${r} ${r} 0 1 0 ${2*r} 0 a${r} ${r} 0 1 0 ${-2*r} 0Z`; }
+let tpId=0;
+function arcText(r,a0,a1,text,cls,size,ls,parent){
+  const m=((a0+a1)/2+720)%360, flip = m>95 && m<265;
+  const id="tp"+(tpId++);
+  const rr = flip ? r+size*0.35 : r-size*0.35;
+  const [sx,sy]=P(rr, flip?a1:a0);
+  el("path",{id, d:`M${f(sx)} ${f(sy)} `+arc(rr, flip?a1:a0, flip?a0:a1, flip?0:1), fill:"none"}, parent);
+  const t=el("text",{class:cls, "font-size":size, "text-anchor":"middle", "letter-spacing":ls||0}, parent);
+  const tp=el("textPath",{href:"#"+id, startOffset:"50%"}, t); tp.textContent=text; return t;
+}
+function twoLines(rMid,a0,a1,l1,l2,c1,s1,c2,s2,gap,parent){
+  const m=((a0+a1)/2+720)%360, flip = m>95 && m<265, h=gap/2;
+  arcText(flip?rMid-h:rMid+h,a0,a1,l1,c1,s1,0.2,parent);
+  arcText(flip?rMid+h:rMid-h,a0,a1,l2,c2,s2,0.2,parent);
+}
+
+// an organ's angular window: the center of its two hours, noon at the top
+const oM = k => (((ORGANS[k].start+1-12)*15)%360+360)%360;
+const oA = k => [oM(k)-15, oM(k)+15];
+const arcOfOrgan = k => ELARCS.findIndex(x=>x.orgs.includes(k));
+const seasonOfOrgan = k => SEASONS.findIndex(x=>x.orgs.includes(k));
+const EL_TEXT = {metal:"tx-ink", earth:"tx-ink", fire:"tx-white", water:"tx-white", wood:"tx-white"};
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+
+/* ---------- Draw ---------- */
+const cells=[];
+function shapeOf(kind,i,g){
+  g=g||0;
+  if(kind==="elem"){ const [a0,a1]=ELARCS[i].a; return rsector(R.elem[0]-g,R.elem[1]+g,a0+GAP,a1-GAP,{rOut:10,rIn:8}); }
+  if(kind==="organ"){ const [a0,a1]=oA(i); return rsector(R.organ[0]-g,R.organ[1]+g,a0+GAP,a1-GAP,{rOut:9,rIn:7}); }
+  if(kind==="daily"){ const [a0,a1]=oA(i); return bloom(R.daily[0],R.daily[1],a0+GAP,a1-GAP); }
+  if(kind==="season"){ const [a0,a1]=SEASONS[i].a; return sector(R.season[0]-g,R.season[1]+g,a0+GAP,a1-GAP,6,12); }
+}
+const tagOf = (k,i)=>{
+  if(k==="elem") return "Five Phases · "+cap(ELARCS[i].el);
+  if(k==="organ") return ORGANS[i].time+" · "+cap(ORGANS[i].el)+" · "+(ORGANS[i].yin?"Yin":"Yang");
+  if(k==="daily") return "In daily life";
+  if(k==="emo") return "Feeling and quality";
+  if(k==="season") return "Season of the day";
+  return "";
+};
+function addCell(d,o){
+  const c=el("path",{d, class:"cell c-"+o.kind, fill:`var(${o.fill})`, tabindex:"0", role:"button", "aria-label":o.label});
+  c.dataset.slice=o.slice; c.dataset.sets=o.sets;
+  const go=()=>{ moonTip(null); o.go(); };
+  c.addEventListener("click",go);
+  c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
+  const info=()=>{ const [x,y]=P(o.at.r,o.at.a); return {x,y,html:`<span class="ringtag"><i></i>${o.tag}</span><b>${o.name}</b><span class="line">${o.line}</span><span>Tap to read more.</span>`,color:o.tipc||o.fill}; };
+  c.addEventListener("mouseenter",()=>{ hover(c); if(!openMoon) moonTip(c,info(),true); });
+  c.addEventListener("mouseleave",()=>{ hover(null); if(!openMoon) moonTip(null); });
+  c.addEventListener("focus",()=>{ hover(c); if(!openMoon && c.matches(":focus-visible")) moonTip(c,info(),true); });
+  c.addEventListener("blur",()=>{ hover(null); if(!openMoon) moonTip(null); });
+  cells.push(c); return c;
+}
+
+function draw(){
+  svg.innerHTML=""; cells.length=0; tpId=0;
+  const defs=el("defs",{});
+  const gr=el("radialGradient",{id:"qig",cx:"50%",cy:"50%",r:"50%"},defs);
+  el("stop",{offset:"0%",style:"stop-color:var(--yang)"},gr); el("stop",{offset:"100%",style:"stop-color:var(--yang2)"},gr);
+
+  // outer ornament: 24 small petals, one for each hour; noon is gold, midnight is indigo
+  const og=el("g",{"aria-hidden":"true"});
+  for(let k=0;k<24;k++){ const a=k*15; el("path",{d:petal(R.orn[0],R.orn[1],a-5.4,a+5.4),class:"orn"+(k===0?" ornnoon":k===12?" ornmid":"")},og); }
+  [["NOON",0],["6 PM",90],["MIDNIGHT",180],["6 AM",270]].forEach(([t,a])=>{ const [x,y]=P(556,a); const tx=el("text",{class:"hourlbl",x:f(x),y:f(y),"text-anchor":"middle","dominant-baseline":"central"},og); tx.textContent=t; });
+
+  const labels=el("g",{"pointer-events":"none"});
+
+  // the four seasons of the day
+  SEASONS.forEach((s,i)=>{
+    const [a0,a1]=s.a, m=(a0+a1)/2;
+    const sets="s"+i+" "+s.orgs.map(k=>"o"+k).join(" ");
+    addCell(shapeOf("season",i),{kind:"season",slice:"s"+i,sets,fill:s.c,label:`${s.name}, ${s.sub}: ${s.yy}`,tag:tagOf("season",i),name:`${s.name} · ${s.sub}`,line:s.tip,at:{a:m,r:(R.season[0]+R.season[1])/2},go:()=>showSeasons(i,true)});
+    twoLines((R.season[0]+R.season[1])/2+2,a0+10,a1-10,s.name,s.sub,"lbl tx-ink tx-disp",25,"tx-ink tx-small",13,28,labels);
+  });
+
+  // the twelve organs: emotion band, daily petal, organ cell
+  ORGANS.forEach((o,k)=>{
+    const [a0,a1]=oA(k), m=oM(k), ai=arcOfOrgan(k), si=seasonOfOrgan(k);
+    const sets=`o${k} e${ai} s${si}`;
+    addCell(rsector(R.emo[0],R.emo[1],a0+0.5,a1-0.5,{rIn:3,rOut:3}),{kind:"emo",slice:"o"+k,sets,fill:k%2?"--band2":"--band",label:`${o.emo}: ${o.name}`,tag:tagOf("emo",k),name:o.emo,line:`The feeling or quality linked with the ${o.name}.`,at:{a:m,r:R.emo[1]},go:()=>showElement(o.el,k,true)});
+    arcText((R.emo[0]+R.emo[1])/2,a0+1,a1-1,o.emo,"bandlbl",12.5,0.5,labels);
+    addCell(shapeOf("daily",k),{kind:"daily",slice:"o"+k,sets,fill:`--${o.el}3`,label:`${o.name}, in daily life: ${o.daily.join(" ")}`,tag:tagOf("daily",k),name:o.daily.join(" "),line:`${o.name}, ${o.time}.`,at:{a:m,r:R.daily[0]+44},go:()=>showElement(o.el,k,true)});
+    twoLines(338,a0+3,a1-3,o.daily[0],o.daily[1],"lbl tx-ink tx-disp",15,"lbl tx-ink tx-disp",15,19,labels);
+    addCell(shapeOf("organ",k),{kind:"organ",slice:"o"+k,sets,fill:`--${o.el}2`,label:`${o.name}, ${o.time}`,tag:tagOf("organ",k),name:o.name,line:o.tip,at:{a:m,r:(R.organ[0]+R.organ[1])/2},go:()=>showElement(o.el,k,true)});
+    twoLines(222,a0+2,a1-2,o.name,o.short,"lbl tx-ink tx-disp",14.5,"tx-ink tx-small",12,23,labels);
+  });
+
+  // the Five Phases
+  ELARCS.forEach((x,i)=>{
+    const [a0,a1]=x.a, m=(a0+a1)/2, E=ELEMENTS[x.el], tx=EL_TEXT[x.el];
+    const sets="e"+i+" "+x.orgs.map(k=>"o"+k).join(" ");
+    addCell(shapeOf("elem",i),{kind:"elem",slice:"e"+i,sets,fill:E.c,label:`${E.name}, ${E.py}: ${E.season}`,tag:tagOf("elem",i),name:`${E.name} · ${E.season.split(",")[0].toLowerCase()}`,line:`${x.kind?x.kind+": ":""}${x.orgs.map(k=>ORGANS[k].name).join(" and ")}. ${E.emo}.`,at:{a:m,r:(R.elem[0]+R.elem[1])/2},go:()=>showElement(x.el,null,true)});
+    twoLines((R.elem[0]+R.elem[1])/2,a0+4,a1-4,E.name.toUpperCase(),x.sub,`lbl ${tx} tx-disp`,20,`${tx} tx-small`,11.5,24,labels);
+  });
+  svg.appendChild(labels);
+
+  // Earth at the hinges between seasons
+  const hg=el("g",{});
+  HINGES.forEach((h,i)=>{
+    const [x,y]=P((R.season[0]+R.season[1])/2,h.a);
+    addCell(discPath(x,y,19),{kind:"hinge",slice:"h"+i,sets:"h"+i,fill:"--earth2",label:`Earth, at ${h.when}: the hinge between ${h.between}`,tag:"Earth · the hinge",name:`${h.when}: ${h.between}`,line:"Earth marks the turn between one season and the next.",at:{a:h.a,r:R.season[0]+8},go:()=>showSeasons(null,true)});
+    const t=el("text",{class:"hingelbl","font-size":9.5,x:f(x),y:f(y),"text-anchor":"middle","dominant-baseline":"central"},labels); t.textContent="Earth";
+  });
+
+  // center: qi, the yin-yang symbol. Noon (yang) at the top, midnight (yin) at the bottom.
+  const core=el("g",{class:"cell",tabindex:"0",role:"button","aria-label":"Qi, yin and yang, at the center. Read what they mean"});
+  core.dataset.slice="core"; core.dataset.sets="core";
+  const r=R.core[1]-4, lg=el("g",{"pointer-events":"none"},core);
+  el("circle",{cx:0,cy:0,r:R.core[1],fill:"url(#qig)"},lg);
+  el("circle",{cx:0,cy:0,r,fill:"var(--yin)"},lg);
+  el("path",{d:`M0 ${-r} A${r} ${r} 0 0 0 0 ${r} A${r/2} ${r/2} 0 0 1 0 0 A${r/2} ${r/2} 0 0 0 0 ${-r}Z`,fill:"var(--yang)"},lg);
+  el("circle",{cx:0,cy:-r/2,r:r/8,fill:"var(--yin)"},lg);
+  el("circle",{cx:0,cy:r/2,r:r/8,fill:"var(--yang)"},lg);
+  el("circle",{cx:0,cy:0,r,fill:"none",stroke:"var(--lotline)","stroke-width":1.8},lg);
+  const goCore=()=>{ moonTip(null); showQi(true); };
+  core.addEventListener("click",goCore); core.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); goCore(); } });
+  const cinfo={x:0,y:-50,html:`<span class="ringtag"><i></i>Qi</span><b>Qi, yin and yang</b><span class="line">The moving force of the body, and the turning of yang and yin through the day.</span><span>Tap to read more.</span>`,color:"--yang2"};
+  core.addEventListener("mouseenter",()=>{ hover(core); if(!openMoon) moonTip(core,cinfo,true); });
+  core.addEventListener("mouseleave",()=>{ hover(null); if(!openMoon) moonTip(null); });
+  core.addEventListener("focus",()=>{ hover(core); if(!openMoon && core.matches(":focus-visible")) moonTip(core,cinfo,true); });
+  core.addEventListener("blur",()=>{ hover(null); if(!openMoon) moonTip(null); });
+  cells.push(core);
+
+  svg.insertBefore(og, svg.firstChild.nextSibling);
+  el("g",{id:"selOutline"});
+  applySel();
+}
+function hover(cell){
+  if(!cell){ svg.classList.remove("dimming"); cells.forEach(c=>c.classList.remove("off")); return; }
+  svg.classList.add("dimming");
+  cells.forEach(c=>c.classList.toggle("off", !(c.dataset.sets||"").split(" ").includes(cell.dataset.slice)));
+}
+
+/* ---------- Hover cards ---------- */
+const mtip=document.getElementById("moontip");
+let openMoon=null;
+function moonTip(mk, info, hoverOnly){
+  if(openMoon) openMoon.classList.remove("open");
+  openMoon=null;
+  if(!mk){ mtip.classList.remove("on"); return; }
+  if(!hoverOnly){ openMoon=mk; mk.classList.add("open"); }
+  mtip.innerHTML=info.html;
+  mtip.classList.toggle("ringed",!!info.color);
+  if(info.color) mtip.style.setProperty("--tipc",`var(${info.color})`);
+  const box=mtip.parentElement, W=box.clientWidth, scale=W/(2*VB);
+  const px=(info.x+VB)*scale, py=(info.y+VB)*scale, w=mtip.offsetWidth, h=mtip.offsetHeight;
+  const left=Math.min(Math.max(px-w/2, 0), W-w);
+  const above=py-h-22*scale-6;
+  mtip.style.left=left+"px"; mtip.style.top=(above>=0 ? above : py+22*scale+6)+"px";
+  mtip.classList.add("on");
+}
+document.addEventListener("click",()=>{ if(openMoon) moonTip(null); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && openMoon) moonTip(null); });
+window.addEventListener("resize",()=>moonTip(null));
+
+/* ---------- Panel ---------- */
+const panel=document.getElementById("panel"), tabs=document.getElementById("tabs"), subnav=document.getElementById("subnav");
+let sel={kind:null,i:null}, view="intro";
+function addTab(label,key,go){
+  const b=document.createElement("button"); b.className="tab"; b.type="button"; b.setAttribute("role","tab");
+  b.textContent=label; b.dataset.tab=key; b.addEventListener("click",go); tabs.appendChild(b);
+}
+addTab("How to read","intro",()=>showIntro());
+addTab("Qi","qi",()=>showQi(true));
+addTab("Five Phases","five",()=>showFive(true));
+ELORDER.forEach(k=>addTab(ELEMENTS[k].name,k,()=>showElement(k,null,true)));
+addTab("Seasons of the day","seasons",()=>showSeasons(null,true));
+addTab("Practice","practice",()=>showPractice(true));
+function markTabs(){ [...tabs.children].forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===view?"true":"false")); }
+function setSubnav(items, current){
+  subnav.innerHTML="";
+  subnav.hidden=!items.length;
+  items.forEach((it,k)=>{ const b=document.createElement("button"); b.type="button"; b.textContent=it.label;
+    b.setAttribute("aria-current", k===current?"true":"false"); b.addEventListener("click",it.go); subnav.appendChild(b); });
+}
+function sw(bg){ return `<span class="sw" style="background:${bg}"></span>`; }
+function ul(items,cls){ return `<ul${cls?` class="${cls}"`:""}>`+items.map(i=>`<li>${i}</li>`).join("")+"</ul>"; }
+const isNarrow=()=>window.matchMedia("(max-width:900px)").matches;
+function wirePanelLinks(){
+  panel.querySelectorAll("[data-organ]").forEach(b=>b.addEventListener("click",()=>{ const k=+b.dataset.organ; showElement(ORGANS[k].el,k,true); }));
+  panel.querySelectorAll("[data-el]").forEach(b=>b.addEventListener("click",()=>showElement(b.dataset.el,null,true)));
+  panel.querySelectorAll("[data-season]").forEach(b=>b.addEventListener("click",()=>showSeasons(+b.dataset.season,true)));
+  panel.querySelectorAll("[data-qi]").forEach(b=>b.addEventListener("click",()=>showQi(true)));
+  panel.querySelectorAll("[data-five]").forEach(b=>b.addEventListener("click",()=>showFive(true)));
+  panel.querySelectorAll("[data-practice]").forEach(b=>b.addEventListener("click",()=>showPractice(true)));
+  panel.querySelectorAll("[data-intro]").forEach(b=>b.addEventListener("click",()=>showIntro()));
+}
+function bringPanel(target){
+  const t=target||panel, r=t.getBoundingClientRect();
+  if(isNarrow() || r.top<0 || r.top>window.innerHeight*0.7) t.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function setView(v,s){ view=v; sel=s||{kind:null,i:null}; applySel(); markTabs(); }
+const organChips = ks => `<div class="orgchips">${ks.map(k=>`<button type="button" data-organ="${k}">${ORGANS[k].name} · ${ORGANS[k].short}</button>`).join("")}</div>`;
+
+/* How to read */
+const CENTER_HTML=`<div class="center-msg">
+    <div class="eyebrow">Begin here</div>
+    <h2>Qi, at the center</h2>
+    <p>This mandala holds the TCM body clock in one circle. At the center is qi, the moving force of the body, drawn as the yin-yang symbol. Around it, ring by ring, run the Five Phases, the twelve organ hours of the day, and the four seasons that the day itself passes through.</p>
+    <p>The wheel is a 24-hour clock with noon at the top and midnight at the bottom, so the day reads clockwise like a clock face. Dawn is on the left, where the sun rises, and dusk is on the right. Yang, the bright and active side, grows through the left half toward its peak at noon. Yin, the cool and quiet side, grows through the right half toward its peak at midnight.</p>
+    <p>You can read the wheel from the center out, as an unfolding: qi, the phases, the organs, and the seasons. Or read it from the outside in, as a day to live: the season of the day you are in, the organ whose window it is, and one small thing that suits it. Either way, you may begin anywhere.</p>
+    <p class="sym">The symbol is drawn to match the clock. Its bright head is at the top, where yang peaks at noon, and its dark head is at the bottom, where yin peaks at midnight. Each holds a small seed of the other.</p>
+  </div>`;
+function showIntro(){
+  setView("intro"); setSubnav([]);
+  panel.innerHTML=CENTER_HTML+`<div class="intro">
+    <h2>Reading the wheel</h2>
+    <ul class="legend">
+      ${["core","elem","organ","daily","emo","season"].map(k=>`<li>${sw(RINGS[k].sw)}<div><b>${RINGS[k].name}</b>${RINGS[k].about}</div></li>`).join("")}
+    </ul>
+    <p>Around the very edge are 24 small petals, one for each hour. The gold petal at the top is noon, and the indigo one at the bottom is midnight. The four small Earth markers on the outer ring sit at 3 am, 9 am, 3 pm, and 9 pm, where one season of the day turns into the next.</p>
+    <p>The organ clock and the seasons are two different layers, and they do not match one for one. The organ clock follows qi through the channels in a fixed order. The seasons follow the sun. For example, the Wood organs keep their hours late at night, just before the day's spring begins at 3 am. Hover over any organ to see which phase and which season of the day it falls in.</p>
+    <p class="hint">Choose any ring or petal to open it. Go slowly, and take what is useful now. <button type="button" class="pauselink" data-practice>Begin gently</button></p>
+  </div>`;
+  wirePanelLinks();
+}
+
+/* Qi, yin and yang */
+function showQi(user){
+  setView("qi",{kind:"core",i:0}); setSubnav([]);
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">The center of the wheel</div><h2>Qi, yin and yang</h2>
+      <div class="meta">Qì · 氣 · the moving force, and its two faces</div><p>${QI.intro}</p></div>
+    <div class="ring"><h3>${sw(RINGS.core.sw)}How qi moves</h3>${ul(QI.what)}</div>
+    <div class="ring"><h3>Yin and yang through the day</h3>${ul(QI.yy)}</div>
+    <div class="ring"><h3>Across the wheel</h3>
+      <p class="about">Each organ sits opposite its partner, twelve hours away. The tradition describes each as at its low point while the other is at its peak, and treats a trouble in one by also looking at the other.</p>
+      <ul>${[0,1,2,3,4,5].map(k=>`<li><button type="button" class="pauselink" data-organ="${k}">${ORGANS[k].name}</button> (${ORGANS[k].short}) and <button type="button" class="pauselink" data-organ="${OPPOSITE(k)}">${ORGANS[OPPOSITE(k)].name}</button> (${ORGANS[OPPOSITE(k)].short})</li>`).join("")}</ul></div>
+    <div class="ring"><h3>Solar time</h3><p>${QI.solar}</p></div>
+    <div class="ring"><h3>Tradition, and what science says</h3>${ul(QI.science)}</div>
+    <p class="gentle"><b>Go gently.</b> ${QI.gently}</p>
+    <p class="src">After Kaptchuk (2000); Maciocia (2015); Chinese Medicine Atlas; Takahashi (2017).</p>
+    <div class="rnext"><button type="button" class="btn" data-intro>← How to read</button><button type="button" class="btn" data-five>On to the Five Phases →</button></div>`;
+  wirePanelLinks();
+  if(user) bringPanel();
+}
+
+/* The Five Phases, with the generating and controlling cycles */
+function cycleSVG(){
+  const order=["fire","earth","metal","water","wood"], pos=order.map((k,i)=>P(104,i*72)), r=30;
+  const line=(i,j,cls,shorten)=>{ const [x1,y1]=pos[i],[x2,y2]=pos[j]; const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),u=[dx/L,dy/L]; return `<line x1="${f(x1+u[0]*(r+2))}" y1="${f(y1+u[1]*(r+2))}" x2="${f(x2-u[0]*(r+8))}" y2="${f(y2-u[1]*(r+8))}" ${cls} marker-end="url(#${shorten})"/>`; };
+  const gen=order.map((_,i)=>line(i,(i+1)%5,'stroke="var(--ink)" stroke-width="2.4"',"ah1")).join("");
+  const ctl=order.map((_,i)=>line(i,(i+2)%5,'stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="5 4"',"ah2")).join("");
+  const nodes=order.map((k,i)=>`<circle cx="${f(pos[i][0])}" cy="${f(pos[i][1])}" r="${r}" fill="var(${ELEMENTS[k].c})" stroke="var(--bg)" stroke-width="2"/><text x="${f(pos[i][0])}" y="${f(pos[i][1])}" text-anchor="middle" dominant-baseline="central" style="${k==='metal'||k==='earth'?'':'fill:#fff'}">${ELEMENTS[k].name}</text>`).join("");
+  return `<svg viewBox="-150 -150 300 300" role="img" aria-label="The Five Phases in a ring. Solid arrows go clockwise for the generating cycle; dashed lines cross the ring for the controlling cycle."><defs><marker id="ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--muted)"/></marker></defs>${ctl}${gen}${nodes}</svg>`;
+}
+function showFive(user){
+  setView("five"); setSubnav([]);
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">The ring inside the organs</div><h2>The Five Phases</h2>
+      <div class="meta">Wǔ Xíng · 五行 · five ways qi moves and changes</div><p>${FIVE.intro}</p></div>
+    <ul class="phtable">${ELORDER.map(k=>{ const E=ELEMENTS[k]; return `<li>${sw(`var(${E.c})`)}<div><b><button type="button" class="pauselink" data-el="${k}" style="font-size:inherit;font-family:inherit;color:inherit;text-decoration:none">${E.name}</button> · ${E.py} ${E.zh}</b><span>${E.season} · ${E.dir} · ${E.climate.toLowerCase()} · ${E.emo.toLowerCase()}</span><span>${E.organs}, ${E.time}</span></div></li>`; }).join("")}</ul>
+    <div class="ring"><h3>The two cycles</h3>
+      <div class="cyc">${cycleSVG()}<div class="legendkey"><span><i></i>generates (shēng)</span><span><i class="dash"></i>controls (kè)</span></div></div>
+      <h4>Generating, clockwise</h4>${ul(FIVE.gen.map(([a,b])=>`<b>${a}</b>, ${b}`))}
+      <h4>Controlling, across the ring</h4>${ul(FIVE.ctl.map(([a,b])=>`<b>${a}</b>, ${b}`))}
+      <p class="about">In a healthy body the two cycles keep one another in balance: each phase is fed by one and checked by another. In the tradition, a pattern is read as one phase too strong, too weak, or not fed.</p></div>
+    <div class="ring"><h3>The phases on the wheel</h3>
+      <p>Metal runs from 3 to 7 am, Earth from 7 to 11 am, Fire from 11 am to 3 pm, Water from 3 to 7 pm, Fire again from 7 to 11 pm, and Wood from 11 pm to 3 am. Fire is the only phase with two arcs, because it holds four organ systems: the Heart and Small Intestine, and the Pericardium and Triple Burner.</p>
+      <p>The same phases also map onto the year, and so onto the seasons of the day: Wood is spring, Fire is summer, Metal is autumn, and Water is winter. Earth is the center, and the hinge between seasons. <button type="button" class="pauselink" data-season="0">See the seasons of the day</button></p></div>
+    <p class="gentle"><b>Go gently.</b> ${FIVE.gently}</p>
+    <p class="src">After Kaptchuk (2000); Maciocia (2015); and the Yellow Emperor's Classic (Veith, 1949).</p>
+    <div class="rnext"><button type="button" class="btn" data-qi>← Qi</button><button type="button" class="btn" data-el="metal">On to Metal →</button></div>`;
+  wirePanelLinks();
+  if(user) bringPanel();
+}
+
+/* A Phase and its organs */
+function showElement(key,oi,user){
+  const E=ELEMENTS[key], ks=ORGANS.map((o,k)=>k).filter(k=>ORGANS[k].el===key);
+  setView(key, oi!=null ? {kind:"organ",i:oi} : {kind:"elem",key});
+  setSubnav(ks.map(k=>({label:`${ORGANS[k].name} · ${ORGANS[k].short}`,go:()=>showElement(key,k,true)})), oi!=null?ks.indexOf(oi):-1);
+  const card=k=>{
+    const o=ORGANS[k], op=OPPOSITE(k), si=seasonOfOrgan(k);
+    return `<details class="qcard" id="o-${k}"${oi===k?" open":""}><summary><span class="cardbar" style="background:var(${E.c})"></span><span style="display:grid;gap:1px;padding:10px 16px 12px"><span class="qn">${o.time} · ${o.name}<span class="yy">${o.yin?"Yin":"Yang"}</span></span><span class="qq">${o.py} ${o.zh} · ${E.name} · ${o.emo.toLowerCase()}</span><span class="qw">${o.tip}</span></span></summary>
+      <div class="qbody">
+        <p>${o.intro}</p>
+        <h4>What it does, in TCM</h4>${ul(o.role)}
+        <h4>In its window</h4>${ul(o.inwin)}
+        <h4>What people notice</h4>${ul(o.notice)}
+        <p class="gentle"><b>Go gently.</b> ${o.gently}</p>
+        <p class="about"><b>On the wheel.</b> ${o.name} falls in the day's <button type="button" class="pauselink" data-season="${si}">${SEASONS[si].name.toLowerCase()}</button>, and sits across from the <button type="button" class="pauselink" data-organ="${op}">${ORGANS[op].name}</button> (${ORGANS[op].short}), which the tradition describes as at its low point while this one peaks.</p>
+      </div></details>`;
+  };
+  const ei=ELORDER.indexOf(key), prev=ei>0?ELORDER[ei-1]:null, next=ei<4?ELORDER[ei+1]:null;
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">The Five Phases · ${E.name}</div><h2>${E.name}</h2>
+      <div class="meta">${E.py} ${E.zh} · ${E.season.toLowerCase()} · ${E.dir.toLowerCase()} · ${E.climate.toLowerCase()} · ${E.emo.toLowerCase()}</div><p>${E.blurb}</p></div>
+    <div class="ring"><h3>${sw(`var(${E.c})`)}What it holds</h3>${ul(E.holds)}<p class="about">${E.organs}. ${E.time}.</p></div>
+    ${ks.map(card).join("")}
+    <p class="gentle"><b>Go gently.</b> ${E.gently}</p>
+    <p class="src">After Kaptchuk (2000); Maciocia (2015); Chinese Medicine Atlas.</p>
+    <div class="rnext"><button type="button" class="btn" ${prev?`data-el="${prev}"`:"data-five"}>← ${prev?ELEMENTS[prev].name:"The Five Phases"}</button><button type="button" class="btn" ${next?`data-el="${next}"`:"data-season=\"0\""}>${next?ELEMENTS[next].name:"Seasons of the day"} →</button></div>`;
+  wirePanelLinks();
+  panel.querySelectorAll(".qcard").forEach(d=>d.addEventListener("toggle",()=>{ if(d.open){ sel={kind:"organ",i:+d.id.slice(2)}; applySel(); } }));
+  if(user) bringPanel(oi!=null ? document.getElementById("o-"+oi) : null);
+}
+
+/* The four seasons of the day */
+function showSeasons(i,user){
+  setView("seasons", i!=null ? {kind:"season",i} : {kind:null,i:null});
+  setSubnav(SEASONS.map((s,k)=>({label:s.name,go:()=>showSeasons(k,true)})), i);
+  const card=(s,k)=>{ const E=ELEMENTS[s.el];
+    return `<details class="qcard" id="s-${k}"${i===k?" open":""}><summary><span class="cardbar" style="background:var(${s.c})"></span><span style="display:grid;gap:1px;padding:10px 16px 12px"><span class="qn">${s.name}<span class="yy">${s.yy}</span></span><span class="qq">${s.sub} · ${E.name}</span><span class="qw">${s.tip}</span></span></summary>
+      <div class="qbody">
+        <p>${s.day}</p>
+        <h4>In the year</h4>${ul(s.year)}
+        <h4>Rhythm for rest and rising</h4><p>${s.rest}</p>
+        <h4>Ways to try it</h4>${ul(s.tryit)}
+        <h4>Organs in this window</h4>${organChips(s.orgs)}
+        <p class="about"><b>On the wheel.</b> ${s.hinge}</p>
+      </div></details>`; };
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">The outer ring · day and year</div><h2>The four seasons of the day</h2>
+      <div class="meta">Spring at dawn · summer at noon · autumn at dusk · winter at midnight</div>
+      <p>The classical texts pair the day with the year (Ling Shu 44). Each day passes through a small spring, summer, autumn, and winter, and each year does the same on a larger scale. Lining them up lets you borrow one for the other: how you rise and rest across the year follows the same shape as the day.</p></div>
+    <div class="ring"><h3>${sw(RINGS.season.sw)}The turning of the day</h3>
+      <p class="about">Yang grows from midnight to noon (winter to summer) and yields to yin from noon to midnight (summer to winter). With noon at the top, spring is on the left, summer at the top, autumn on the right, and winter at the bottom.</p></div>
+    ${SEASONS.map(card).join("")}
+    <div class="ring"><h3>${sw("var(--earth2)")}Earth, at the hinges</h3>
+      <p>Earth (Tǔ) is the center and the great nourisher, and it sits at the turn between one season and the next. Some schools add a fifth season, late summer (cháng xià), when the year is at its fullest. Others give Earth the last eighteen days or so of every season. On the wheel, four small Earth markers sit at 3 am, 9 am, 3 pm, and 9 pm. The Stomach and Spleen, the Earth organs, keep their hours from 7 to 11 am, either side of the 9 am marker.</p></div>
+    <div class="ring"><h3>Two layers, not one</h3>
+      <p>The organ clock and the seasons of the day do not match organ for organ. The Wood organs, for example, belong to spring in the year, but their hours fall in the dark, just before the day's spring begins. The Metal organs belong to autumn in the year, but their hours fall at dawn. The tradition does not treat this as an error. The organ clock follows qi through the channels, and the seasons follow the sun, and each shows something different. If you want one rule of thumb, let the seasons set the broad shape of your day and the organs add detail.</p></div>
+    <div class="ring"><h3>Where you live</h3>
+      <p>The seasons in the year depend on where you live: in the southern hemisphere they are reversed, and near the equator the year is more even. The seasons of the day do not change. Noon is always the day's summer, and midnight its winter.</p></div>
+    <p class="gentle"><b>Go gently.</b> The old advice about when to rise and rest was written for a farming life, and many of us cannot follow it. Work, children, health, and light shape the hours we get. Take the shape of the day, not the rule.</p>
+    <p class="src">After Ling Shu 44; Su Wen 2 (Veith, 1949); Kaptchuk (2000); Maciocia (2015).</p>
+    <div class="rnext"><button type="button" class="btn" data-el="wood">← Wood</button><button type="button" class="btn" data-practice>Begin gently →</button></div>`;
+  wirePanelLinks();
+  panel.querySelectorAll(".qcard").forEach(d=>d.addEventListener("toggle",()=>{ if(d.open){ sel={kind:"season",i:+d.id.slice(2)}; applySel(); } }));
+  if(user) bringPanel(i!=null ? document.getElementById("s-"+i) : null);
+}
+
+/* Practice */
+function showPractice(user){
+  setView("practice"); setSubnav([]);
+  const X=PRACTICE;
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">Starting out</div><h2>Begin gently</h2>
+      <div class="meta">A gentle day around the wheel, and a way to read your own patterns</div><p>${X.intro}</p></div>
+    <div class="ring"><h3>A gentle day around the wheel</h3>
+      <ul>${X.anchors.map(([a,b])=>`<li><b>${a}.</b> ${b}</li>`).join("")}</ul></div>
+    <div class="ring"><h3>Reading your own patterns</h3>
+      <p class="about">For two weeks, jot down when you wake, when your energy rises and falls, and when a feeling or a symptom comes up. A repeating hour is a clue, a place to be curious. It is not a diagnosis.</p>
+      <ul class="ptn">${X.patterns.map(([a,k,b])=>`<li><b>${a}</b><span><button type="button" class="pauselink" data-organ="${k}">${ORGANS[k].name}</button>: ${b}.</span></li>`).join("")}</ul></div>
+    <div class="ring"><h3>The year around the wheel</h3>
+      <p class="about">Across the year the same shape returns, a little at a time. In spring begin and move. In summer give your fullest effort and take a pause at the peak. In autumn let go and draw close. In winter rest and keep warm. <button type="button" class="pauselink" data-season="0">Open the seasons</button></p></div>
+    <div class="ring"><h3>If your life does not follow the clock</h3><p>${X.life}</p></div>
+    <p class="gentle"><b>Go gently.</b> ${X.gently}</p>
+    <div class="ring"><h3>Going further</h3>${ul(X.more)}</div>
+    <p class="src">After common teaching practice; see the references below the wheel.</p>
+    <div class="rnext"><button type="button" class="btn" data-season="3">← Seasons of the day</button><button type="button" class="btn" data-intro>Back to How to read</button></div>`;
+  wirePanelLinks();
+  if(user) bringPanel();
+}
+
+function applySel(){
+  const so=document.getElementById("selOutline");
+  if(!so) return; so.innerHTML="";
+  if(sel.kind==="organ"){ const [a0,a1]=oA(sel.i);
+    el("path",{d:rsector(R.organ[0]-3,R.emo[1]+3,a0+GAP/2,a1-GAP/2,{rIn:9,rOut:6})},so); }
+  else if(sel.kind==="elem"){ ELARCS.forEach((x,i)=>{ if(x.el===sel.key) el("path",{d:shapeOf("elem",i,3)},so); }); }
+  else if(sel.kind==="season") el("path",{d:shapeOf("season",sel.i,3)},so);
+  else if(sel.kind==="core") el("circle",{cx:0,cy:0,r:R.core[1]+4},so);
+}
+
+/* light and dark switch */
+const root=document.documentElement, tbtn=document.getElementById("themebtn");
+const sysDark=window.matchMedia("(prefers-color-scheme: dark)");
+function isDark(){ const t=root.getAttribute("data-theme"); return t ? t==="dark" : sysDark.matches; }
+function syncTheme(){ const d=isDark(); root.classList.toggle("is-dark",d); tbtn.setAttribute("aria-label", d?"Switch to light mode":"Switch to dark mode"); tbtn.title=d?"Light mode":"Dark mode"; }
+tbtn.addEventListener("click",()=>{ const next=isDark()?"light":"dark"; root.setAttribute("data-theme",next); try{ localStorage.setItem("tcm-theme",next); }catch(e){} syncTheme(); });
+sysDark.addEventListener("change",syncTheme);
+syncTheme();
+
+/* ring key */
+const rk=document.getElementById("ringkey");
+const KEYGO={core:()=>showQi(true), elem:()=>showFive(true), organ:()=>showElement("metal",null,true), daily:()=>showElement("metal",null,true), emo:()=>showElement("metal",null,true), season:()=>showSeasons(null,true)};
+["core","elem","organ","daily","emo","season"].forEach(k=>{
+  const b=document.createElement("button"); b.type="button"; b.innerHTML=sw(RINGS[k].sw)+RINGS[k].name;
+  b.addEventListener("click",KEYGO[k]); rk.appendChild(b);
+});
+
+draw();
+showIntro();
+
+})();
+</script>
+
+</body></html>
