@@ -246,6 +246,40 @@ section.about p{margin:0;max-width:68ch}
 .nowmark circle{fill:var(--gold);stroke:var(--bg);stroke-width:2.5}
 @media (max-width:560px){.viewtoggle button{padding:7px 14px}.viewtoggle button span{display:none}}
 /* The Phases wheel */
+.tabs:has(.tabgroup){display:grid;gap:8px}
+.tabgroup{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tablabel{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);min-width:118px}
+@media (max-width:520px){.tablabel{min-width:0;width:100%}}
+.learn{margin:0;font-size:14px;border:1px dashed var(--line);border-radius:10px;padding:8px 12px;color:var(--muted)}
+.learn b{color:var(--ink)}
+.qcompass{display:grid;justify-items:center}
+.qcompass svg{width:min(340px,100%);height:auto;overflow:visible}
+.qd{stroke:var(--bg);stroke-width:3;cursor:pointer;opacity:.85}
+.qd:hover,.qd:focus-visible{opacity:1;outline:none;stroke:var(--ink)}
+.qd.on{opacity:1;stroke:var(--gold);stroke-width:4}
+.qd.opp{opacity:1}
+.qcenter{fill:var(--surface);stroke:var(--lotline);stroke-width:1.5;cursor:pointer}
+.qlab{font-family:var(--display);font-size:15px;fill:var(--on-light);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.qcenter+.qlab{fill:var(--ink)}
+.qaxis{font-family:var(--body);font-weight:700;font-size:12px;letter-spacing:.16em;fill:var(--muted);text-anchor:middle;dominant-baseline:central}
+.qline{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 4;opacity:.5;pointer-events:none}
+.qarrow{fill:none;stroke:var(--ink);stroke-width:2.6}
+.qcard-on{border-left:6px solid var(--qc)}
+.tonegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tonegrid>div{display:grid;gap:6px;align-content:start;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.tonegrid b{font-family:var(--display);font-weight:400;font-size:18px}
+.tonegrid p{margin:0}
+.tonegrid .tx{font-size:14px;color:var(--muted)}
+@media (max-width:520px){.tonegrid{grid-template-columns:1fr}}
+.eight{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.eight>li{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:12px 14px;display:grid;gap:8px}
+.eight .eh b{font-family:var(--display);font-weight:400;font-size:21px;display:block}
+.eight .eh span{font-size:13px;color:var(--muted)}
+.eight .ep{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.eight .ep>div{background:var(--bg);border-radius:10px;padding:8px 10px}
+.eight .ep b{font-weight:700}
+.eight .ep p{margin:2px 0 0;font-size:14.5px}
+@media (max-width:520px){.eight .ep{grid-template-columns:1fr}}
 .ctable{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface);scrollbar-width:thin}
 .ctable:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .ctable table{border-collapse:collapse;font-size:13.5px;min-width:640px;width:100%}
@@ -329,6 +363,8 @@ try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") docume
     <h3>Three wheels</h3>
     <p>The Phases wheel follows the Taoist account of how the many come from the one, in the order of the 11th-century scholar Zhou Dunyi's Explanation of the Diagram of the Supreme Ultimate: Wuji, the boundless; Taiji, the first movement; yin and yang; the Five Phases; and the ten thousand things. The phases are spaced evenly, Fire at the top and then Earth, Metal, Water, and Wood clockwise, so the generating cycle runs around the circle and the controlling cycle forms a five-pointed star, drawn behind yin and yang where all the phases meet. The texts give more than one route from one to many: the Tao Te Ching counts one, two, three, and the ten thousand things, and the Book of Changes moves from Taiji to two modes, four images, and eight trigrams. The panels note where readings differ.</p>
     <p>The Day wheel follows the Chinese Medicine Atlas body clock: the twelve organ windows, the phase of each organ, a line for daily life, and the feeling each is linked with. The Year wheel follows Five Phase theory in its first home, the year: Wood in spring, Fire in summer, Earth in late summer, Metal in autumn, and Water in winter, with the organs each phase holds, the 24 solar terms of the Chinese calendar, and the calendar months. Seasons begin at the four starts (lì), around February 4, May 5, August 7, and November 7, so each solstice and equinox falls mid-season. Both wheels put noon and midsummer at the top.</p>
+    <h3>Qualities and balance</h3>
+    <p>The Balance pages on the Phases wheel show the energetic approach shared by Chinese medicine, Ayurveda, and Western herbalism: describing a state by qualities you can feel, such as hot or cold, damp or dry, tense or lax, and bringing it back toward the middle with the opposite quality. A cold is used as a worked example, because the same cold can lean cold or hot and is balanced in opposite ways. These pages are a learning tool for the philosophy and its concepts, not medical advice. The herbs named are examples of how each quality is approached, not recommendations.</p>
     <h3>What is tradition, and what is science</h3>
     <p>The organ clock and the Five Phases are classical Chinese medical ideas. They are a way of organizing experience, and they have been used for centuries. They have not been shown by modern research to work as stated, and in particular there is no good evidence that each organ peaks in its own two-hour window. What science does support is that the body keeps time. Genes in nearly every cell run a circadian clock. Cortisol rises in the early morning, core body temperature falls overnight, and melatonin begins to rise in the evening. The TCM clock and the circadian clock overlap in spirit, not in detail. Use the first as a lens for noticing, and lean on the second, and on your clinicians, for health decisions.</p>
     <h3>Going gently</h3>
@@ -338,15 +374,18 @@ try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") docume
     <h3>References</h3>
     <ol class="refs">
       <li>Chinese Medicine Atlas. (n.d.). <i>TCM Body Clock</i>. <a href="https://chinesemedicineatlas.com/tcm-body-clock/" target="_blank" rel="noopener">chinesemedicineatlas.com/tcm-body-clock</a>. The clock's windows and the idea for this map.</li>
+      <li>Bensky, D., Clavey, S., &amp; Stöger, E. (2004). <i>Chinese Herbal Medicine: Materia Medica</i> (3rd ed.). Eastland Press.</li>
       <li>Chan, W. (Trans. and Ed.). (1963). <i>A Source Book in Chinese Philosophy</i>. Princeton University Press. (Includes Zhou Dunyi's Explanation of the Diagram of the Supreme Ultimate.)</li>
       <li>Kaptchuk, T. J. (2000). <i>The Web That Has No Weaver: Understanding Chinese Medicine</i> (2nd ed.). McGraw-Hill.</li>
       <li>Kohn, L. (2001). <i>Daoism and Chinese Culture</i>. Three Pines Press.</li>
       <li>Maciocia, G. (2015). <i>The Foundations of Chinese Medicine</i> (3rd ed.). Elsevier.</li>
+      <li>Maier, K. (2021). <i>Energetic Herbalism: A Guide to Sacred Plant Traditions Integrating Elements of Vitalism, Ayurveda, and Chinese Medicine</i>. Chelsea Green.</li>
       <li>Panda, S. (2018). <i>The Circadian Code</i>. Rodale.</li>
       <li>Takahashi, J. S. (2017). Transcriptional architecture of the mammalian circadian clock. <i>Nature Reviews Genetics, 18</i>(3), 164 to 179.</li>
       <li>Unschuld, P. U. (Trans.). (1986). <i>Nan-ching: The Classic of Difficult Issues</i>. University of California Press.</li>
       <li>Veith, I. (Trans.). (1949). <i>The Yellow Emperor's Classic of Internal Medicine</i>. University of California Press. Translates the first 34 chapters of the Su Wen, including chapter 2 on the seasons. The Ling Shu is the companion classic.</li>
       <li>Wang, R. R. (2012). <i>Yinyang: The Way of Heaven and Earth in Chinese Thought and Culture</i>. Cambridge University Press.</li>
+      <li>Wood, M. (2004). <i>The Practice of Traditional Western Herbalism</i>. North Atlantic Books.</li>
       <li>The Tao Te Ching, the Book of Changes, and the medical classics, in Chinese with many translations, at the <a href="https://ctext.org" target="_blank" rel="noopener">Chinese Text Project</a>.</li>
     </ol>
     <p class="foot">Created by Erin Singleton. An educational map for reflection, not therapy, medical advice, or a substitute for a licensed practitioner.</p>
@@ -1079,7 +1118,7 @@ function showCycle(kind){
   cells.forEach(c=>c.classList.toggle("lit", kind && c.classList.contains("rel-"+kind)));
   svg.classList.toggle("cycle", !!kind);
 }
-const GO_C = {intro:()=>showCosmosIntro(), wuji:()=>showWuji(true), taiji:()=>showTaiji(true), yy:()=>showYinYang(true), phases:()=>showPhases(null,true), corr:()=>showCorr(true), gen:()=>showGen(null,true), ctl:()=>showCtl(null,true), bal:()=>showBalance(true), ww:()=>showWanwu(true), practice:()=>showCosmosPractice(true)};
+const GO_C = {intro:()=>showCosmosIntro(), wuji:()=>showWuji(true), taiji:()=>showTaiji(true), yy:()=>showYinYang(true), phases:()=>showPhases(null,true), corr:()=>showCorr(true), qual:()=>showQual(null,true), cold:()=>showCold(null,true), eight:()=>showEight(true), gen:()=>showGen(null,true), ctl:()=>showCtl(null,true), bal:()=>showBalance(true), ww:()=>showWanwu(true), practice:()=>showCosmosPractice(true)};
 const pchip = k => `<button type="button" class="pchip" data-phase="${k}" style="--c:var(${PHASES[k].c}2)">${PHASES[k].name}</button>`;
 const nextBtns = (a,b) => `<div class="rnext"><button type="button" class="btn" data-go="${a[0]}">← ${a[1]}</button><button type="button" class="btn" data-go="${b[0]}">${b[1]} →</button></div>`;
 
@@ -1108,6 +1147,7 @@ function showCosmosIntro(){
     <h2>Reading the wheel</h2>
     <ul class="legend">${Object.keys(RINGS_C).map(k=>`<li>${sw(RINGS_C[k].sw)}<div><b>${RINGS_C[k].name}</b>${RINGS_C[k].about}</div></li>`).join("")}</ul>
     <p>Hover over a phase to light up its four relationships: the phase that feeds it, the one it feeds, the one that tames it, and the one it tames. Hover over an arrow to see that one relationship.</p>
+    <p>The tabs are grouped for easy reference. <b>Origins</b> follows the unfolding from Wuji. <b>The Five Phases</b> holds the phases, their correspondences, and their two cycles. <b>Balance</b> shows how the herbal traditions use qualities such as hot and cold, damp and dry, to understand a state and what would balance it, with a cold as a worked example. <button type="button" class="pauselink" data-go="qual">Open the qualities compass</button></p>
     <p class="hint">Choose any ring, phase, or arrow to open it. Go slowly, and take what is useful now. <button type="button" class="pauselink" data-go="practice">Begin gently</button></p>
   </div>`;
   wirePanelLinks();
@@ -1216,6 +1256,168 @@ function showCorr(user){
   wirePanelLinks();
   if(user) bringPanel();
 }
+
+/* ---------- Balance: qualities, a cold, and the eight principles ----------
+   In our own words, after widely taught principles of Chinese medicine, Ayurveda, and Western energetic herbalism.
+   A learning tool for the philosophy, not medical advice. */
+const LEARN_NOTE = `<p class="learn"><b>A learning tool.</b> These pages show how the herbal traditions think about balance. They are not medical advice, and they are not a way to diagnose or treat yourself.</p>`;
+
+/* the four quadrants of the compass: hot or cold, damp or dry. opp is the direction that balances it. */
+const QUAL = {
+  hd:  {name:"Hot and damp", short:"Hot & damp", c:"--earth2", opp:"cdr", toward:"Cooling and drying", tcm:"Damp-heat, shī rè 濕熱", ayur:"Pitta, the hot and oily dosha", phases:[0,1],
+        signs:["Thick yellow mucus or discharge","Inflamed, oily, or weeping skin","Feeling heavy and irritable at once, sticky heat","Strong odors; a thick, yellow tongue coating"],
+        tastes:"Bitter cools and dries at the same time, which is why it is the classic taste for damp-heat.",
+        foods:"Bitter greens, mung beans, barley water, lighter meals with less fried and rich food",
+        herbs:"Dandelion root, Oregon grape root; in Chinese medicine, coptis (huáng lián) and Baikal skullcap root (huáng qín)"},
+  hdr: {name:"Hot and dry", short:"Hot & dry", c:"--fire2", opp:"cd", toward:"Cooling and moistening", tcm:"Dry-heat, or heat from too little yin (yīn xū)", ayur:"Pitta with Vata", phases:[0,2],
+        signs:["Dry, tickly cough; dry, sore throat","Thirst, dry lips and skin","Restlessness, feeling warm in the afternoon or at night","Dry stools; a red tongue with little coating"],
+        tastes:"Sweet that is cool and moist soothes and moistens; a little sour helps hold fluids in.",
+        foods:"Pears, watermelon, cucumber, soups, soaked grains",
+        herbs:"Marshmallow root, licorice; in Chinese medicine, ophiopogon root (mài mén dōng) and glehnia root (běi shā shēn)"},
+  cd:  {name:"Cold and damp", short:"Cold & damp", c:"--water2", opp:"hdr", toward:"Warming and drying", tcm:"Cold-damp, hán shī 寒濕", ayur:"Kapha, the cold and heavy dosha", phases:[3,1],
+        signs:["Clear, runny mucus; chills","Heaviness, sluggish digestion, loose stools","Puffiness or water retention","Pale tongue with a white coating; feeling better with warmth"],
+        tastes:"Pungent warms, dries, and gets things moving; aromatic herbs help clear dampness.",
+        foods:"Warm soups with ginger, onion, and spices; cooked rather than cold and raw food",
+        herbs:"Ginger, cinnamon, thyme; in Chinese medicine, dried ginger (gān jiāng) and atractylodes (cāng zhú)"},
+  cdr: {name:"Cold and dry", short:"Cold & dry", c:"--metal2", opp:"hd", toward:"Warming and moistening", tcm:"Cold with deficient blood or fluids", ayur:"Vata, the cold, dry, and moving dosha", phases:[3,2],
+        signs:["Feeling cold; dry skin and hair","Stiff joints, cracking","Dry, hard stools","Feeling scattered or anxious; light, broken sleep"],
+        tastes:"Sweet that is warm and nourishing, with salty and some healthy oils, builds and moistens.",
+        foods:"Warm stews, healthy oils, nuts and seeds, dates, warm milk or broth",
+        herbs:"Licorice, ashwagandha; in Chinese medicine, dong quai (dāng guī) and prepared rehmannia (shú dì huáng)"}
+};
+const QUAL_ORDER = ["hd","hdr","cd","cdr"];
+const TONE = [
+  {name:"Tension", aim:"Relax", phase:4, tcm:"Constrained Liver qi; internal wind", signs:["Cramping, spasm, tight muscles","Clenched jaw, shallow breath","Feeling wound up or irritable","Pain that comes and goes"], tastes:"Aromatic and gently sweet herbs relax. In Chinese medicine, sour with sweet softens cramping.", herbs:"Chamomile, lemon balm; in Chinese medicine, white peony root (bái sháo) with licorice"},
+  {name:"Laxity", aim:"Tone and hold", phase:1, tcm:"Qi too weak to hold things in place", signs:["Leaking: heavy sweating, loose stools, frequent urination","Loose, boggy tissue","Low tone, a sagging feeling","Feeling drained"], tastes:"Sour and astringent tastes tighten and hold.", herbs:"Raspberry leaf, sage; in Chinese medicine, schisandra (wǔ wèi zǐ) and cornus fruit (shān zhū yú)"}
+];
+/* the six tastes of Ayurveda, and where each moves the body */
+const SIX_TASTES = [
+  ["Sweet","Cooling","Moistening","Builds and nourishes"],["Sour","Warming","Moistening","Stimulates; in Chinese medicine, gathers"],["Salty","Warming","Moistening","Softens, holds water"],
+  ["Pungent","Heating","Drying","Disperses and moves"],["Bitter","Cooling","Drying","Clears heat, drains"],["Astringent","Cooling","Drying","Tightens and holds"]
+];
+
+const COLDS = [
+  {key:"wc", name:"Wind-Cold", zh:"風寒 fēng hán", q:"cd", reads:"Cold and damp",
+   signs:["Chills stronger than fever","Little or no sweating","Clear, watery mucus and sneezing","Stiff neck and body aches","Wanting warm drinks and blankets"],
+   means:"In Chinese medicine a cold is an outside influence, wind carrying cold, caught at the surface where the protective qi (wèi qì) meets it. The surface closes up tight against the chill.",
+   aim:"Warm and open the surface, so a light sweat can push the cold back out.",
+   tastes:"Pungent and warm",
+   home:"Fresh ginger and scallion tea, warm soup, rest, staying covered",
+   herbs:"Fresh ginger (shēng jiāng), cinnamon twig (guì zhī), perilla leaf (zǐ sū yè)",
+   formula:"Jing Fang Bai Du San is a classic formula for this pattern.",
+   west:"Western energetics would call it cold and damp, and reach for warming, drying herbs that bring on a sweat, such as ginger or thyme."},
+  {key:"wh", name:"Wind-Heat", zh:"風熱 fēng rè", q:"hdr", reads:"Hot and dry",
+   signs:["Fever stronger than chills","Sore, red throat","Thick, yellow mucus","Some sweating and thirst","Headache"],
+   means:"Here the wind carries heat. The struggle is still at the surface, but the body is already running hot.",
+   aim:"Cool and open the surface, releasing heat outward and soothing the throat.",
+   tastes:"Pungent and cool",
+   home:"Mint or chrysanthemum tea, plenty of fluids, rest",
+   herbs:"Mint (bò he), chrysanthemum flower (jú huā), honeysuckle flower (jīn yín huā)",
+   formula:"Yin Qiao San is a classic formula for this pattern.",
+   west:"Western energetics would call it hot and dry, and reach for cooling, relaxing herbs that bring on a sweat, such as elderflower or peppermint."}
+];
+const COLD_CARE = ["Trouble breathing, or chest pain","A high fever, or one that lasts more than a few days","Symptoms that get worse after a week, or last more than ten days","Confusion, severe headache, a stiff neck with fever, or signs of dehydration","Babies, older adults, pregnant people, and anyone with a chronic illness: call sooner"];
+
+const EIGHT = [
+  {pair:"Exterior or interior", zh:"表 biǎo · 裏 lǐ", asks:"Where is it?", a:["Exterior","At the surface and recent: chills, body aches, a new cold."], b:["Interior","Inside, in the organs, often longer lasting."], aim:"Release what is at the surface outward; work within for what is inside."},
+  {pair:"Cold or heat", zh:"寒 hán · 熱 rè", asks:"What is its nature?", a:["Cold","Chills, pale, wanting warmth, clear fluids, slowness."], b:["Heat","Feeling hot, redness, thirst, yellow fluids, speed."], aim:"Warm what is cold; cool what is hot (Su Wen 74)."},
+  {pair:"Deficiency or excess", zh:"虛 xū · 實 shí", asks:"How strong is it?", a:["Deficiency","Too little: tired, weak, worse with effort, comes on slowly."], b:["Excess","Too much: strong, sudden, blocked, or full."], aim:"Build up what is deficient (tonify); clear out what is in excess (drain)."},
+  {pair:"Yin or yang", zh:"陰 yīn · 陽 yáng", asks:"Putting it together", a:["Yin","Interior, cold, and deficiency tend to gather together."], b:["Yang","Exterior, heat, and excess tend to gather together."], aim:"Bring both back toward the center, where yin and yang hold each other."}
+];
+
+// the compass: hot at the top and cold at the bottom, as noon and summer are on the other wheels; damp to the left, dry to the right
+function qualCompass(sel){
+  const quad={hd:[180,270],hdr:[270,360],cd:[90,180],cdr:[0,90]}, lab={hd:[-62,-58],hdr:[62,-58],cd:[-62,62],cdr:[62,62]};
+  const sector=(a0,a1,r0,r1)=>{ const p=(r,a)=>[r*Math.cos(a*Math.PI/180),r*Math.sin(a*Math.PI/180)]; const [x0,y0]=p(r1,a0),[x1,y1]=p(r1,a1),[x2,y2]=p(r0,a1),[x3,y3]=p(r0,a0); return `M${f(x0)} ${f(y0)} A${r1} ${r1} 0 0 1 ${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)} A${r0} ${r0} 0 0 0 ${f(x3)} ${f(y3)}Z`; };
+  let arrow="";
+  if(sel){ const [x,y]=lab[sel], [ox,oy]=lab[QUAL[sel].opp]; arrow=`<path d="M${f(x*0.78)} ${f(y*0.78)} L${f(ox*0.62)} ${f(oy*0.62)}" class="qarrow" marker-end="url(#qah)"/>`; }
+  return `<div class="qcompass"><svg viewBox="-165 -165 330 330" role="group" aria-label="The qualities compass: hot at the top, cold at the bottom, damp on the left, dry on the right">
+    <defs><marker id="qah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker></defs>
+    ${QUAL_ORDER.map(k=>`<path d="${sector(...quad[k],38,128)}" class="qd${sel===k?" on":""}${sel&&QUAL[sel].opp===k?" opp":""}" style="fill:var(${QUAL[k].c})" data-q="${k}" tabindex="0" role="button" aria-label="${QUAL[k].name}"/>`).join("")}
+    <line x1="0" y1="-132" x2="0" y2="132" class="qline"/><line x1="-132" y1="0" x2="132" y2="0" class="qline"/>
+    ${QUAL_ORDER.map(k=>`<text x="${lab[k][0]}" y="${lab[k][1]}" class="qlab">${QUAL[k].short}</text>`).join("")}
+    ${arrow}
+    <circle r="34" class="qcenter" data-q="" tabindex="0" role="button" aria-label="Balance, the center"/><text y="1" class="qlab">Balance</text>
+    <text y="-146" class="qaxis">HOT</text><text y="150" class="qaxis">COLD</text><text x="-146" y="2" class="qaxis" style="text-anchor:end">DAMP</text><text x="146" y="2" class="qaxis" style="text-anchor:start">DRY</text></svg></div>`;
+}
+
+function showQual(q,user){
+  setView("qual"); setSubnav(QUAL_ORDER.map((k,i)=>({label:QUAL[k].name,go:()=>showQual(k,true)})), q?QUAL_ORDER.indexOf(q):-1);
+  const Q=q?QUAL[q]:null;
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">Balance · the qualities</div><h2>Qualities and balance</h2>
+      <div class="meta">Hot or cold · damp or dry · tense or lax · opposites balance</div>
+      <p>Herbal traditions describe the body with qualities you can feel: warm or cool, damp or dry, tight or loose. A state that leans too far one way is brought back toward the middle with its opposite. The Su Wen puts it simply: what is cold is warmed, and what is hot is cooled (chapter 74). Ayurveda says the same in another way: like increases like, and opposites balance. Choose a part of the compass to see what that state can look like and which way balances it.</p></div>
+    ${LEARN_NOTE}
+    ${qualCompass(q)}
+    ${Q?`<div class="ring qcard-on" style="--qc:var(${Q.c})"><h3>${sw(`var(${Q.c})`)}${Q.name}</h3>
+      <p class="about">In Chinese medicine: ${Q.tcm}. In Ayurveda: ${Q.ayur}.</p>
+      <h4>What it can look like</h4>${ul(Q.signs)}
+      <h4>What balances it</h4><p><b>${Q.toward}</b>, moving back toward the center in the direction of ${QUAL[Q.opp].name.toLowerCase()}. ${Q.tastes}</p>
+      <h4>In the kitchen</h4><p>${Q.foods}.</p>
+      <h4>Herbs, for example</h4><p>${Q.herbs}.</p>
+      <h4>Linked phases</h4><div class="orgchips">${Q.phases.map(pchip).join("")}</div></div>`
+    :`<div class="ring"><h3>The center</h3><p>Balance is not a fixed point. It is the middle the qualities keep returning to, as yin and yang do. A person can lean warm or cool by nature and still be in balance. What matters is whether the lean has gone far enough to cause trouble.</p><p class="about">The compass links to the climates of the Five Phases: heat belongs to Fire, dampness to Earth, dryness to Metal, cold to Water, and wind, with its sudden movement and tension, to Wood.</p></div>`}
+    <div class="ring"><h3>The third pair: tense or lax</h3>
+      <p class="about">Western energetic herbalism adds tone: how tight or loose the tissues are.</p>
+      <div class="tonegrid">${TONE.map(t=>`<div><b>${t.name}</b><span class="about">In Chinese medicine: ${t.tcm}.</span>${ul(t.signs)}<p><b>${t.aim}.</b> ${t.tastes}</p><p class="tx"><i>Herbs, for example:</i> ${t.herbs}.</p><div class="orgchips">${pchip(t.phase)}</div></div>`).join("")}</div></div>
+    <div class="ring"><h3>Tastes as tools</h3>
+      <p class="about">In Ayurveda each taste carries its own warmth and moisture. In Chinese medicine an herb's temperature is listed apart from its taste, so a pungent herb can be warm, like ginger, or cool, like mint.</p>
+      <div class="ctable"><table><thead><tr><th>Taste</th><th>Temperature</th><th>Moisture</th><th>Action</th></tr></thead><tbody>${SIX_TASTES.map(r=>`<tr>${r.map((c,i)=>i?`<td>${c}</td>`:`<th scope="row">${c}</th>`).join("")}</tr>`).join("")}</tbody></table></div></div>
+    <p class="gentle"><b>Go gently with herbs.</b> ${HERB_CARE}</p>
+    <p class="src">After the Su Wen; Maier (2021); Wood (2004); Bensky, Clavey, and Stöger (2004).</p>
+    ${nextBtns(["bal","Out of balance"],["cold","A cold, for example"])}`;
+  wirePanelLinks();
+  panel.querySelectorAll("[data-q]").forEach(p=>{ const goq=()=>showQual(p.dataset.q||null,false); p.addEventListener("click",goq); p.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); goq(); } }); });
+  if(user) bringPanel();
+}
+
+function showCold(i,user){
+  setView("cold"); setSubnav(COLDS.map((c,k)=>({label:c.name,go:()=>showCold(k,true)})), i==null?-1:i);
+  const card=k=>{ const c=COLDS[k];
+    return `<details class="qcard" id="c-${k}"${i===k?" open":""}><summary><span class="cardbar" style="background:var(${QUAL[c.q].c})"></span><span style="display:grid;gap:1px;padding:10px 16px 12px"><span class="qn">${c.name} · ${c.zh}</span><span class="qq">Reads as ${c.reads.toLowerCase()} · balance by ${c.tastes.toLowerCase()} herbs</span><span class="qw">${c.signs[0]}; ${c.signs[2].toLowerCase()}.</span></span></summary>
+      <div class="qbody">
+        <h4>What it can look like</h4>${ul(c.signs)}
+        <h4>What it means</h4><p>${c.means}</p>
+        <h4>What balances it</h4><p>${c.aim} The taste for this is ${c.tastes.toLowerCase()}.</p>
+        <h4>At home</h4><p>${c.home}.</p>
+        <h4>Herbs, for example</h4><p>${c.herbs}. ${c.formula}</p>
+        <h4>In Western energetics</h4><p>${c.west} <button type="button" class="pauselink" data-qual="${c.q}">See ${QUAL[c.q].name.toLowerCase()} on the compass</button></p>
+      </div></details>`; };
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">Balance · a worked example</div><h2>A cold, for example</h2>
+      <div class="meta">The same cold can lean cold or hot, and is balanced in opposite ways</div>
+      <p>A cold is not always too much cold. Chinese medicine first asks what kind it is. Two people with the same virus can show opposite pictures: one shivering, with clear mucus and no sweat; the other feverish, with a red sore throat and yellow mucus. The first leans cold, the second leans hot, and each is balanced with the opposite quality. This is the heart of the energetic approach: treat the pattern in the person, not only the name of the illness.</p></div>
+    ${LEARN_NOTE}
+    ${[0,1].map(card).join("")}
+    <div class="ring"><h3>Colds change</h3><p>A cold that starts as Wind-Cold can turn to heat after a day or two, as the body fights harder, and a cold can move deeper if it lingers. That is why herbalists look again each day rather than choosing once.</p></div>
+    <div class="ring"><h3>When to see a doctor</h3>${ul(COLD_CARE)}</div>
+    <p class="gentle"><b>Go gently with herbs.</b> ${HERB_CARE}</p>
+    <p class="src">After Bensky, Clavey, and Stöger (2004); Maciocia (2015); Maier (2021).</p>
+    ${nextBtns(["qual","Qualities and balance"],["eight","The eight principles"])}`;
+  wirePanelLinks();
+  if(user) bringPanel(i!=null?document.getElementById("c-"+i):null);
+}
+
+function showEight(user){
+  setView("eight"); setSubnav([]);
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">Balance · how a pattern is read</div><h2>The eight principles</h2>
+      <div class="meta">Bā gāng · 八綱 · four questions, each with two answers</div>
+      <p>Chinese medicine reads a pattern with four pairs. Where is it? What is its nature? How strong is it? And, putting those together, does it lean yin or yang? The answers point to what would bring it back toward balance.</p></div>
+    ${LEARN_NOTE}
+    <ul class="eight">${EIGHT.map(e=>`<li><div class="eh"><b>${e.pair}</b><span>${e.zh} · ${e.asks}</span></div>
+      <div class="ep"><div><b>${e.a[0]}</b><p>${e.a[1]}</p></div><div><b>${e.b[0]}</b><p>${e.b[1]}</p></div></div>
+      <p class="about"><b>Toward balance.</b> ${e.aim}</p></li>`).join("")}</ul>
+    <div class="ring"><h3>Two kinds of heat</h3><p>Heat can come from too much fire, as in a high fever: excess heat, which is cleared. It can also come from too little cooling yin, as in hot flashes, night sweats, or feeling warm in the afternoon: deficient heat, which is cooled by nourishing yin rather than by draining. The same principle, cool what is hot, is followed in two different ways.</p></div>
+    <div class="ring"><h3>A cold, read with the eight principles</h3><p>Wind-Cold is exterior, cold, and usually excess. Wind-Heat is exterior, hot, and usually excess. <button type="button" class="pauselink" data-go="cold">See them side by side</button></p></div>
+    <p class="gentle"><b>Go gently.</b> Reading a pattern takes training, and it is done together with pulse, tongue, and a person's whole history. Use these questions to understand the approach, and take health concerns to a doctor or a licensed practitioner.</p>
+    <p class="src">After Kaptchuk (2000); Maciocia (2015).</p>
+    ${nextBtns(["cold","A cold, for example"],["ww","The ten thousand things"])}`;
+  wirePanelLinks();
+  if(user) bringPanel();
+}
+
 function relPage(kind,k,user){
   const L=kind==="gen"?GEN:CTL, step=kind==="gen"?1:2;
   setView(kind, k!=null?{kind,i:k}:{kind:null,i:null}, kind);
@@ -1255,14 +1457,14 @@ function showBalance(user){
     <div class="ring"><h3>A rule from the classics</h3><p>${B.rule}</p></div>
     <p class="gentle"><b>Go gently.</b> ${B.gently}</p>
     <p class="src">After the Nan Jing (Unschuld, 1986); Maciocia (2015).</p>
-    ${nextBtns(["ctl","Controlling"],["ww","The ten thousand things"])}`;
+    ${nextBtns(["ctl","Controlling"],["qual","Qualities and balance"])}`;
   wirePanelLinks();
   if(user) bringPanel();
 }
 function showWanwu(user){
   simplePage("ww","ww","The outer ring","The ten thousand things","Wànwù · 萬物 · everything that is",WANWU,
     `<div class="ring"><h3>The way back</h3><p>Read from the outside in, the wheel is a path of return: from the many things, to the phases they are made of, to yin and yang, to the first movement, and to the stillness underneath. Taoist practice walks this path in meditation, and it can be walked in a single breath.</p></div>`,
-    nextBtns(["bal","Out of balance"],["practice","Begin gently"]));
+    nextBtns(["eight","The eight principles"],["practice","Begin gently"]));
   if(user) bringPanel();
 }
 function showCosmosPractice(user){
@@ -1308,15 +1510,21 @@ window.addEventListener("resize",()=>moonTip(null));
 /* ---------- Panel ---------- */
 const panel=document.getElementById("panel"), tabs=document.getElementById("tabs"), subnav=document.getElementById("subnav");
 let sel={kind:null,i:null}, view="intro";
-function addTab(label,key,go){
+function addTab(label,key,go,parent){
   const b=document.createElement("button"); b.className="tab"; b.type="button"; b.setAttribute("role","tab");
-  b.textContent=label; b.dataset.tab=key; b.addEventListener("click",go); tabs.appendChild(b);
+  b.textContent=label; b.dataset.tab=key; b.addEventListener("click",go); (parent||tabs).appendChild(b);
 }
 // the day wheel's tabs open the organ clock; the year wheel's open the five seasons
 function buildTabs(){
   tabs.innerHTML="";
   if(mode==="phases"){
-    [["How to read","intro"],["Wuji","wuji"],["Taiji","taiji"],["Yin and yang","yy"],["Five Phases","phases"],["Correspondences","corr"],["Generating","gen"],["Controlling","ctl"],["Out of balance","bal"],["Ten thousand things","ww"],["Practice","practice"]].forEach(([l,k])=>addTab(l,k,()=>GO_C[k]()));
+    [["Begin",[["How to read","intro"],["Practice","practice"]]],
+     ["Origins",[["Wuji","wuji"],["Taiji","taiji"],["Yin and yang","yy"],["Ten thousand things","ww"]]],
+     ["The Five Phases",[["Five Phases","phases"],["Correspondences","corr"],["Generating","gen"],["Controlling","ctl"],["Out of balance","bal"]]],
+     ["Balance",[["Qualities","qual"],["A cold, for example","cold"],["Eight principles","eight"]]]].forEach(([g,items])=>{
+      const row=document.createElement("div"); row.className="tabgroup"; row.innerHTML=`<span class="tablabel">${g}</span>`; tabs.appendChild(row);
+      items.forEach(([l,k])=>addTab(l,k,()=>GO_C[k](),row));
+    });
     return markTabs();
   }
   addTab("How to read","intro",()=>showIntro());
@@ -1328,7 +1536,7 @@ function buildTabs(){
   addTab("Practice","practice",()=>showPractice(true));
   markTabs();
 }
-function markTabs(){ [...tabs.children].forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===view?"true":"false")); }
+function markTabs(){ tabs.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===view?"true":"false")); }
 function setSubnav(items, current){
   subnav.innerHTML="";
   subnav.hidden=!items.length;
@@ -1346,6 +1554,7 @@ function wirePanelLinks(){
   panel.querySelectorAll("[data-phase]").forEach(b=>b.addEventListener("click",()=>{ setMode("phases",true); showPhases(+b.dataset.phase,true); }));
   panel.querySelectorAll("[data-gen]").forEach(b=>b.addEventListener("click",()=>{ setMode("phases",true); showGen(+b.dataset.gen,true); }));
   panel.querySelectorAll("[data-ctl]").forEach(b=>b.addEventListener("click",()=>{ setMode("phases",true); showCtl(+b.dataset.ctl,true); }));
+  panel.querySelectorAll("[data-qual]").forEach(b=>b.addEventListener("click",()=>{ setMode("phases",true); showQual(b.dataset.qual,true); }));
   panel.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{ setMode(b.dataset.mode); bringPanel(document.querySelector(".stage")); }));
   panel.querySelectorAll("[data-qi]").forEach(b=>b.addEventListener("click",()=>showQi(true)));
   panel.querySelectorAll("[data-five]").forEach(b=>b.addEventListener("click",()=>showFive(true)));
