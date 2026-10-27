@@ -237,6 +237,15 @@ section.about p{margin:0;max-width:68ch}
 .hourlbl{font-family:var(--body);font-weight:700;font-size:11px;letter-spacing:.14em;fill:var(--muted);pointer-events:none}
 .hingelbl{font-family:var(--body);font-weight:700;pointer-events:none;fill:var(--on-light)}
 .cell.hinge{stroke-width:2}
+.viewtoggle{display:flex;justify-content:center;gap:0;margin:0 auto;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:4px;width:max-content;max-width:100%}
+.viewtoggle button{font:inherit;display:inline-flex;align-items:baseline;gap:8px;border:0;background:transparent;color:var(--muted);border-radius:999px;padding:7px 18px;cursor:pointer}
+.viewtoggle button b{font-family:var(--display);font-weight:400;font-size:18px;color:var(--ink)}
+.viewtoggle button span{font-size:13px}
+.viewtoggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.viewtoggle button[aria-pressed="true"] b{color:var(--bg)}
+.viewtoggle button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.nowmark line{stroke:var(--gold);stroke-width:2.5;stroke-linecap:round}
+.nowmark circle{fill:var(--gold);stroke:var(--bg);stroke-width:2.5}
 </style>
 <script>
 try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") document.documentElement.setAttribute("data-theme",t); }catch(e){}
@@ -251,11 +260,12 @@ try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") docume
     </button>
     <div class="eyebrow">Traditional Chinese Medicine, in one circle</div>
     <h1>The Body Clock Mandala</h1>
-    <p class="lede">A map of the day as Traditional Chinese Medicine (TCM) describes it. Around the wheel run the 24 hours, with noon at the top and midnight at the bottom. Qi, the body's moving energy, is said to pass through twelve organ systems in turn, about two hours each. Each belongs to one of the Five Phases (Wood, Fire, Earth, Metal, Water), and the day itself turns through the four seasons: dawn as spring, midday as summer, evening as autumn, night as winter. Read it as a way to notice your own rhythms, not as a diagnosis. Take what is useful now.</p>
+    <p class="lede">Two wheels for the rhythms of Traditional Chinese Medicine (TCM). The Day wheel is the body clock: 24 hours with noon at the top, and qi, the body's moving energy, passing through twelve organ systems about two hours each. The Year wheel is the Five Phases (Wood, Fire, Earth, Metal, Water) in their five seasons, from spring to winter. Both share the same shape, with summer and noon at the top and winter and midnight at the bottom, so you can switch between them and see the day inside the year. Read them as a way to notice your own rhythms, not as a diagnosis. Take what is useful now.</p>
   </header>
 
   <div class="main">
     <div class="stage">
+      <div class="viewtoggle" id="viewtoggle" role="group" aria-label="Choose a wheel"><button type="button" data-mode="day" aria-pressed="true"><b>Day</b><span>24 hours</span></button><button type="button" data-mode="year" aria-pressed="false"><b>Year</b><span>five seasons</span></button></div>
       <div class="svgbox"><div class="moontip" id="moontip" role="status"></div><svg id="m" viewBox="-574 -574 1148 1148" role="group" aria-label="The Body Clock Mandala"></svg></div>
       <div class="ringkey" id="ringkey" aria-label="Rings"></div>
       <p class="hintline">Choose any ring or petal to open it.</p>
@@ -270,10 +280,12 @@ try{ var t=localStorage.getItem("tcm-theme"); if(t==="light"||t==="dark") docume
 
   <section class="about" id="about">
     <h2>About this mandala</h2>
-    <p>A mandala is a circle organized around a center. This one gathers the TCM body clock into a single wheel, with qi, the flowing center of the system, in the middle. It draws on classical Chinese medicine as it is taught today, and on the Five Phase (Wu Xing) theory that sits underneath it. Other schools and practitioners describe these ideas in their own ways, and this map does not replace them.</p>
+    <p>A mandala is a circle organized around a center. This one gathers the TCM body clock and the Five Phase year into two matching wheels, with qi, the flowing center of the system, in the middle. It draws on classical Chinese medicine as it is taught today, and on the Five Phase (Wu Xing) theory that sits underneath it. Other schools and practitioners describe these ideas in their own ways, and this map does not replace them.</p>
     <h3>How it is built</h3>
     <p>The wheel is a 24-hour clock with noon at the top and midnight at the bottom, so the day reads clockwise like a clock face. The twelve organ systems each take a two-hour window in a fixed order (the horary cycle, zǐwǔ liúzhù): Lung at 3 am, then Large Intestine, Stomach, Spleen, Heart, Small Intestine, Bladder, Kidney, Pericardium, Triple Burner, Gallbladder, and Liver at 1 am. Each organ sits across the wheel from its partner twelve hours away, for example Heart at noon and Gallbladder at midnight.</p>
     <p>The ring just inside the organs is the Five Phases. Metal, Earth, Fire, Water, Fire again, and Wood cover the clock in six arcs, because Fire has two sets of organs: the Heart and Small Intestine at midday, and the Pericardium and Triple Burner in the evening. Outside the organs are daily-life petals, a narrow band for the feeling or quality each organ is linked with, and an outer ring of the four seasons.</p>
+    <h3>Two wheels</h3>
+    <p>The Day wheel follows the Chinese Medicine Atlas body clock: the twelve organ windows, the phase of each organ, a line for daily life, and the feeling each is linked with. The Year wheel follows Five Phase theory in its first home, the year: Wood in spring, Fire in summer, Earth in late summer, Metal in autumn, and Water in winter, with the organs each phase holds, the 24 solar terms of the Chinese calendar, and the calendar months. Seasons begin at the four starts (lì), around February 4, May 5, August 7, and November 7, so each solstice and equinox falls mid-season. Both wheels put summer and noon at the top, so the seasons sit in the same places on each.</p>
     <h3>The day as a small year</h3>
     <p>The classical texts pair the day with the year: morning is spring, noon is summer, evening is autumn, and midnight is winter (Ling Shu 44). With noon at the top this falls neatly into place: spring on the left where the sun rises, summer at the top, autumn on the right, winter at the bottom. Yang, the warm and active side of things, grows from midnight to noon and yields to yin from noon to midnight, the same turning as the yin-yang symbol at the center. Earth, the fifth phase, sits at the hinges between seasons, shown as four small markers.</p>
     <p>The organ clock and the seasons of the day are two different layers, and they do not line up one for one. The Wood organs, for instance, keep their hours late in the night, just before the day's spring begins. The tradition holds both at once: the organ clock follows qi through the channels, while the four seasons follow the sun.</p>
@@ -514,6 +526,64 @@ const FIVE = {
   gently:"The cycles are metaphors that help the mind hold relationships. They are not laws, and they do not tell you what is wrong with you. If a pattern here seems to describe a problem, treat it as a question to take to a practitioner."
 };
 
+/* ---------- The year wheel ----------
+   The same orientation as the day: the summer solstice at the top, the winter solstice at the bottom, spring on the
+   left, autumn on the right. Seasons begin at the four "starts" (lì), so each solstice and equinox sits mid-season.
+   Angles are degrees from the summer solstice, clockwise; one solar term is 15 degrees. */
+const RINGS_Y = {
+  core:  RINGS.core,
+  phase: {name:"The Five Phases", sw:RINGS.elem.sw, color:"--earth", about:"Wood, Fire, Earth, Metal, and Water, each in its own season of the year. This is where Five Phase theory is most at home."},
+  yorg:  {name:"Organs of each phase", sw:RINGS.organ.sw, color:"--earth2", about:"The yin and yang organs each phase holds: the Liver and Gallbladder for Wood, and so on. Fire holds four."},
+  term:  {name:"The solar months", sw:RINGS.daily.sw, color:"--earth3", about:"Twelve petals, one for each month of the Chinese solar calendar, named by its two solar terms (jiéqì)."},
+  month: {name:"The calendar months", sw:RINGS.emo.sw, color:"--band", about:"January to December, where they fall in the year, for the northern hemisphere."},
+  yseason:{name:"The five seasons", sw:"linear-gradient(90deg,var(--wood2),var(--fire2),var(--earth2),var(--metal2),var(--water2))", color:"--wood2", about:"Spring, summer, late summer, autumn, and winter, with their approximate dates."}
+};
+
+const YEAR = [
+  {key:"spring", name:"Spring", el:"wood", a:[-135,-45], dates:"Feb 4 to May 5", orgs:[11,10], orgLines:["Liver","Gallbladder"], yy:"Yang rising",
+   tip:"Wood: growth that wants to move. The equinox is its middle.",
+   intro:"Spring is Wood: the push of growth, sap rising, shoots breaking ground. In the Chinese calendar it begins at the Start of Spring (Lìchūn), around February 4, halfway between the winter solstice and the spring equinox, so the equinox falls in its middle. Yang is rising. The Liver, which keeps qi moving smoothly, is its organ, and its feeling is anger, the energy that wants to push through.",
+   rest:"The Su Wen suggests that in spring you go to bed a little late and rise early, walk about easily in the open, and loosen your hair and clothes, letting life stir rather than holding it back (Su Wen 2).",
+   live:["Move more: walks, stretching, anything that loosens the sides of the body.","Begin things. Plan, sow, clear space.","Lighter, fresher food, with young greens.","Notice frustration as a sign that something wants to move, and give it a way."],
+   gently:"Spring can feel restless or irritable, and for some people the change of season lowers mood rather than lifting it. If yours is heavy, talk with someone you trust or a professional."},
+  {key:"summer", name:"Summer", el:"fire", a:[-45,15], dates:"May 5 to Jul 7", orgs:[4,5,8,9], orgLines:["Heart · Small Intestine","Pericardium · Triple Burner"], yy:"Yang at its height",
+   tip:"Fire: warmth, light, and connection. The solstice is its middle.",
+   intro:"Summer is Fire: warmth, light, and the fullest reach of growth. It begins at the Start of Summer (Lìxià), around May 5, with the solstice in its middle. Yang is at its height. The Heart and its partners are its organs, and its feeling is joy: connection, play, and openness.",
+   rest:"For summer the Su Wen suggests going to bed a little late and rising early, not tiring of the long days, and keeping the mind free of anger, so that what is inside can flow out (Su Wen 2).",
+   live:["Be outside, early and late, when it is cooler.","Connect: shared meals, long evenings with people you love.","Light, cooling food and plenty of water.","A pause at the hottest part of the day."],
+   gently:"Heat, short nights, and the pressure to be joyful can all be hard. Joy is not required. Rest in the shade counts."},
+  {key:"late", name:"Late summer", el:"earth", a:[15,45], dates:"Jul 7 to Aug 7", orgs:[3,2], orgLines:["Spleen","Stomach"], yy:"Yang turning to yin",
+   tip:"Earth: the ripe, heavy pivot of the year, before the harvest.",
+   intro:"Late summer (cháng xià) is Earth: the heavy, ripe stretch when growth has peaked and the harvest is coming in. The Neijing gives it to the Spleen (Su Wen 22). Many commentators, from Wang Bing in the Tang dynasty on, read it as the sixth month, and that is how it is shown here: from Minor Heat (Xiǎoshǔ), around July 7, to the Start of Autumn, around August 7, often the hottest and dampest weeks of the year. Yang turns toward yin here, so Earth is the pivot. Its feeling is worry, and its gift is steadiness.",
+   rest:"The Su Wen's seasonal chapter names only four seasons, so it gives no rhythm for late summer. Practitioners usually suggest steadiness: regular hours, regular meals, and staying dry.",
+   live:["Regular, simple, warm meals.","Go easy on iced drinks and very rich or sweet food in damp heat.","Ground yourself: routines, time outdoors, time to digest.","Notice worry, and bring it back to one next step."],
+   other:"There is a second classical reading. In it Earth has no season of its own: the Spleen rules about eighteen days at the end of each of the four seasons, so Earth is present at every turn (Su Wen 29). Four times eighteen is 72 days, a fifth of the year. The Day wheel uses this reading, with Earth markers at the turns.",
+   gently:"Worry often makes sense. If it loops without rest, or eating has become hard, reach out for support."},
+  {key:"autumn", name:"Autumn", el:"metal", a:[45,135], dates:"Aug 7 to Nov 7", orgs:[0,1], orgLines:["Lung","Large Intestine"], yy:"Yin gathering",
+   tip:"Metal: gathering in, refining, and letting go. The equinox is its middle.",
+   intro:"Autumn is Metal: gathering in, refining, and letting go. Leaves fall, the harvest is stored, and the air turns dry. It begins at the Start of Autumn (Lìqiū), around August 7, with the equinox in its middle. Yin begins to gather. The Lung and Large Intestine are its organs, and its feeling is grief: the ache of what is ending, and the clearing that can follow.",
+   rest:"For autumn the Su Wen suggests going to bed early and rising early, with the rooster, and keeping the mind calm and quiet (Su Wen 2).",
+   live:["Let go of what the year does not need: a drawer, a habit, a commitment.","Breathe: slow breathing, time in clean air.","Moistening food against the dryness, such as pears, soups, and stewed fruit.","Make room for grief if it comes."],
+   gently:"Autumn can bring grief or old losses to the surface, and shorter days affect mood for many people. You do not have to carry it alone."},
+  {key:"winter", name:"Winter", el:"water", a:[135,225], dates:"Nov 7 to Feb 4", orgs:[7,6], orgLines:["Kidney","Bladder"], yy:"Yin at its deepest",
+   tip:"Water: depth, stillness, and rest. The solstice is its middle.",
+   intro:"Winter is Water: depth, stillness, and rest. Life goes down to the root, and the stores laid in during autumn carry us through. It begins at the Start of Winter (Lìdōng), around November 7, with the solstice in its middle. Yin is at its deepest, and at the solstice the first yang returns. The Kidney and Bladder are its organs, and its feeling is fear, met by the will.",
+   rest:"For winter the Su Wen suggests going to bed early and rising late, waiting for the sun, staying warm, and keeping your energy stored rather than spent (Su Wen 2).",
+   live:["Rest more, and sleep longer if you can.","Warm, slow-cooked food.","Keep the low back and feet warm.","Quieter work: reflecting, planning, keeping reserves."],
+   gently:"Short days are hard for many people. Low mood that settles in each winter is common and treatable, and light, movement, and support help. Please reach out if it is heavy."}
+];
+
+/* the 24 solar terms, from the Start of Spring. Dates are approximate and vary by a day from year to year. */
+const TERMS = [
+  ["Start of Spring","Lìchūn","立春","Feb 4"],["Rain Water","Yǔshuǐ","雨水","Feb 19"],["Insects Awaken","Jīngzhé","惊蛰","Mar 6"],["Spring Equinox","Chūnfēn","春分","Mar 20"],
+  ["Clear and Bright","Qīngmíng","清明","Apr 5"],["Grain Rain","Gǔyǔ","谷雨","Apr 20"],["Start of Summer","Lìxià","立夏","May 5"],["Grain Buds","Xiǎomǎn","小满","May 21"],
+  ["Grain in Ear","Mángzhòng","芒种","Jun 6"],["Summer Solstice","Xiàzhì","夏至","Jun 21"],["Minor Heat","Xiǎoshǔ","小暑","Jul 7"],["Major Heat","Dàshǔ","大暑","Jul 23"],
+  ["Start of Autumn","Lìqiū","立秋","Aug 7"],["End of Heat","Chǔshǔ","处暑","Aug 23"],["White Dew","Báilù","白露","Sep 8"],["Autumn Equinox","Qiūfēn","秋分","Sep 23"],
+  ["Cold Dew","Hánlù","寒露","Oct 8"],["Frost's Descent","Shuāngjiàng","霜降","Oct 23"],["Start of Winter","Lìdōng","立冬","Nov 7"],["Minor Snow","Xiǎoxuě","小雪","Nov 22"],
+  ["Major Snow","Dàxuě","大雪","Dec 7"],["Winter Solstice","Dōngzhì","冬至","Dec 21"],["Minor Cold","Xiǎohán","小寒","Jan 5"],["Major Cold","Dàhán","大寒","Jan 20"]
+];
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 /* ---------- Geometry ---------- */
 const R = {core:[0,62], elem:[68,146], organ:[152,280], daily:[286,396], emo:[402,424], season:[432,504], orn:[524,538]};
 const VB = 574;
@@ -614,7 +684,7 @@ function addCell(d,o){
   cells.push(c); return c;
 }
 
-function draw(){
+function drawDay(){
   svg.innerHTML=""; cells.length=0; tpId=0;
   const defs=el("defs",{});
   const gr=el("radialGradient",{id:"qig",cx:"50%",cy:"50%",r:"50%"},defs);
@@ -664,7 +734,14 @@ function draw(){
     const t=el("text",{class:"hingelbl","font-size":9.5,x:f(x),y:f(y),"text-anchor":"middle","dominant-baseline":"central"},labels); t.textContent="Earth";
   });
 
-  // center: qi, the yin-yang symbol. Noon (yang) at the top, midnight (yin) at the bottom.
+  drawCore();
+
+  svg.insertBefore(og, svg.firstChild.nextSibling);
+  el("g",{id:"selOutline"});
+  applySel();
+}
+function drawCore(){
+  // center: qi, the yin-yang symbol. Noon or midsummer (yang) at the top, midnight or midwinter (yin) at the bottom.
   const core=el("g",{class:"cell",tabindex:"0",role:"button","aria-label":"Qi, yin and yang, at the center. Read what they mean"});
   core.dataset.slice="core"; core.dataset.sets="core";
   const r=R.core[1]-4, lg=el("g",{"pointer-events":"none"},core);
@@ -676,17 +753,95 @@ function draw(){
   el("circle",{cx:0,cy:0,r,fill:"none",stroke:"var(--lotline)","stroke-width":1.8},lg);
   const goCore=()=>{ moonTip(null); showQi(true); };
   core.addEventListener("click",goCore); core.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); goCore(); } });
-  const cinfo={x:0,y:-50,html:`<span class="ringtag"><i></i>Qi</span><b>Qi, yin and yang</b><span class="line">The moving force of the body, and the turning of yang and yin through the day.</span><span>Tap to read more.</span>`,color:"--yang2"};
+  const cinfo={x:0,y:-50,html:`<span class="ringtag"><i></i>Qi</span><b>Qi, yin and yang</b><span class="line">The moving force of the body, and the turning of yang and yin through the day and the year.</span><span>Tap to read more.</span>`,color:"--yang2"};
   core.addEventListener("mouseenter",()=>{ hover(core); if(!openMoon) moonTip(core,cinfo,true); });
   core.addEventListener("mouseleave",()=>{ hover(null); if(!openMoon) moonTip(null); });
   core.addEventListener("focus",()=>{ hover(core); if(!openMoon && core.matches(":focus-visible")) moonTip(core,cinfo,true); });
   core.addEventListener("blur",()=>{ hover(null); if(!openMoon) moonTip(null); });
   cells.push(core);
+}
 
+/* ---------- The year wheel ---------- */
+const RY = {core:[0,62], phase:[68,146], yorg:[152,280], term:[286,396], month:[402,424], yseason:[432,504], orn:[524,538]};
+// degrees from the summer solstice for a day of the (non-leap) year, 1 to 365
+const doyAngle = d => (d-172)*360/365.2422;
+const MONTH_START = [1,32,60,91,121,152,182,213,244,274,305,335,366];
+const yearOf = a => { const m=a<-135?a+360:a; return YEAR.findIndex(y=>m>=y.a[0]&&m<y.a[1]); };
+function yShape(kind,i,g){
+  g=g||0; const [a0,a1]=YEAR[i].a;
+  if(kind==="phase") return rsector(RY.phase[0]-g,RY.phase[1]+g,a0+GAP,a1-GAP,{rOut:10,rIn:8});
+  if(kind==="yorg") return rsector(RY.yorg[0]-g,RY.yorg[1]+g,a0+GAP,a1-GAP,{rOut:9,rIn:7});
+  if(kind==="yseason") return sector(RY.yseason[0]-g,RY.yseason[1]+g,a0+GAP,a1-GAP,Math.max(2,Math.round((a1-a0)/15)),12);
+}
+function drawYear(){
+  svg.innerHTML=""; cells.length=0; tpId=0;
+  const defs=el("defs",{});
+  const gr=el("radialGradient",{id:"qig",cx:"50%",cy:"50%",r:"50%"},defs);
+  el("stop",{offset:"0%",style:"stop-color:var(--yang)"},gr); el("stop",{offset:"100%",style:"stop-color:var(--yang2)"},gr);
+
+  // outer ornament: 24 small petals, one for each solar term; the summer solstice is gold, the winter solstice indigo
+  const og=el("g",{"aria-hidden":"true"});
+  for(let k=0;k<24;k++){ const a=k*15; el("path",{d:petal(RY.orn[0],RY.orn[1],a-5.4,a+5.4),class:"orn"+(k===0?" ornnoon":k===12?" ornmid":"")},og); }
+  [["SUMMER SOLSTICE",0],["AUTUMN EQUINOX",90],["WINTER SOLSTICE",180],["SPRING EQUINOX",270]].forEach(([t,a])=>arcText(556,a-24,a+24,t,"hourlbl",11,1.4,og));
+
+  const labels=el("g",{"pointer-events":"none"});
+
+  // the five seasons
+  YEAR.forEach((y,i)=>{
+    const [a0,a1]=y.a, m=(a0+a1)/2, narrow=a1-a0<45;
+    addCell(yShape("yseason",i),{kind:"yseason",slice:"y"+i,sets:"y"+i,fill:`--${y.el}2`,label:`${y.name}, ${y.dates}`,tag:"Season of the year",name:`${y.name} · ${y.dates}`,line:y.tip,at:{a:m,r:(RY.yseason[0]+RY.yseason[1])/2},go:()=>showYear(i,true)});
+    twoLines((RY.yseason[0]+RY.yseason[1])/2+2,a0+3,a1-3,y.name,y.dates,"lbl tx-ink tx-disp",narrow?20:25,"tx-ink tx-small",narrow?11.5:13,narrow?24:28,labels);
+  });
+
+  // the calendar months
+  MONTHS.forEach((mo,k)=>{
+    const a0=doyAngle(MONTH_START[k]), a1=doyAngle(MONTH_START[k+1]), m=(a0+a1)/2, yi=yearOf(m);
+    addCell(rsector(RY.month[0],RY.month[1],a0+0.5,a1-0.5,{rIn:3,rOut:3}),{kind:"month",slice:"mo"+k,sets:`mo${k} y${yi}`,fill:k%2?"--band2":"--band",label:`${mo}, in ${YEAR[yi].name.toLowerCase()}`,tag:"Calendar month",name:mo,line:`Mostly in ${YEAR[yi].name.toLowerCase()}, in the northern hemisphere.`,at:{a:m,r:RY.month[1]},go:()=>showYear(yi,true)});
+    arcText((RY.month[0]+RY.month[1])/2,a0+1,a1-1,mo,"bandlbl",12.5,0.5,labels);
+  });
+
+  // the twelve solar months, each named by its two terms
+  for(let k=0;k<12;k++){
+    const a0=-135+30*k, a1=a0+30, m=a0+15, yi=yearOf(m), y=YEAR[yi], [t1,t2]=[TERMS[2*k],TERMS[2*k+1]];
+    addCell(bloom(RY.term[0],RY.term[1],a0+GAP,a1-GAP),{kind:"term",slice:"t"+k,sets:`t${k} y${yi}`,fill:`--${y.el}3`,label:`${t1[0]} and ${t2[0]}, in ${y.name.toLowerCase()}`,tag:"Solar month · "+y.name,name:`${t1[0]} · ${t2[0]}`,line:`About ${t1[3]} and ${t2[3]}.`,at:{a:m,r:RY.term[0]+44},go:()=>showYear(yi,true)});
+    twoLines(338,a0+3,a1-3,t1[0],t2[0],"lbl tx-ink tx-disp",14,"lbl tx-ink tx-disp",14,19,labels);
+  }
+
+  // the organs of each phase, and the phases
+  YEAR.forEach((y,i)=>{
+    const [a0,a1]=y.a, m=(a0+a1)/2, E=ELEMENTS[y.el], narrow=a1-a0<45, tx=EL_TEXT[y.el];
+    addCell(yShape("yorg",i),{kind:"yorg",slice:"y"+i,sets:"y"+i,fill:`--${y.el}2`,label:`Organs of ${E.name}: ${y.orgs.map(k=>ORGANS[k].name).join(", ")}`,tag:"Organs of "+E.name,name:y.orgLines.join(", "),line:`The ${y.orgs.length>2?"four":"yin and yang"} organs of ${E.name}.`,at:{a:m,r:(RY.yorg[0]+RY.yorg[1])/2},go:()=>showYear(i,true)});
+    twoLines(222,a0+2,a1-2,y.orgLines[0],y.orgLines[1],"lbl tx-ink tx-disp",narrow?14.5:16,"lbl tx-ink tx-disp",narrow?14.5:16,26,labels);
+    addCell(yShape("phase",i),{kind:"phase",slice:"y"+i,sets:"y"+i,fill:E.c,label:`${E.name}, ${E.py}: ${y.name}`,tag:"Five Phases · "+E.name,name:`${E.name} · ${y.name.toLowerCase()}`,line:`${E.climate}, ${E.dir.toLowerCase()}, ${E.emo.toLowerCase()}.`,at:{a:m,r:(RY.phase[0]+RY.phase[1])/2},go:()=>showYear(i,true)});
+    twoLines((RY.phase[0]+RY.phase[1])/2,a0+3,a1-3,E.name.toUpperCase(),E.py,`lbl ${tx} tx-disp`,narrow?15:20,`${tx} tx-small`,narrow?10.5:11.5,narrow?20:24,labels);
+  });
+  svg.appendChild(labels);
+
+  drawCore();
   svg.insertBefore(og, svg.firstChild.nextSibling);
   el("g",{id:"selOutline"});
   applySel();
 }
+
+/* today: a small gold mark at the current hour on the day wheel, or today's date on the year wheel */
+function nowAngle(){
+  const d=new Date();
+  if(mode==="day") return (d.getHours()+d.getMinutes()/60-12)*15;
+  const doy=Math.floor((Date.UTC(2001,d.getMonth(),d.getDate())-Date.UTC(2001,0,1))/864e5)+1;
+  return doyAngle(doy);
+}
+function drawNow(){
+  const old=document.getElementById("nowmark"); if(old) old.remove();
+  const a=nowAngle(), [x,y]=P(R.orn[1]+12,a), [x1,y1]=P(R.orn[0]-2,a);
+  const g=el("g",{id:"nowmark",class:"nowmark"});
+  el("line",{x1:f(x1),y1:f(y1),x2:f(x),y2:f(y)},g);
+  el("circle",{cx:f(x),cy:f(y),r:6.5},g);
+  const t=el("title",{},g); const d=new Date();
+  t.textContent= mode==="day" ? "Now: "+d.toLocaleTimeString([], {hour:"numeric",minute:"2-digit"}) : "Today: "+d.toLocaleDateString([], {month:"long",day:"numeric"});
+}
+let mode="day";
+function draw(){ if(mode==="year") drawYear(); else drawDay(); drawNow(); }
+setInterval(()=>{ if(document.getElementById("nowmark")) drawNow(); }, 60000);
 function hover(cell){
   if(!cell){ svg.classList.remove("dimming"); cells.forEach(c=>c.classList.remove("off")); return; }
   svg.classList.add("dimming");
@@ -722,12 +877,19 @@ function addTab(label,key,go){
   const b=document.createElement("button"); b.className="tab"; b.type="button"; b.setAttribute("role","tab");
   b.textContent=label; b.dataset.tab=key; b.addEventListener("click",go); tabs.appendChild(b);
 }
-addTab("How to read","intro",()=>showIntro());
-addTab("Qi","qi",()=>showQi(true));
-addTab("Five Phases","five",()=>showFive(true));
-ELORDER.forEach(k=>addTab(ELEMENTS[k].name,k,()=>showElement(k,null,true)));
-addTab("Seasons of the day","seasons",()=>showSeasons(null,true));
-addTab("Practice","practice",()=>showPractice(true));
+// the day wheel's tabs open the organ clock; the year wheel's open the five seasons
+function buildTabs(){
+  tabs.innerHTML="";
+  addTab("How to read","intro",()=>showIntro());
+  addTab("Qi","qi",()=>showQi(true));
+  addTab("Five Phases","five",()=>showFive(true));
+  if(mode==="day"){
+    ELORDER.forEach(k=>addTab(ELEMENTS[k].name,k,()=>showElement(k,null,true)));
+    addTab("Seasons of the day","seasons",()=>showSeasons(null,true));
+  } else YEAR.forEach((y,i)=>addTab(y.name,"y-"+y.key,()=>showYear(i,true)));
+  addTab("Practice","practice",()=>showPractice(true));
+  markTabs();
+}
 function markTabs(){ [...tabs.children].forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===view?"true":"false")); }
 function setSubnav(items, current){
   subnav.innerHTML="";
@@ -739,9 +901,11 @@ function sw(bg){ return `<span class="sw" style="background:${bg}"></span>`; }
 function ul(items,cls){ return `<ul${cls?` class="${cls}"`:""}>`+items.map(i=>`<li>${i}</li>`).join("")+"</ul>"; }
 const isNarrow=()=>window.matchMedia("(max-width:900px)").matches;
 function wirePanelLinks(){
-  panel.querySelectorAll("[data-organ]").forEach(b=>b.addEventListener("click",()=>{ const k=+b.dataset.organ; showElement(ORGANS[k].el,k,true); }));
-  panel.querySelectorAll("[data-el]").forEach(b=>b.addEventListener("click",()=>showElement(b.dataset.el,null,true)));
-  panel.querySelectorAll("[data-season]").forEach(b=>b.addEventListener("click",()=>showSeasons(+b.dataset.season,true)));
+  panel.querySelectorAll("[data-organ]").forEach(b=>b.addEventListener("click",()=>{ const k=+b.dataset.organ; setMode("day",true); showElement(ORGANS[k].el,k,true); }));
+  panel.querySelectorAll("[data-el]").forEach(b=>b.addEventListener("click",()=>{ setMode("day",true); showElement(b.dataset.el,null,true); }));
+  panel.querySelectorAll("[data-season]").forEach(b=>b.addEventListener("click",()=>{ setMode("day",true); showSeasons(+b.dataset.season,true); }));
+  panel.querySelectorAll("[data-yseason]").forEach(b=>b.addEventListener("click",()=>{ setMode("year",true); showYear(+b.dataset.yseason,true); }));
+  panel.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{ setMode(b.dataset.mode); bringPanel(document.querySelector(".stage")); }));
   panel.querySelectorAll("[data-qi]").forEach(b=>b.addEventListener("click",()=>showQi(true)));
   panel.querySelectorAll("[data-five]").forEach(b=>b.addEventListener("click",()=>showFive(true)));
   panel.querySelectorAll("[data-practice]").forEach(b=>b.addEventListener("click",()=>showPractice(true)));
@@ -763,18 +927,68 @@ const CENTER_HTML=`<div class="center-msg">
     <p>You can read the wheel from the center out, as an unfolding: qi, the phases, the organs, and the seasons. Or read it from the outside in, as a day to live: the season of the day you are in, the organ whose window it is, and one small thing that suits it. Either way, you may begin anywhere.</p>
     <p class="sym">The symbol is drawn to match the clock. Its bright head is at the top, where yang peaks at noon, and its dark head is at the bottom, where yin peaks at midnight. Each holds a small seed of the other.</p>
   </div>`;
+const YEAR_HTML=`<div class="center-msg">
+    <div class="eyebrow">The year wheel</div>
+    <h2>The year, in five seasons</h2>
+    <p>This wheel is the year as Five Phase theory describes it, which is where the phases are most at home. Each phase has a season: Wood is spring, Fire is summer, Earth is late summer, Metal is autumn, and Water is winter. Around them are the organs each phase holds, the months of the Chinese solar calendar, the calendar months, and the five seasons with their dates.</p>
+    <p>The seasons sit in the same places as on the day wheel, so you can switch between the two and see one inside the other: summer at the top, winter at the bottom, spring on the left, and autumn on the right. Midsummer at the top is noon on the day wheel, and midwinter at the bottom is midnight.</p>
+    <p>The Chinese calendar starts each season at one of the four starts (lì): the Start of Spring around February 4, of Summer around May 5, of Autumn around August 7, and of Winter around November 7. That puts each solstice and equinox in the middle of its season rather than at its beginning, so midsummer really is the middle of summer.</p>
+    <p class="sym">The yin-yang at the center turns the same way for the year as for the day. Yang peaks at the summer solstice, at the top, and yin at the winter solstice, at the bottom. A small gold mark on the edge shows today.</p>
+  </div>`;
 function showIntro(){
+  if(mode==="year") return showYearIntro();
   setView("intro"); setSubnav([]);
   panel.innerHTML=CENTER_HTML+`<div class="intro">
     <h2>Reading the wheel</h2>
     <ul class="legend">
       ${["core","elem","organ","daily","emo","season"].map(k=>`<li>${sw(RINGS[k].sw)}<div><b>${RINGS[k].name}</b>${RINGS[k].about}</div></li>`).join("")}
     </ul>
-    <p>Around the very edge are 24 small petals, one for each hour. The gold petal at the top is noon, and the indigo one at the bottom is midnight. The four small Earth markers on the outer ring sit at 3 am, 9 am, 3 pm, and 9 pm, where one season of the day turns into the next.</p>
+    <p>Around the very edge are 24 small petals, one for each hour. The gold petal at the top is noon, and the indigo one at the bottom is midnight, and a small gold mark shows the time now. The four small Earth markers on the outer ring sit at 3 am, 9 am, 3 pm, and 9 pm, where one season of the day turns into the next.</p>
     <p>The organ clock and the seasons are two different layers, and they do not match one for one. The organ clock follows qi through the channels in a fixed order. The seasons follow the sun. For example, the Wood organs keep their hours late at night, just before the day's spring begins at 3 am. Hover over any organ to see which phase and which season of the day it falls in.</p>
+    <p>This is the Day wheel. The Year wheel shows the same Five Phases across the year, where each has a season of its own. <button type="button" class="pauselink" data-mode="year">Switch to the year</button></p>
     <p class="hint">Choose any ring or petal to open it. Go slowly, and take what is useful now. <button type="button" class="pauselink" data-practice>Begin gently</button></p>
   </div>`;
   wirePanelLinks();
+}
+function showYearIntro(){
+  setView("intro"); setSubnav([]);
+  panel.innerHTML=YEAR_HTML+`<div class="intro">
+    <h2>Reading the year</h2>
+    <ul class="legend">
+      ${["core","phase","yorg","term","month","yseason"].map(k=>`<li>${sw(RINGS_Y[k].sw)}<div><b>${RINGS_Y[k].name}</b>${RINGS_Y[k].about}</div></li>`).join("")}
+    </ul>
+    <p>Around the very edge are 24 small petals, one for each solar term (jiéqì), the markers of the Chinese solar calendar about fifteen days apart. The gold petal at the top is the summer solstice, and the indigo one at the bottom the winter solstice.</p>
+    <p>Late summer, Earth's season, is shown as the sixth solar month, from Minor Heat to the Start of Autumn. The classics also describe Earth another way, as the turn at the end of every season. The Day wheel uses that second reading. <button type="button" class="pauselink" data-yseason="2">Read about late summer</button></p>
+    <p>The dates are for the northern hemisphere. In the southern hemisphere the seasons fall six months later, so spring begins around August 4.</p>
+    <p>This is the Year wheel. The Day wheel shows the organ clock, with each organ's two hours. <button type="button" class="pauselink" data-mode="day">Switch to the day</button></p>
+    <p class="hint">Choose any ring or petal to open it. Go slowly, and take what is useful now. <button type="button" class="pauselink" data-practice>Begin gently</button></p>
+  </div>`;
+  wirePanelLinks();
+}
+
+/* A season of the year */
+function showYear(i,user){
+  const y=YEAR[i], E=ELEMENTS[y.el];
+  setView("y-"+y.key,{kind:"yseason",i}); setSubnav([]);
+  const ks=[];
+  for(let k=0;k<12;k++){ if(yearOf(-120+30*k)===i) ks.push(2*k,2*k+1); }
+  const prev=(i+4)%5, next=(i+1)%5;
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">The year · ${E.name}</div><h2>${y.name}</h2>
+      <div class="meta">${E.name} · ${E.py} ${E.zh} · about ${y.dates} · ${y.yy.toLowerCase()}</div><p>${y.intro}</p></div>
+    <div class="ring"><h3>${sw(`var(${E.c})`)}The phase in this season</h3>
+      <ul><li><b>Climate:</b> ${E.climate.toLowerCase()}. <b>Direction:</b> ${E.dir.toLowerCase()}. <b>Feeling:</b> ${E.emo.toLowerCase()}.</li><li>${E.holds[0]}</li><li>${E.holds[2]}</li></ul>
+      <h4>Its organs, on the day clock</h4>${organChips(y.orgs)}</div>
+    <div class="ring"><h3>Rhythm for rest and rising</h3><p>${y.rest}</p></div>
+    <div class="ring"><h3>Living with the season</h3>${ul(y.live)}</div>
+    <div class="ring"><h3>Its solar terms</h3>
+      <ul class="ptn">${ks.map(k=>`<li><b>${TERMS[k][0]}</b><span>${TERMS[k][1]} ${TERMS[k][2]} · about ${TERMS[k][3]}</span></li>`).join("")}</ul></div>
+    ${y.other?`<div class="ring"><h3>Another reading of Earth</h3><p>${y.other}</p></div>`:""}
+    <p class="gentle"><b>Go gently.</b> ${y.gently}</p>
+    <p class="src">After Su Wen 2, 22, and 29; Kaptchuk (2000); Maciocia (2015). Solar term dates are approximate and shift by a day from year to year.</p>
+    <div class="rnext"><button type="button" class="btn" data-yseason="${prev}">← ${YEAR[prev].name}</button><button type="button" class="btn" data-yseason="${next}">${YEAR[next].name} →</button></div>`;
+  wirePanelLinks();
+  if(user) bringPanel();
 }
 
 /* Qi, yin and yang */
@@ -809,7 +1023,7 @@ function cycleSVG(){
 function showFive(user){
   setView("five"); setSubnav([]);
   panel.innerHTML=`
-    <div class="phasehead"><div class="eyebrow">The ring inside the organs</div><h2>The Five Phases</h2>
+    <div class="phasehead"><div class="eyebrow">On both wheels</div><h2>The Five Phases</h2>
       <div class="meta">Wǔ Xíng · 五行 · five ways qi moves and changes</div><p>${FIVE.intro}</p></div>
     <ul class="phtable">${ELORDER.map(k=>{ const E=ELEMENTS[k]; return `<li>${sw(`var(${E.c})`)}<div><b><button type="button" class="pauselink" data-el="${k}" style="font-size:inherit;font-family:inherit;color:inherit;text-decoration:none">${E.name}</button> · ${E.py} ${E.zh}</b><span>${E.season} · ${E.dir} · ${E.climate.toLowerCase()} · ${E.emo.toLowerCase()}</span><span>${E.organs}, ${E.time}</span></div></li>`; }).join("")}</ul>
     <div class="ring"><h3>The two cycles</h3>
@@ -819,7 +1033,8 @@ function showFive(user){
       <p class="about">In a healthy body the two cycles keep one another in balance: each phase is fed by one and checked by another. In the tradition, a pattern is read as one phase too strong, too weak, or not fed.</p></div>
     <div class="ring"><h3>The phases on the wheel</h3>
       <p>Metal runs from 3 to 7 am, Earth from 7 to 11 am, Fire from 11 am to 3 pm, Water from 3 to 7 pm, Fire again from 7 to 11 pm, and Wood from 11 pm to 3 am. Fire is the only phase with two arcs, because it holds four organ systems: the Heart and Small Intestine, and the Pericardium and Triple Burner.</p>
-      <p>The same phases also map onto the year, and so onto the seasons of the day: Wood is spring, Fire is summer, Metal is autumn, and Water is winter. Earth is the center, and the hinge between seasons. <button type="button" class="pauselink" data-season="0">See the seasons of the day</button></p></div>
+      <p>The phases are most at home in the year, where each has a season: Wood is spring, Fire is summer, Earth is late summer, Metal is autumn, and Water is winter. <button type="button" class="pauselink" data-yseason="0">See the Year wheel</button></p>
+      <p>Through the old pairing of day and year, the phases also reach the day: morning is spring, noon summer, evening autumn, and midnight winter, with Earth at the turns. That is the outer ring of the Day wheel. <button type="button" class="pauselink" data-season="0">See the seasons of the day</button></p></div>
     <p class="gentle"><b>Go gently.</b> ${FIVE.gently}</p>
     <p class="src">After Kaptchuk (2000); Maciocia (2015); and the Yellow Emperor's Classic (Veith, 1949).</p>
     <div class="rnext"><button type="button" class="btn" data-qi>← Qi</button><button type="button" class="btn" data-el="metal">On to Metal →</button></div>`;
@@ -880,7 +1095,7 @@ function showSeasons(i,user){
       <p class="about">Yang grows from midnight to noon (winter to summer) and yields to yin from noon to midnight (summer to winter). With noon at the top, spring is on the left, summer at the top, autumn on the right, and winter at the bottom.</p></div>
     ${SEASONS.map(card).join("")}
     <div class="ring"><h3>${sw("var(--earth2)")}Earth, at the hinges</h3>
-      <p>Earth (Tǔ) is the center and the great nourisher, and it sits at the turn between one season and the next. Some schools add a fifth season, late summer (cháng xià), when the year is at its fullest. Others give Earth the last eighteen days or so of every season. On the wheel, four small Earth markers sit at 3 am, 9 am, 3 pm, and 9 pm. The Stomach and Spleen, the Earth organs, keep their hours from 7 to 11 am, either side of the 9 am marker.</p></div>
+      <p>Earth (Tǔ) is the center and the great nourisher, and it sits at the turn between one season and the next. Some schools add a fifth season, late summer (cháng xià), when the year is at its fullest, and the <button type="button" class="pauselink" data-yseason="2">Year wheel</button> shows it that way. Others give Earth the last eighteen days or so of every season. On the Day wheel, four small Earth markers sit at 3 am, 9 am, 3 pm, and 9 pm. The Stomach and Spleen, the Earth organs, keep their hours from 7 to 11 am, either side of the 9 am marker.</p></div>
     <div class="ring"><h3>Two layers, not one</h3>
       <p>The organ clock and the seasons of the day do not match organ for organ. The Wood organs, for example, belong to spring in the year, but their hours fall in the dark, just before the day's spring begins. The Metal organs belong to autumn in the year, but their hours fall at dawn. The tradition does not treat this as an error. The organ clock follows qi through the channels, and the seasons follow the sun, and each shows something different. If you want one rule of thumb, let the seasons set the broad shape of your day and the organs add detail.</p></div>
     <div class="ring"><h3>Where you live</h3>
@@ -906,12 +1121,12 @@ function showPractice(user){
       <p class="about">For two weeks, jot down when you wake, when your energy rises and falls, and when a feeling or a symptom comes up. A repeating hour is a clue, a place to be curious. It is not a diagnosis.</p>
       <ul class="ptn">${X.patterns.map(([a,k,b])=>`<li><b>${a}</b><span><button type="button" class="pauselink" data-organ="${k}">${ORGANS[k].name}</button>: ${b}.</span></li>`).join("")}</ul></div>
     <div class="ring"><h3>The year around the wheel</h3>
-      <p class="about">Across the year the same shape returns, a little at a time. In spring begin and move. In summer give your fullest effort and take a pause at the peak. In autumn let go and draw close. In winter rest and keep warm. <button type="button" class="pauselink" data-season="0">Open the seasons</button></p></div>
+      <p class="about">Across the year the same shape returns, a little at a time. In spring begin and move. In summer give your fullest effort and take a pause at the peak. In autumn let go and draw close. In winter rest and keep warm. <button type="button" class="pauselink" data-yseason="0">Open the Year wheel</button></p></div>
     <div class="ring"><h3>If your life does not follow the clock</h3><p>${X.life}</p></div>
     <p class="gentle"><b>Go gently.</b> ${X.gently}</p>
     <div class="ring"><h3>Going further</h3>${ul(X.more)}</div>
     <p class="src">After common teaching practice; see the references below the wheel.</p>
-    <div class="rnext"><button type="button" class="btn" data-season="3">← Seasons of the day</button><button type="button" class="btn" data-intro>Back to How to read</button></div>`;
+    <div class="rnext"><button type="button" class="btn" data-intro>Back to How to read</button></div>`;
   wirePanelLinks();
   if(user) bringPanel();
 }
@@ -919,11 +1134,13 @@ function showPractice(user){
 function applySel(){
   const so=document.getElementById("selOutline");
   if(!so) return; so.innerHTML="";
+  if((mode==="year") !== (sel.kind==="yseason") && sel.kind!=="core") return;
   if(sel.kind==="organ"){ const [a0,a1]=oA(sel.i);
     el("path",{d:rsector(R.organ[0]-3,R.emo[1]+3,a0+GAP/2,a1-GAP/2,{rIn:9,rOut:6})},so); }
   else if(sel.kind==="elem"){ ELARCS.forEach((x,i)=>{ if(x.el===sel.key) el("path",{d:shapeOf("elem",i,3)},so); }); }
   else if(sel.kind==="season") el("path",{d:shapeOf("season",sel.i,3)},so);
   else if(sel.kind==="core") el("circle",{cx:0,cy:0,r:R.core[1]+4},so);
+  else if(sel.kind==="yseason"){ const [a0,a1]=YEAR[sel.i].a; el("path",{d:rsector(RY.phase[0]-3,RY.yseason[1]+3,a0+GAP/2,a1-GAP/2,{rIn:9,rOut:6})},so); }
 }
 
 /* light and dark switch */
@@ -938,13 +1155,35 @@ syncTheme();
 /* ring key */
 const rk=document.getElementById("ringkey");
 const KEYGO={core:()=>showQi(true), elem:()=>showFive(true), organ:()=>showElement("metal",null,true), daily:()=>showElement("metal",null,true), emo:()=>showElement("metal",null,true), season:()=>showSeasons(null,true)};
-["core","elem","organ","daily","emo","season"].forEach(k=>{
-  const b=document.createElement("button"); b.type="button"; b.innerHTML=sw(RINGS[k].sw)+RINGS[k].name;
-  b.addEventListener("click",KEYGO[k]); rk.appendChild(b);
-});
+const KEYGO_Y={core:()=>showQi(true), phase:()=>showFive(true), yorg:()=>showYear(0,true), term:()=>showYear(0,true), month:()=>showYear(0,true), yseason:()=>showYear(0,true)};
+function buildKey(){
+  rk.innerHTML="";
+  const [rings,go]= mode==="year" ? [RINGS_Y,KEYGO_Y] : [RINGS,KEYGO];
+  Object.keys(go).forEach(k=>{
+    const b=document.createElement("button"); b.type="button"; b.innerHTML=sw(rings[k].sw)+rings[k].name;
+    b.addEventListener("click",go[k]); rk.appendChild(b);
+  });
+}
 
-draw();
-showIntro();
+/* Day and Year: two wheels on one page. The choice is remembered, and #day or #year in the address opens one. */
+const vt=document.getElementById("viewtoggle");
+function setMode(m,keepPanel){
+  if(m===mode && svg.childNodes.length) return;
+  mode=m; moonTip(null);
+  if(m!=="year" && sel.kind==="yseason") sel={kind:null,i:null};
+  draw(); buildTabs(); buildKey();
+  vt.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.mode===m?"true":"false"));
+  svg.setAttribute("aria-label", m==="year" ? "The Body Clock Mandala, the year in five seasons" : "The Body Clock Mandala, the day in 24 hours");
+  try{ localStorage.setItem("tcm-view",m); }catch(e){}
+  if(location.hash!=="#"+m) history.replaceState(null,"","#"+m);
+  if(!keepPanel) showIntro();
+}
+vt.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(h==="day"||h==="year") setMode(h); });
+
+let start=location.hash.slice(1);
+if(start!=="day" && start!=="year"){ try{ start=localStorage.getItem("tcm-view"); }catch(e){} }
+setMode(start==="year" ? "year" : "day");
 
 })();
 </script>
