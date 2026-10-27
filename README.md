@@ -19,6 +19,10 @@ All content is in the `RINGS`, `ELEMENTS`, `ORGANS`, `ELARCS`, `SEASONS`, `HINGE
 
 Preview with the `tcm-mandala` entry in DreamWave's `.claude/launch.json`, or `python3 -m http.server --directory .`.
 
+## Live
+
+Published with GitHub Pages from `main` at https://erinsarita.github.io/tcm-mandala/. A push updates the live site.
+
 ## Not yet done
 
-Not published, and not on the Living Mandalas hub. To add it there: save light and dark 800 × 800 images of the wheel to the hub's `img/`, then add a `MANDALAS` entry with `themeKey: "tcm-theme"`.
+Not on the Living Mandalas hub. To add it there: save light and dark 800 × 800 images of the wheel to the hub's `img/`, then add a `MANDALAS` entry with `themeKey: "tcm-theme"`.
