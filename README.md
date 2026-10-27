@@ -16,7 +16,7 @@ Three wheels share the page, switched by a Phases, Day, and Year toggle above th
 
 **The Year wheel** is the Five Phases in their seasons. From the center out: the yin-yang; the five phases; the organs each holds; twelve solar-month petals named by their two solar terms; the calendar months; and the five seasons with dates (spring Feb 4 to May 5, summer to Jul 7, late summer to Aug 7, autumn to Nov 7, winter to Feb 4). Seasons start at the four "starts" (lì), so each solstice and equinox is mid-season. Late summer is the sixth solar month (Minor Heat to the Start of Autumn); the 18-days-per-season reading of Earth is explained in the panel. A gold mark on the edge shows the current hour or today's date.
 
-Phases tabs: How to read, Wuji, Taiji, Yin and yang, Five Phases, Generating, Controlling, Out of balance, Ten thousand things, Practice.
+Phases tabs: How to read, Wuji, Taiji, Yin and yang, Five Phases, Correspondences (a full table, the five tastes with foods and example herbs, and feelings on the controlling cycle), Generating, Controlling, Out of balance, Ten thousand things, Practice.
 
 Day tabs: How to read, Qi, Five Phases (with the generating and controlling cycles), Metal, Earth, Fire, Water, Wood (each with its organ cards), Practice.
 
@@ -24,7 +24,7 @@ Year tabs: How to read, Qi, Five Phases, Spring, Summer, Late summer, Autumn, Wi
 
 ## Editing
 
-Phases wheel content is in `RINGS_C`, `WUJI`, `TAIJI`, `YINYANG`, `PHASES`, `GEN` (phase k feeds k+1), `CTL` (phase k tames k+2), `BALANCE`, `WANWU`, and `PRACTICE_C`, with radii in `RC`. Day and Year content is in the `RINGS`, `RINGS_Y`, `YEAR`, `TERMS`, `MONTHS`, `ELEMENTS`, `ORGANS`, `ELARCS`, `QI`, `PRACTICE`, and `FIVE` objects near the top of the script. Ring radii are in `R`. Light and dark mode is saved as `tcm-theme`.
+Phases wheel content is in `RINGS_C`, `WUJI`, `TAIJI`, `YINYANG`, `PHASES`, `GEN` (phase k feeds k+1), `CTL` (phase k tames k+2), `BALANCE`, `WANWU`, `PRACTICE_C`, `CORR` (organs, sense organ, tissue, sound, taste, climate, emotion, organ hours, and more for each phase), `TASTES`, and `HERB_CARE`, with radii in `RC`. Day and Year content is in the `RINGS`, `RINGS_Y`, `YEAR`, `TERMS`, `MONTHS`, `ELEMENTS`, `ORGANS`, `ELARCS`, `QI`, `PRACTICE`, and `FIVE` objects near the top of the script. Ring radii are in `R`. Light and dark mode is saved as `tcm-theme`.
 
 Preview with the `tcm-mandala` entry in DreamWave's `.claude/launch.json`, or `python3 -m http.server --directory .`.
 

@@ -246,6 +246,22 @@ section.about p{margin:0;max-width:68ch}
 .nowmark circle{fill:var(--gold);stroke:var(--bg);stroke-width:2.5}
 @media (max-width:560px){.viewtoggle button{padding:7px 14px}.viewtoggle button span{display:none}}
 /* The Phases wheel */
+.ctable{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface);scrollbar-width:thin}
+.ctable:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.ctable table{border-collapse:collapse;font-size:13.5px;min-width:640px;width:100%}
+.ctable th,.ctable td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ctable thead th{border-top:5px solid var(--c);font-family:var(--display);font-weight:400;font-size:17px}
+.ctable thead th:first-child{border-top-color:transparent}
+.ctable thead th button{font-size:inherit;font-family:inherit;color:inherit;text-decoration:none}
+.ctable thead th span{display:block;font-family:var(--body);font-size:12px;color:var(--muted)}
+.ctable tbody th{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;white-space:nowrap;position:sticky;left:0;background:var(--surface)}
+.ctable tr:last-child th,.ctable tr:last-child td{border-bottom:0}
+.tastes{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.tastes li{border:1px solid var(--line);border-left:5px solid var(--c);border-radius:10px;padding:8px 12px;background:color-mix(in srgb, var(--c) 18%, var(--surface))}
+.tastes b{font-family:var(--display);font-weight:400;font-size:19px}
+.tastes .tph{margin-left:8px;font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.tastes p{margin:2px 0 0}
+.tastes .tx{font-size:14px;color:var(--muted)}
 .relline{fill:none;stroke-linecap:round}
 .rel-gen .relline{stroke:var(--ink);stroke-width:3.4;opacity:.82}
 .rel-ctl .relline{stroke:var(--muted);stroke-width:2.6;stroke-dasharray:8 6}
@@ -831,7 +847,7 @@ const RINGS_C = {
   phase: {name:"The Five Phases", sw:"linear-gradient(90deg,var(--fire),var(--earth),var(--metal),var(--water),var(--wood))", color:"--earth", about:"Fire, Earth, Metal, Water, and Wood, spaced evenly around the wheel, joined by their two cycles."},
   gen:   {name:"Generating, shēng", sw:"linear-gradient(90deg,var(--ink),var(--ink))", color:"--earth2", about:"Arrows around the circle, clockwise: each phase feeds the next, like a mother feeding her child."},
   ctl:   {name:"Controlling, kè", sw:"repeating-linear-gradient(90deg,var(--muted) 0 4px,transparent 4px 7px)", color:"--metal2", about:"The star through the middle: each phase tames the one two steps ahead, like a grandmother setting limits."},
-  corr:  {name:"Correspondences", sw:"linear-gradient(90deg,var(--fire2),var(--earth2),var(--metal2),var(--water2),var(--wood2))", color:"--earth2", about:"For each phase: its season and direction, its organs, and its feeling and virtue."},
+  corr:  {name:"Correspondences", sw:"linear-gradient(90deg,var(--fire2),var(--earth2),var(--metal2),var(--water2),var(--wood2))", color:"--earth2", about:"For each phase: its season, climate, and direction; its organ, sense organ, and tissue; and its taste, sound, and feeling."},
   motion:{name:"The motion of each phase", sw:"linear-gradient(90deg,var(--band),var(--band2))", color:"--band", about:"How qi moves in each phase: rising, centering, gathering, sinking, growing."},
   ww:    {name:"The ten thousand things", sw:"linear-gradient(90deg,var(--fire3),var(--earth3),var(--metal3),var(--water3),var(--wood3))", color:"--earth3", about:"Everything that is, each a blend of yin, yang, and the Five Phases. Read inward, the way of return."}
 };
@@ -875,6 +891,29 @@ const PHASES = [
    blurb:"Wood is yang being born and growing: spring, the shoot pushing up through the soil. It plans, grows, and reaches toward the light. It is the phase of the Liver and of the ethereal soul (hún), which carries vision and dreams. Its motion is growing up and out.",
    tip:"Yang growing: vision, plans, new life."}
 ];
+/* the classical correspondences of each phase, after the Huangdi Neijing (Su Wen 4, 5, 9, 22, 23, 39) */
+const CORR = {
+  wood: {yin:"Liver", yang:"Gallbladder", sense:"Eyes", tissue:"Tendons and sinews", shows:"Nails", fluid:"Tears", sound:"Shouting", taste:"Sour", climate:"Wind", odor:"Rancid", stage:"Birth", hours:"Gallbladder 11 pm to 1 am, Liver 1 to 3 am",
+         emo:"Anger", emoLine:"In balance, healthy assertion and the drive to grow. In excess, anger makes the qi rush upward."},
+  fire: {yin:"Heart", yang:"Small Intestine", also:"Pericardium and Triple Burner", sense:"Tongue", tissue:"Blood vessels", shows:"Complexion", fluid:"Sweat", sound:"Laughing", taste:"Bitter", climate:"Heat", odor:"Scorched", stage:"Growth", hours:"Heart 11 am to 1 pm, Small Intestine 1 to 3 pm, Pericardium 7 to 9 pm, Triple Burner 9 to 11 pm",
+         emo:"Joy", emoLine:"In balance, warmth and connection. In excess, overexcitement slackens the qi and scatters the spirit."},
+  earth:{yin:"Spleen", yang:"Stomach", sense:"Mouth", tissue:"Muscles and flesh", shows:"Lips", fluid:"Thin saliva", sound:"Singing", taste:"Sweet", climate:"Dampness", odor:"Fragrant", stage:"Transformation", hours:"Stomach 7 to 9 am, Spleen 9 to 11 am",
+         emo:"Worry and pensiveness", emoLine:"In balance, clear and steady thought. In excess, worry knots the qi."},
+  metal:{yin:"Lung", yang:"Large Intestine", sense:"Nose", tissue:"Skin", shows:"Body hair", fluid:"Nasal mucus", sound:"Weeping", taste:"Pungent", climate:"Dryness", odor:"Rank", stage:"Harvest", hours:"Lung 3 to 5 am, Large Intestine 5 to 7 am",
+         emo:"Grief", emoLine:"In balance, grief lets us let go. Held too long, it wears away the qi."},
+  water:{yin:"Kidney", yang:"Bladder", sense:"Ears", tissue:"Bones", shows:"Head hair", fluid:"Thick saliva", sound:"Groaning", taste:"Salty", climate:"Cold", odor:"Putrid", stage:"Storage", hours:"Bladder 3 to 5 pm, Kidney 5 to 7 pm",
+         emo:"Fear", emoLine:"In balance, caution that protects. In excess, fear makes the qi sink."}
+};
+/* the five tastes, as herbalists use them (Su Wen 22: pungent disperses, sour gathers, sweet relaxes, bitter firms, salty softens) */
+const TASTES = {
+  wood: {does:"Gathers and holds in. It astringes, slowing what leaks away, such as heavy sweating or loose stools.", foods:"Lemon, vinegar, plums, sauerkraut", herbs:"Cornus fruit (shān zhū yú), mume fruit (wū méi), schisandra (wǔ wèi zǐ)"},
+  fire: {does:"Drains and dries. It clears heat, dries dampness, and sends things downward.", foods:"Dandelion greens, bitter melon, arugula, green tea", herbs:"Coptis (huáng lián), Baikal skullcap root (huáng qín), rhubarb root (dà huáng)"},
+  earth:{does:"Nourishes and harmonizes. It builds qi and blood, eases tension, and moderates harsher herbs in a formula.", foods:"Rice and other grains, sweet potato, carrots, dates", herbs:"Licorice (gān cǎo), astragalus (huáng qí), jujube (dà zǎo)"},
+  metal:{does:"Disperses and moves. It opens the surface to release a chill, and gets qi and blood moving.", foods:"Ginger, scallions, garlic, radish, mint", herbs:"Fresh ginger (shēng jiāng), mint (bò he), cinnamon twig (guì zhī)"},
+  water:{does:"Softens and descends. It softens hardness and lumps, and moves the bowels.", foods:"Seaweed, miso, shellfish", herbs:"Oyster shell (mǔ lì), kelp (kūn bù), mirabilite (máng xiāo)"}
+};
+const HERB_CARE = "Chinese herbs are medicines. Some interact with prescription drugs, some are unsafe in pregnancy or while breastfeeding, and quality varies. Licorice, for example, taken often can raise blood pressure. The herbs here show how each taste is used; they are not recommendations. See a licensed herbalist (in the U.S., look for NCCAOM certification in Chinese herbology) and tell your doctor what you take.";
+
 const GEN = [
   {title:"Fire makes Earth", image:"Fire burns down to ash, and ash becomes soil.", body:"The Heart's warmth supports the Spleen's work of digestion. Warmth and ease can help appetite and steadiness.", life:"Enthusiasm and connection settle into something steady: a home, a routine, a shared table."},
   {title:"Earth bears Metal", image:"Metals and minerals form inside the earth.", body:"The Spleen sends refined essence up to the Lung. Strengthening Earth to support Metal (péi tǔ shēng jīn) is a classic approach to a Lung that has been weak for a long time.", life:"Being nourished and steady makes it possible to see clearly, refine, and let go."},
@@ -977,11 +1016,12 @@ function drawCosmos(){
     const a=pA(k), a0=a-36, a1=a+36, sets=`p${k} s${k} s${nxt(k,4)} k${k} k${nxt(k,3)}`;
     cAddCell(rsector(RC.motion[0],RC.motion[1],a0+0.6,a1-0.6,{rIn:3,rOut:3}),{kind:"motion",slice:"p"+k,sets:"p"+k,fill:k%2?"--band2":"--band",label:`${p.name}: ${p.motion.toLowerCase()}`,tag:"The motion of "+p.name,name:p.motion,line:`How qi moves in ${p.name}.`,at:{a,r:RC.motion[1]},go:()=>showPhases(k,true)});
     arcText((RC.motion[0]+RC.motion[1])/2,a0+2,a1-2,p.motion,"bandlbl",13,0.6,labels);
-    cAddCell(rsector(RC.corr[0],RC.corr[1],a0+GAP,a1-GAP,{rIn:9,rOut:9}),{kind:"corr",slice:"p"+k,sets:"p"+k,fill:`${p.c}2`,label:`${p.name}: ${p.season}, ${p.dir}; ${p.organs}; ${p.emo}, ${p.virtue}`,tag:"Correspondences · "+p.name,name:`${p.season} · ${p.dir}`,line:`${p.organs}. ${p.emo}; ${p.virtue.toLowerCase()}.`,at:{a,r:(RC.corr[0]+RC.corr[1])/2},go:()=>showPhases(k,true)});
+    cAddCell(rsector(RC.corr[0],RC.corr[1],a0+GAP,a1-GAP,{rIn:9,rOut:9}),{kind:"corr",slice:"p"+k,sets:"p"+k,fill:`${p.c}2`,label:`${p.name}: ${p.season}, ${CORR[p.key].climate}, ${p.dir}; ${CORR[p.key].yin}, ${CORR[p.key].sense}, ${CORR[p.key].tissue}; ${CORR[p.key].taste}, ${CORR[p.key].sound}, ${p.emo}`,tag:"Correspondences · "+p.name,name:`${p.season} · ${CORR[p.key].climate}`,line:`${CORR[p.key].yin}, ${CORR[p.key].sense.toLowerCase()}, ${CORR[p.key].tissue.toLowerCase()}. ${CORR[p.key].taste} taste; ${p.emo.toLowerCase()}.`,at:{a,r:(RC.corr[0]+RC.corr[1])/2},go:()=>showPhases(k,true)});
     const m=(RC.corr[0]+RC.corr[1])/2, flip=a>95&&a<265, sg=flip?-1:1;
-    arcText(m+sg*24,a0+3,a1-3,`${p.season} · ${p.dir}`,"lbl tx-ink tx-disp",19,0.3,labels);
-    arcText(m,a0+3,a1-3,p.organs,"lbl tx-ink tx-disp",16,0.2,labels);
-    arcText(m-sg*22,a0+3,a1-3,`${p.emo.toLowerCase()} · ${p.virtue.toLowerCase()}`,"tx-ink tx-small",13,0.3,labels);
+    const C=CORR[p.key];
+    arcText(m+sg*24,a0+3,a1-3,`${p.season} · ${C.climate} · ${p.dir}`,"lbl tx-ink tx-disp",18,0.3,labels);
+    arcText(m,a0+3,a1-3,`${C.yin} · ${C.sense} · ${C.tissue.split(" and ")[0]}`,"lbl tx-ink tx-disp",16,0.2,labels);
+    arcText(m-sg*22,a0+3,a1-3,`${C.taste.toLowerCase()} · ${C.sound.toLowerCase()} · ${p.emo.toLowerCase()}`,"tx-ink tx-small",13,0.3,labels);
   });
 
   // the controlling cycle: a star behind the center, each phase taming the one two steps ahead
@@ -1039,7 +1079,7 @@ function showCycle(kind){
   cells.forEach(c=>c.classList.toggle("lit", kind && c.classList.contains("rel-"+kind)));
   svg.classList.toggle("cycle", !!kind);
 }
-const GO_C = {intro:()=>showCosmosIntro(), wuji:()=>showWuji(true), taiji:()=>showTaiji(true), yy:()=>showYinYang(true), phases:()=>showPhases(null,true), gen:()=>showGen(null,true), ctl:()=>showCtl(null,true), bal:()=>showBalance(true), ww:()=>showWanwu(true), practice:()=>showCosmosPractice(true)};
+const GO_C = {intro:()=>showCosmosIntro(), wuji:()=>showWuji(true), taiji:()=>showTaiji(true), yy:()=>showYinYang(true), phases:()=>showPhases(null,true), corr:()=>showCorr(true), gen:()=>showGen(null,true), ctl:()=>showCtl(null,true), bal:()=>showBalance(true), ww:()=>showWanwu(true), practice:()=>showCosmosPractice(true)};
 const pchip = k => `<button type="button" class="pchip" data-phase="${k}" style="--c:var(${PHASES[k].c}2)">${PHASES[k].name}</button>`;
 const nextBtns = (a,b) => `<div class="rnext"><button type="button" class="btn" data-go="${a[0]}">← ${a[1]}</button><button type="button" class="btn" data-go="${b[0]}">${b[1]} →</button></div>`;
 
@@ -1110,6 +1150,15 @@ function showYinYang(user){
     nextBtns(["taiji","Taiji"],["phases","The Five Phases"]));
   if(user) bringPanel();
 }
+// one phase's correspondences, in four groups
+function corrHTML(i){
+  const p=PHASES[i], C=CORR[p.key], T=TASTES[p.key], dl=rows=>`<dl class="day">${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`;
+  return `<h4>In the body</h4>${dl([["Organs",`${C.yin} (yin) and ${C.yang} (yang)${C.also?`, with the ${C.also}`:""}`],["Sense organ",C.sense],["Tissue",C.tissue],["Shows in",C.shows],["Fluid",C.fluid],["Sound",C.sound],["Odor",C.odor]])}
+    <h4>In time and nature</h4>${dl([["Season",p.season],["Climate",C.climate],["Direction",p.dir],["Color",p.color],["Stage",C.stage],["Organ hours",`${C.hours}. <button type="button" class="pauselink" data-mode="day">See them on the Day wheel</button>`]])}
+    <h4>Feeling and spirit</h4>${dl([["Emotion",`${C.emo}. ${C.emoLine}`],["Virtue",`${p.virtue}, ${p.virtueZh}`],["Spirit",p.spirit],["Yin and yang",`${p.img} (${p.imgZh})`],["Motion",p.motion]])}
+    <h4>Taste and herbs</h4>${dl([["Taste",`${C.taste}. ${T.does}`],["In the kitchen",T.foods],["Herbs, for example",T.herbs]])}
+    <p class="about">${HERB_CARE.split(". ")[0]}. <button type="button" class="pauselink" data-go="corr">Read about tastes and herbs</button></p>`;
+}
 function showPhases(k,user){
   setView("phases", k!=null?{kind:"node",i:k}:{kind:"phases",i:0});
   setSubnav(PHASES.map((p,i)=>({label:p.name,go:()=>showPhases(i,true)})), k==null?-1:k);
@@ -1124,8 +1173,7 @@ function showPhases(k,user){
           <li><span>Tamed by</span>${pchip(tb)}<button type="button" class="pauselink" data-ctl="${tb}">${CTL[tb].title}</button></li>
           <li><span>Tames</span>${pchip(td)}<button type="button" class="pauselink" data-ctl="${i}">${CTL[i].title}</button></li>
         </ul>
-        <h4>Correspondences</h4>
-        <dl class="day"><dt>Yin and yang</dt><dd>${p.img} (${p.imgZh})</dd><dt>Motion</dt><dd>${p.motion}</dd><dt>Season</dt><dd>${p.season}</dd><dt>Direction</dt><dd>${p.dir}</dd><dt>Color</dt><dd>${p.color}</dd><dt>Organs</dt><dd>${p.organsLong}</dd><dt>Feeling</dt><dd>${p.emo}</dd><dt>Virtue</dt><dd>${p.virtue}, ${p.virtueZh}</dd><dt>Spirit</dt><dd>${p.spirit}</dd></dl>
+        ${corrHTML(i)}
         <p class="gentle"><b>Go gently.</b> A phase that feels strong or thin in you is not a verdict on who you are. The phases shift with seasons, years, and circumstances.</p>
       </div></details>`; };
   panel.innerHTML=`
@@ -1135,10 +1183,38 @@ function showPhases(k,user){
     ${cCycleSVG("both")}
     ${[0,1,2,3,4].map(card).join("")}
     <p class="src">After Zhou Dunyi; the Huangdi Neijing; Kaptchuk (2000); Maciocia (2015); Wang (2012).</p>
-    ${nextBtns(["yy","Yin and yang"],["gen","Generating"])}`;
+    ${nextBtns(["yy","Yin and yang"],["corr","Correspondences"])}`;
   wirePanelLinks();
   panel.querySelectorAll(".qcard").forEach(d=>d.addEventListener("toggle",()=>{ if(d.open){ sel={kind:"node",i:+d.id.slice(2)}; applySel(); } }));
   if(user) bringPanel(k!=null?document.getElementById("p-"+k):null);
+}
+function showCorr(user){
+  setView("corr"); setSubnav([]);
+  const order=[4,0,1,2,3], ph=order.map(i=>PHASES[i]), C=k=>CORR[k.key];
+  const rows=[["Yin organ",p=>C(p).yin],["Yang organ",p=>C(p).yang+(C(p).also?`, with the ${C(p).also}`:"")],["Sense organ",p=>C(p).sense],["Tissue",p=>C(p).tissue],["Shows in",p=>C(p).shows],["Fluid",p=>C(p).fluid],["Sound",p=>C(p).sound],["Odor",p=>C(p).odor],["Taste",p=>C(p).taste],["Emotion",p=>C(p).emo],["Climate",p=>C(p).climate],["Season",p=>p.season],["Direction",p=>p.dir],["Color",p=>p.color],["Stage",p=>C(p).stage],["Organ hours",p=>C(p).hours],["Virtue",p=>p.virtue],["Spirit",p=>p.spirit.split(",")[0]]];
+  panel.innerHTML=`
+    <div class="phasehead"><div class="eyebrow">For Chinese medicine and herbalism</div><h2>Correspondences</h2>
+      <div class="meta">What each phase gathers together, in the body, in nature, and on the tongue</div>
+      <p>The Five Phases are a way of grouping things that share a quality of movement. A practitioner who sees a pattern in one part of a group, such as red eyes, a sour taste, and shouting, will look at the rest of it: the Liver, the tendons, the wind. The lists below are the classical ones, mostly from the Yellow Emperor's Classic (Su Wen 4 and 5). They are a map for noticing, used alongside pulse, tongue, and the whole person.</p></div>
+    <div class="ctable" tabindex="0" role="region" aria-label="Table of correspondences, scrolls sideways"><table>
+      <thead><tr><th></th>${ph.map(p=>`<th style="--c:var(${p.c})"><button type="button" class="pauselink" data-phase="${PHASES.indexOf(p)}">${p.name}</button><span>${p.zh} ${p.py}</span></th>`).join("")}</tr></thead>
+      <tbody>${rows.map(([l,fn])=>`<tr><th scope="row">${l}</th>${ph.map(p=>`<td>${fn(p)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    <div class="ring"><h3>The five tastes, in food and herbs</h3>
+      <p class="about">Each taste is said to enter its organ: sour the Liver, bitter the Heart, sweet the Spleen, pungent the Lung, and salty the Kidney (Su Wen 23). A little supports it; too much strains it, and the phase it tames. Herbalists pair each herb's taste with its nature, from hot to cold, and the channels it enters.</p>
+      <ul class="tastes">${ph.map(p=>{ const T=TASTES[p.key]; return `<li style="--c:var(${p.c}2)"><b>${C(p).taste}</b><span class="tph">${p.name} · ${C(p).yin}</span><p>${T.does}</p><p class="tx"><i>In the kitchen:</i> ${T.foods}.</p><p class="tx"><i>Herbs, for example:</i> ${T.herbs}.</p></li>`; }).join("")}</ul>
+      <p class="gentle"><b>Go gently with herbs.</b> ${HERB_CARE}</p></div>
+    <div class="ring"><h3>Feelings on the controlling cycle</h3>
+      <p class="about">The same star that runs through the phases runs through the feelings. The Su Wen (chapter 5) says each feeling is eased by the one that tames its phase, and the tastes work the same way.</p>
+      <ul>${[2,3,4,0,1].map(i=>{ const a=PHASES[i], b=PHASES[nxt(i,2)]; return `<li><b>${C(a).emo.split(" and ")[0]}</b> eases <b>${C(b).emo.split(" and ")[0].toLowerCase()}</b> (${a.name} tames ${b.name}); ${C(a).taste.toLowerCase()} tempers ${C(b).taste.toLowerCase()}.</li>`; }).join("")}</ul>
+      <p class="about">So grief can soften anger, and a little fear or caution can steady joy that has run too high. These are images for balance, not instructions to feel a certain way.</p></div>
+    <div class="ring"><h3>How the feelings move the qi</h3>
+      <p class="about">The Su Wen (chapter 39) describes how each feeling, when it is too strong or lasts too long, moves the qi.</p>
+      <ul>${ph.map(p=>`<li><b>${C(p).emo}.</b> ${C(p).emoLine}</li>`).join("")}</ul></div>
+    <p class="gentle"><b>Go gently.</b> Every feeling here belongs to a whole human life. None of them is a fault, and none of them causes illness by itself. Correspondences are a way practitioners think, not a way to diagnose yourself; take symptoms to a doctor or a licensed practitioner.</p>
+    <p class="src">After the Huangdi Neijing Su Wen, chapters 4, 5, 9, 22, 23, and 39; Maciocia (2015); Kaptchuk (2000).</p>
+    ${nextBtns(["phases","The Five Phases"],["gen","Generating"])}`;
+  wirePanelLinks();
+  if(user) bringPanel();
 }
 function relPage(kind,k,user){
   const L=kind==="gen"?GEN:CTL, step=kind==="gen"?1:2;
@@ -1161,7 +1237,7 @@ function relPage(kind,k,user){
     <div class="ring"><h3>${G?"Feeding and taming together":"Taming as care"}</h3><p>${G?"Each phase is both a mother and a child: it is fed by the phase behind it and feeds the phase ahead. The controlling cycle runs alongside, so that what is fed does not overgrow. When one is strong, the generating cycle passes the strength on, and the controlling cycle keeps it in proportion.":"Every phase is tamed by one and tames another, so no phase is only in charge. The grandmother is herself fed by the generating cycle, and the phase she tames grows the very phase that will tame her in turn, closing the loop. Restraint, held this way, is part of how each thing is cared for."} <button type="button" class="pauselink" data-go="bal">When the balance slips</button></p></div>
     <p class="gentle"><b>Go gently.</b> These relationships are images for thinking about balance, not rules about your body or your character. Use them to ask questions, and take health concerns to a doctor or a licensed practitioner.</p>
     <p class="src">After the Huangdi Neijing; the Nan Jing; Kaptchuk (2000); Maciocia (2015).</p>
-    ${G?nextBtns(["phases","The Five Phases"],["ctl","Controlling"]):nextBtns(["gen","Generating"],["bal","Out of balance"])}`;
+    ${G?nextBtns(["corr","Correspondences"],["ctl","Controlling"]):nextBtns(["gen","Generating"],["bal","Out of balance"])}`;
   wirePanelLinks();
   panel.querySelectorAll(".qcard").forEach(d=>d.addEventListener("toggle",()=>{ if(d.open){ sel={kind,i:+d.id.slice(2)}; applySel(); } }));
   if(user) bringPanel(k!=null?document.getElementById("r-"+k):null);
@@ -1240,7 +1316,7 @@ function addTab(label,key,go){
 function buildTabs(){
   tabs.innerHTML="";
   if(mode==="phases"){
-    [["How to read","intro"],["Wuji","wuji"],["Taiji","taiji"],["Yin and yang","yy"],["Five Phases","phases"],["Generating","gen"],["Controlling","ctl"],["Out of balance","bal"],["Ten thousand things","ww"],["Practice","practice"]].forEach(([l,k])=>addTab(l,k,()=>GO_C[k]()));
+    [["How to read","intro"],["Wuji","wuji"],["Taiji","taiji"],["Yin and yang","yy"],["Five Phases","phases"],["Correspondences","corr"],["Generating","gen"],["Controlling","ctl"],["Out of balance","bal"],["Ten thousand things","ww"],["Practice","practice"]].forEach(([l,k])=>addTab(l,k,()=>GO_C[k]()));
     return markTabs();
   }
   addTab("How to read","intro",()=>showIntro());
@@ -1460,7 +1536,7 @@ function showPractice(user){
   if(user) bringPanel();
 }
 
-const KIND_MODES={core:["day","year"],organ:["day"],elem:["day"],yseason:["year"],node:["phases"],gen:["phases"],ctl:["phases"],wuji:["phases"],taiji:["phases"],yy:["phases"],ww:["phases"],phases:["phases"]};
+const KIND_MODES={core:["day","year"],organ:["day"],elem:["day"],yseason:["year"],node:["phases"],gen:["phases"],ctl:["phases"],wuji:["phases"],taiji:["phases"],yy:["phases"],ww:["phases"],phases:["phases"],corr:["phases"]};
 const kindOk = k => !!k && (KIND_MODES[k]||["day"]).includes(mode);
 function applySel(){
   const so=document.getElementById("selOutline");
@@ -1489,7 +1565,7 @@ syncTheme();
 /* ring key */
 const rk=document.getElementById("ringkey");
 const KEYGO={core:()=>showQi(true), elem:()=>showFive(true), organ:()=>showElement("metal",null,true), daily:()=>showElement("metal",null,true), emo:()=>showElement("metal",null,true)};
-const KEYGO_C={wuji:()=>showWuji(true), taiji:()=>showTaiji(true), yy:()=>showYinYang(true), phase:()=>showPhases(null,true), gen:()=>showGen(null,true), ctl:()=>showCtl(null,true), corr:()=>showPhases(null,true), motion:()=>showPhases(null,true), ww:()=>showWanwu(true)};
+const KEYGO_C={wuji:()=>showWuji(true), taiji:()=>showTaiji(true), yy:()=>showYinYang(true), phase:()=>showPhases(null,true), gen:()=>showGen(null,true), ctl:()=>showCtl(null,true), corr:()=>showCorr(true), motion:()=>showPhases(null,true), ww:()=>showWanwu(true)};
 const KEYGO_Y={core:()=>showQi(true), phase:()=>showFive(true), yorg:()=>showYear(0,true), term:()=>showYear(0,true), month:()=>showYear(0,true), yseason:()=>showYear(0,true)};
 function buildKey(){
   rk.innerHTML="";
